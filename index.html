@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F.R.I.D.A.Y. — Asisten Pribadi</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23031424' stroke='%2300e5ff' stroke-width='8'/><circle cx='50' cy='50' r='16' fill='%2300e5ff'/></svg>">
+<meta name="description" content="F.R.I.D.A.Y. — Asisten pribadi canggih ala Iron Man. Chat, perintah suara, pengingat, catatan, kalkulator, diagnostik sistem.">
+<style>
+:root{
+  --bg:#02060c; --bg2:#06121f; --panel:rgba(8,25,40,.78); --panel2:rgba(10,32,52,.6);
+  --cyan:#00e5ff; --cyan-dim:#0aa7bd; --orange:#ff9f1c; --green:#3dffb8; --red:#ff4d6d;
+  --text:#d9f4ff; --muted:#7fa8bd; --line:rgba(0,229,255,.22);
+  --glow:0 0 18px rgba(0,229,255,.45), 0 0 60px rgba(0,229,255,.15);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg); color:var(--text); overflow-x:hidden;
+  background-image:
+    radial-gradient(1200px 600px at 50% -10%, rgba(0,229,255,.14), transparent 60%),
+    radial-gradient(900px 500px at 90% 110%, rgba(255,159,28,.10), transparent 60%),
+    linear-gradient(rgba(0,229,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,.05) 1px, transparent 1px);
+  background-size:auto,auto,44px 44px,44px 44px;
+  min-height:100vh;
+}
+body::after{content:""; position:fixed; inset:0; pointer-events:none; z-index:60;
+  background:repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 3px); mix-blend-mode:overlay;}
+a{color:var(--cyan)}
+/* Boot */
+#boot{position:fixed; inset:0; z-index:100; background:#010409; display:flex; align-items:center; justify-content:center; transition:opacity .6s;}
+#boot.done{opacity:0; pointer-events:none}
+.boot-box{width:min(560px,90vw); text-align:center; border:1px solid var(--line); padding:28px; background:rgba(3,14,24,.9); box-shadow:var(--glow); border-radius:12px}
+.boot-logo{font-size:44px; letter-spacing:.35em; font-weight:800; color:var(--cyan); text-shadow:var(--glow)}
+.boot-sub{color:var(--muted); letter-spacing:.25em; font-size:12px; margin:6px 0 18px}
+.boot-bar{height:8px; border:1px solid var(--line); border-radius:99px; overflow:hidden; background:#031220}
+.boot-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--cyan-dim),var(--cyan),#fff); box-shadow:var(--glow); transition:width .2s}
+#bootLog{text-align:left; font-family:Consolas,monospace; font-size:12px; color:#8fe9ff; height:120px; overflow:hidden; margin-top:14px; opacity:.9}
+/* Top bar */
+header{position:sticky; top:0; z-index:20; backdrop-filter:blur(12px); background:rgba(2,8,15,.82); border-bottom:1px solid var(--line)}
+.top{display:flex; align-items:center; gap:14px; padding:10px 16px; max-width:1400px; margin:0 auto}
+.logo-mark{width:42px;height:42px;border-radius:50%; border:2px solid var(--cyan); display:grid; place-items:center; box-shadow:var(--glow); background:radial-gradient(circle,#0ff3 0 30%,transparent 31%),#031826; font-weight:900; color:var(--cyan)}
+.brand b{letter-spacing:.3em; font-size:18px; color:var(--cyan); text-shadow:var(--glow)}
+.brand small{display:block; color:var(--muted); letter-spacing:.18em; font-size:10px}
+.top-stats{margin-left:auto; display:flex; gap:16px; align-items:center; font-size:13px; color:var(--muted)}
+.pill{border:1px solid var(--line); border-radius:99px; padding:4px 12px; background:rgba(0,229,255,.06); color:var(--text); white-space:nowrap}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green); box-shadow:0 0 10px var(--green); display:inline-block; margin-right:6px; vertical-align:middle}
+.dot.off{background:var(--red); box-shadow:0 0 10px var(--red)}
+/* Layout */
+main{max-width:1400px; margin:0 auto; padding:16px; display:grid; grid-template-columns:300px 1fr 310px; gap:14px}
+@media(max-width:1080px){main{grid-template-columns:1fr 1fr} .center{grid-column:1/-1; order:-1}}
+@media(max-width:720px){main{grid-template-columns:1fr} .top-stats .hide-m{display:none}}
+.card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px; position:relative; overflow:hidden; backdrop-filter:blur(8px)}
+.card::before{content:""; position:absolute; top:0; left:14px; right:14px; height:1px; background:linear-gradient(90deg,transparent,var(--cyan),transparent); opacity:.7}
+.card h3{margin:0 0 10px; font-size:12px; letter-spacing:.25em; color:var(--cyan); text-transform:uppercase}
+.card h3 .tag{float:right; color:var(--muted); letter-spacing:.05em}
+/* Reactor */
+.reactor-wrap{display:flex; flex-direction:column; align-items:center; gap:8px}
+#reactor{width:210px; height:210px}
+#wave{width:100%; height:64px; background:#020b14; border:1px solid var(--line); border-radius:10px}
+.status-line{font-size:13px; color:var(--muted); min-height:20px; text-align:center}
+.status-line b{color:var(--green)}
+.controls-row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:6px}
+button,.chip{font:inherit; cursor:pointer}
+.btn{border:1px solid var(--line); background:rgba(0,229,255,.08); color:var(--text); border-radius:10px; padding:9px 14px; transition:.15s}
+.btn:hover{background:rgba(0,229,255,.18); box-shadow:var(--glow)}
+.btn.primary{background:linear-gradient(180deg,#00e5ff,#0090a8); color:#00141a; font-weight:800; border:none}
+.btn.warn{border-color:rgba(255,159,28,.5); background:rgba(255,159,28,.1)}
+.btn.mic-live{background:var(--red); border-color:var(--red); color:#fff; animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(255,77,109,.25)}}
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+.chip{font-size:12px; border:1px solid var(--line); background:#041525; color:#aee9ff; padding:6px 10px; border-radius:99px}
+.chip:hover{background:rgba(0,229,255,.15)}
+/* Chat */
+.chat-log{height:420px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding:6px 2px; scroll-behavior:smooth}
+.msg{max-width:88%; padding:10px 12px; border-radius:12px; font-size:14.5px; line-height:1.5; animation:pop .25s}
+@keyframes pop{from{transform:translateY(6px); opacity:0}}
+.msg.user{align-self:flex-end; background:linear-gradient(180deg,rgba(0,229,255,.22),rgba(0,229,255,.10)); border:1px solid var(--line); border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-bottom-left-radius:4px}
+.msg.bot b{color:var(--cyan)}
+.msg .meta{display:block; font-size:10.5px; color:var(--muted); margin-top:6px; letter-spacing:.08em}
+.chat-input{display:flex; gap:8px; margin-top:10px}
+.chat-input input{flex:1; background:#020d18; border:1px solid var(--line); color:var(--text); border-radius:10px; padding:12px; font-size:15px; outline:none}
+.chat-input input:focus{box-shadow:var(--glow); border-color:var(--cyan)}
+/* vitals */
+.vital{margin:10px 0}
+.vital .row{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-bottom:5px}
+.bar{height:8px; background:#031524; border:1px solid var(--line); border-radius:99px; overflow:hidden}
+.bar i{display:block; height:100%; background:linear-gradient(90deg,var(--cyan-dim),var(--cyan)); transition:width .6s}
+.kv{display:flex; justify-content:space-between; font-size:13px; padding:6px 0; border-bottom:1px dashed rgba(0,229,255,.15)}
+.kv span:last-child{color:var(--text)}
+ul.list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px; max-height:220px; overflow:auto}
+ul.list li{background:#041525; border:1px solid var(--line); border-radius:10px; padding:8px 10px; font-size:13.5px; display:flex; gap:8px; align-items:center}
+ul.list li.done{opacity:.55; text-decoration:line-through}
+ul.list button{margin-left:auto; background:none; border:none; color:var(--muted); font-size:16px}
+ul.list button:hover{color:var(--red)}
+.mini-form{display:flex; gap:6px; margin-top:8px}
+.mini-form input{flex:1; background:#020d18; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:8px; font-size:13px}
+.log{font-family:Consolas,monospace; font-size:11.5px; color:#8fe9ff; max-height:180px; overflow:auto; background:#020b14; border:1px solid var(--line); border-radius:8px; padding:8px}
+footer{max-width:1400px; margin:0 auto; padding:14px 16px 30px; color:var(--muted); font-size:12px; display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between}
+.toggle{display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted)}
+.toggle input{accent-color:var(--cyan); width:16px; height:16px}
+.mini-form select{flex:1; background:#020d18; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:8px; font-size:13px}
+</style>
+</head>
+<body>
+
+<div id="boot">
+  <div class="boot-box">
+    <div class="boot-logo">FRIDAY</div>
+    <div class="boot-sub">FEMALE REPLACEMENT INTELLIGENT DIGITAL ASSISTANT YOUTH</div>
+    <div class="boot-bar"><div class="boot-fill" id="bootFill"></div></div>
+    <div id="bootLog"></div>
+  </div>
+</div>
+
+<header>
+  <div class="top">
+    <div class="logo-mark">◉</div>
+    <div class="brand"><b>F.R.I.D.A.Y.</b><small>STARK INDUSTRIES • MARK VII INTERFACE</small></div>
+    <div class="top-stats">
+      <span class="pill hide-m" id="clock">--:--:--</span>
+      <span class="pill hide-m" id="dateLine">…</span>
+      <span class="pill"><span class="dot" id="netDot"></span><span id="netText">ONLINE</span></span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- LEFT -->
+  <section class="card">
+    <h3>⚡ Arc Reactor <span class="tag" id="powerTag">98%</span></h3>
+    <div class="reactor-wrap">
+      <canvas id="reactor" width="420" height="420"></canvas>
+      <canvas id="wave" width="600" height="128"></canvas>
+      <div class="status-line" id="statusLine">Sistem <b>siaga</b> — klik mic atau ketik perintah.</div>
+      <div class="controls-row">
+        <button class="btn primary" id="micBtn">🎙 Bicara</button>
+        <button class="btn" id="speakBtn">🔊 Suara: ON</button>
+        <button class="btn" id="clearBtn">🧹 Bersihkan</button>
+      </div>
+      <div class="chips" id="quickChips"></div>
+    </div>
+    <div style="margin-top:12px">
+      <h3>❤️ Vitals</h3>
+      <div class="vital"><div class="row"><span>CPU CORE</span><span id="cpuT">42%</span></div><div class="bar"><i id="cpuB" style="width:42%"></i></div></div>
+      <div class="vital"><div class="row"><span>MEMORY</span><span id="memT">61%</span></div><div class="bar"><i id="memB" style="width:61%"></i></div></div>
+      <div class="vital"><div class="row"><span>ARC OUTPUT</span><span id="arcT">3.1 GJ/s</span></div><div class="bar"><i id="arcB" style="width:78%"></i></div></div>
+      <div class="kv"><span>🔋 Baterai</span><span id="batt">…</span></div>
+      <div class="kv"><span>🌐 Jaringan</span><span id="netKv">…</span></div>
+      <div class="kv"><span>👤 Pengguna</span><span id="userKv">Boss</span></div>
+    </div>
+  </section>
+
+  <!-- CENTER -->
+  <section class="card center">
+    <h3>💬 Dialog Interface <span class="tag">ID • v7.2</span></h3>
+    <div class="chat-log" id="chatLog"></div>
+    <div class="chat-input">
+      <input id="chatInput" placeholder='Coba: "Friday, jam berapa?" / "hitung 12*8+5" / "ingat deploy jam 9" / "bantuan"' autocomplete="off">
+      <button class="btn primary" id="sendBtn">Kirim ⏎</button>
+    </div>
+    <div class="chips">
+      <button class="chip" data-q="bantuan">📖 bantuan</button>
+      <button class="chip" data-q="jam berapa sekarang?">🕒 jam</button>
+      <button class="chip" data-q="hitung 12*8+5">🧮 hitung</button>
+      <button class="chip" data-q="tambah tugas review desain arc reactor">➕ tugas</button>
+      <button class="chip" data-q="cuaca di Jakarta">🌦 cuaca</button>
+      <button class="chip" data-q="diagnostik sistem">🛠 diagnostik</button>
+      <button class="chip" data-q="ceritakan lelucon">😄 lelucon</button>
+      <button class="chip" data-q="beri aku motivasi">🔥 motivasi</button>
+      <button class="chip" data-q="ai jelaskan lubang hitam secara sederhana">🤖 tanya AI</button>
+    </div>
+  </section>
+
+  <!-- RIGHT -->
+  <section>
+    <div class="card" style="margin-bottom:14px">
+      <h3>📋 Agenda Misi</h3>
+      <ul class="list" id="todoList"></ul>
+      <div class="mini-form"><input id="todoInput" placeholder="Tugas baru…"><button class="btn" id="todoAdd">+</button></div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <h3>🧠 Bank Memori</h3>
+      <ul class="list" id="noteList"></ul>
+      <div class="mini-form"><input id="noteInput" placeholder='Contoh: ingat …'><button class="btn" id="noteAdd">+</button></div>
+    </div>
+    <div class="card" style="margin-bottom:14px">
+      <h3>🌐 AI Cloud <span class="tag" id="aiStatus">…</span></h3>
+      <div class="toggle"><input type="checkbox" id="aiToggle"> <label for="aiToggle">Aktifkan AI gratis (tanpa daftar)</label></div>
+      <div class="mini-form">
+        <select id="aiModel">
+          <option value="openai">openai (default)</option>
+          <option value="mistral">mistral</option>
+          <option value="llama">llama</option>
+        </select>
+        <button class="btn" id="aiTest">Tes</button>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">Perintah cepat (todo, timer, hitung) dijawab instan secara lokal. Pertanyaan terbuka dikirim ke Pollinations.ai bila AI aktif — gratis, tanpa API key.</div>
+    </div>
+    <div class="card">
+      <h3>📡 Log Aktivitas</h3>
+      <div class="log" id="sysLog"></div>
+      <div style="margin-top:8px" class="toggle"><input type="checkbox" id="autoSpeak" checked> <label for="autoSpeak">Bacakan jawaban dengan suara</label></div>
+      <div class="toggle"><input type="checkbox" id="soundFx" checked> <label for="soundFx">Efek suara UI</label></div>
+      <div class="mini-form">
+        <select id="voiceEngine">
+          <option value="auto">🎙 Suara: Otomatis</option>
+          <option value="browser">Browser bawaan</option>
+          <option value="piper">Piper lokal (id)</option>
+        </select>
+        <span class="pill" id="piperStatus" style="font-size:12px">…</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">Piper = suara neural Indonesia (butuh <b>./piper-server/run.sh</b> di perangkatmu). Bila tak terdeteksi, otomatis pakai suara browser.</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Otak lokal 100% di browser (data di localStorage) + <b>AI Cloud gratis</b> via Pollinations.ai bila diaktifkan — tanpa daftar, tanpa API key.</span>
+  <span>Tekan <b>Enter</b> untuk kirim • <b>M</b> untuk mic • Dibuat untuk para Boss Stark 🦾</span>
+</footer>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s);
+const chatLog=$("#chatLog"), chatInput=$("#chatInput"), statusLine=$("#statusLine"), sysLog=$("#sysLog");
+const store={get(k,d){try{const v=localStorage.getItem("friday_"+k);return v?JSON.parse(v):d}catch{return d}},set(k,v){try{localStorage.setItem("friday_"+k,JSON.stringify(v))}catch{}}};
+let todos=store.get("todos",[{t:"Kalibrasi arc reactor",done:false},{t:"Review desain Mark VII",done:false}]);
+let notes=store.get("notes",["Kode akses lab: STARK-1970","Ulang tahun Pepper: catat kado"]);
+let userName=store.get("username","Boss");
+let aiEnabled=store.get("ai",true), aiModel=store.get("aimodel","openai"), history=[];
+let voiceEngine=store.get("voice","auto"), piperOK=false;
+const PIPER_URL="http://127.0.0.1:5002";
+function plainText(s){return s.replace(/<[^>]*>/g,"").trim()}
+function updateVoiceUI(){$("#voiceEngine").value=voiceEngine;$("#piperStatus").textContent=piperOK?"Piper: OK 🟢":"Piper: off ⚪"}
+async function detectPiper(silent){
+  try{
+    const c=new AbortController(), t=setTimeout(()=>c.abort(),2500);
+    const r=await fetch(PIPER_URL+"/api/health",{signal:c.signal});
+    clearTimeout(t); piperOK=r.ok;
+    if(r.ok){const d=await r.json().catch(()=>({})); if(!silent){logSys("Piper TTS terdeteksi: "+(d.model||"ok")); addMsg(`Modul suara neural <b>Piper</b> terdeteksi 🗣️ — FRIDAY kini bicara Bahasa Indonesia alami. (Nonaktifkan via pemilih suara bila ingin suara browser.)`)}}
+    else if(!silent) logSys("Piper tidak aktif — pakai suara browser");
+  }catch{ piperOK=false; if(!silent) logSys("Piper tidak aktif — pakai suara browser") }
+  updateVoiceUI();
+}
+let voiceOn=true, mode="idle"; // idle|listening|thinking|speaking
+$("#userKv").textContent=userName;
+
+/* ---------- utils ---------- */
+function now(){return new Date()}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function logSys(t){const d=document.createElement("div");d.textContent=`[${now().toLocaleTimeString("id-ID")}] ${t}`;sysLog.prepend(d);while(sysLog.children.length>60)sysLog.lastChild.remove()}
+function addMsg(text,who="bot"){const d=document.createElement("div");d.className="msg "+who;d.innerHTML=(who==="bot"?text:esc(text))+`<span class="meta">${who==="bot"?"F.R.I.D.A.Y.":"ANDA"} • ${now().toLocaleTimeString("id-ID")}</span>`;chatLog.appendChild(d);chatLog.scrollTop=chatLog.scrollHeight;return d}
+function setStatus(html){statusLine.innerHTML=html}
+function beep(f=880,d=.08,type="sine",g=.05){if(!$("#soundFx").checked)return;try{const ctx=beep.ctx||(beep.ctx=new (window.AudioContext||window.webkitAudioContext)());const o=ctx.createOscillator(),gn=ctx.createGain();o.type=type;o.frequency.value=f;gn.gain.value=g;o.connect(gn);gn.connect(ctx.destination);o.start();gn.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+d);o.stop(ctx.currentTime+d)}catch{}}
+function speakBrowser(plain){try{const u=new SpeechSynthesisUtterance(plain);u.lang="id-ID";u.rate=1.02;u.pitch=1.05;mode="speaking";setStatus("Berbicara… <b>🔊</b>");speechSynthesis.cancel();speechSynthesis.speak(u);u.onend=()=>{mode="idle";setStatus('Sistem <b>siaga</b> — klik mic atau ketik perintah.')};}catch{}}
+let piperAudio=null;
+async function speakPiper(plain){
+  try{
+    if(piperAudio){try{piperAudio.pause()}catch{} piperAudio=null}
+    try{speechSynthesis.cancel()}catch{}
+    mode="speaking";setStatus("Berbicara (Piper)… <b>🔊</b>");
+    const r=await fetch(PIPER_URL+"/api/tts",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:plain.slice(0,500)})});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const url=URL.createObjectURL(await r.blob()), a=new Audio(url);
+    piperAudio=a;
+    a.onended=()=>{URL.revokeObjectURL(url);if(piperAudio===a)piperAudio=null;mode="idle";setStatus('Sistem <b>siaga</b> — klik mic atau ketik perintah.')};
+    a.onerror=()=>speakBrowser(plain);
+    await a.play().catch(()=>speakBrowser(plain));
+  }catch{ speakBrowser(plain) }
+}
+function speak(text){
+  if(!voiceOn||!$("#autoSpeak").checked)return;
+  const plain=plainText(text); if(!plain)return;
+  if(voiceEngine==="piper"&&!piperOK){detectPiper(true)}
+  const usePiper=(voiceEngine==="piper")||(voiceEngine==="auto"&&piperOK);
+  if(usePiper) speakPiper(plain); else speakBrowser(plain);
+}
+function renderTodos(){const ul=$("#todoList");ul.innerHTML="";todos.forEach((t,i)=>{const li=document.createElement("li");if(t.done)li.className="done";li.innerHTML=`<span>${t.done?"✅":"⬜"} ${esc(t.t)}</span>`;const b=document.createElement("button");b.textContent="✕";b.title="Hapus";b.onclick=()=>{todos.splice(i,1);saveTodos();logSys("Tugas dihapus: "+t.t)};li.appendChild(b);li.onclick=e=>{if(e.target===b)return;todos[i].done=!todos[i].done;saveTodos();beep(todos[i].done?660:440)};ul.appendChild(li)});if(!todos.length){ul.innerHTML="<li>🎉 Semua misi selesai, Boss.</li>"}}
+function renderNotes(){const ul=$("#noteList");ul.innerHTML="";notes.forEach((t,i)=>{const li=document.createElement("li");li.innerHTML=`<span>💾 ${esc(t)}</span>`;const b=document.createElement("button");b.textContent="✕";b.onclick=()=>{notes.splice(i,1);saveNotes();logSys("Memori dihapus")};li.appendChild(b);ul.appendChild(li)});if(!notes.length)ul.innerHTML="<li>Bank memori kosong.</li>"}
+function saveTodos(){store.set("todos",todos);renderTodos()} function saveNotes(){store.set("notes",notes);renderNotes()}
+
+/* ---------- brain ---------- */
+const jokes=["Kenapa robot tidak pernah panik? Karena dia selalu punya <i>backup plan</i>.","Saya bertanya ke JARVIS apa rahasia Stark… jawabannya: kopi dan begadang.","Tony bilang suit-nya anti peluru. Saya bilang: anti <i>deadline</i> juga perlu.","Kenapa AI tidak ikut arisan? Karena dia selalu <i>overthinking</i>.","Hulk coba meditasi. Hasilnya: tetap hijau, tapi lebih tenang."];
+const quotes=["“Bagian dari perjalanan adalah akhir.” — Tony Stark","“Saya bisa melakukan ini sepanjang hari.” — Captain America","“Genius, billionaire, playboy, philanthropist.” — Tony Stark","“Jangan buang waktumu untuk membuktikan diri. Fokus membangun.” — F.R.I.D.A.Y.","Disiplin kecil hari ini = armor terkuat esok hari, Boss."];
+const facts=["Arc reactor pertama dibuat Tony di gua dengan baterai mobil dan magnet.","F.R.I.D.A.Y. menggantikan J.A.R.V.I.S. setelah Age of Ultron.","Suit Mark VII bisa dikendalikan otomatis dan merakit sendiri di udara.","Vibranium menyerap energi kinetik — itulah rahasia perisai Cap.","Rumah Tony di Malibu Point ditenagai arc reactor raksasa."];
+
+function safeMath(expr){const clean=expr.replace(/[^0-9+\-*/().,%\s]/g,"").replace(/,/g,".").replace(/(\d)\s*%/g,"($1/100)");if(!/^[\d+\-*/().\s]+$/.test(clean)||!clean.trim())return null;try{const v=Function('"use strict";return ('+clean+')')();if(typeof v!=="number"||!isFinite(v))return null;return Math.round(v*1e8)/1e8}catch{return null}}
+
+function brain(raw){
+  const q=raw.toLowerCase().trim();
+  const num=id=>new Date().toLocaleString("id-ID",id);
+  // nama
+  let m=q.match(/(?:panggil (?:saya|aku|gue)|nama saya|namaku)\s+(.+)/);
+  if(m){userName=m[1].replace(/[.!?]+$/,"").trim().split(" ").slice(0,2).join(" ");userName=userName.charAt(0).toUpperCase()+userName.slice(1);store.set("username",userName);$("#userKv").textContent=userName;return `Siap, <b>${esc(userName)}</b>. Mulai sekarang saya memanggil Anda demikian, Boss.`}
+  if(/^(halo|hai|hello|hei|pagi|siang|sore|malam|friday|hey)/.test(q)){
+    const h=now().getHours(),sap=h<11?"pagi":h<15?"siang":h<18?"sore":"malam";
+    return `Selamat ${sap}, <b>${esc(userName)}</b> 🦾. Semua sistem normal. Mau saya bantu apa — cek jadwal, hitung, catat, atau diagnostik?`}
+  if(/bantuan|help|perintah|menu|fitur|apa yang bisa|bisanya apa/.test(q))return `<b>Daftar perintah F.R.I.D.A.Y.:</b><br>• 🕒 “jam berapa / tanggal berapa”<br>• 🧮 “hitung 12*8+5” atau “berapa 15% dari 200?”<br>• ➕ “tambah tugas … / tampilkan tugas / selesai tugas 1 / hapus tugas 1”<br>• 🧠 “ingat … / tampilkan catatan / lupakan nomor …”<br>• ⏱ “timer 10 detik / timer 2 menit”<br>• 🌦 “cuaca di Jakarta”<br>• 🛠 “diagnostik / status sistem / baterai”<br>• 🔍 “cari … / buka youtube”<br>• 😄 “lelucon / fakta iron man / motivasi”<br>• 👤 “panggil saya …” • 🧹 “bersihkan chat”<br>• 🤖 Bila <b>AI Cloud aktif</b>, pertanyaan terbuka dijawab AI — atau paksa dengan awalan “<b>ai …</b>”, mis. “ai jelaskan lubang hitam”<br>• 🔊 Mesin suara: Browser / Piper lokal (panel kanan; Piper perlu ./piper-server/run.sh)`;
+  if(/tanggal|hari ini|kalender/.test(q))return `Hari ini <b>${num({weekday:"long",day:"numeric",month:"long",year:"numeric"})}</b>, ${esc(userName)}.`;
+  if(/\b(jam|pukul|waktu)\b/.test(q))return `Pukul <b>${now().toLocaleTimeString("id-ID")}</b>, Boss. Waktu Stark selalu tepat. ⏱`;
+  if(/berapa.*(umur|usia)/.test(q))return `Saya lahir saat Anda membuka halaman ini, Boss — jadi umur saya masih hitungan menit, tapi pengetahuan saya seluas arc reactor. ⚡`;
+  // persen dari
+  m=q.match(/(\d+(?:[.,]\d+)?)\s*%\s*dari\s*(\d+(?:[.,]\d+)?)/);if(m){const a=parseFloat(m[1].replace(",",".")),b=parseFloat(m[2].replace(",","."));return `<b>${a}% dari ${b} = ${Math.round(a/100*b*1e8)/1e8}</b>. Dihitung dalam 0,003 detik. 🧮`}
+  if(/^(hitung|kalkulasi|kalkulator|berapa|itungan)/.test(q)||/[\d)]\s*[+\-*/×x^]\s*[\d(]/.test(q)){
+    const expr=raw.replace(/^(hitung|kalkulasi|berapa)\s*/i,"").replace(/×/g,"*").replace(/x/gi,"*").replace(/\^/g,"**").replace(/berapa\s*/i,"");
+    const v=safeMath(expr);if(v!==null)return `Hasilnya <b>${v}</b>, Boss. <span style="color:var(--muted)">(${esc(expr)} )</span>`;
+    return `Maaf Boss, ekspresi itu tidak valid. Contoh: <b>hitung 12*8+5</b>.`}
+  // todo
+  if(/tampilkan|lihat|daftar|list/.test(q)&&/tugas|todo|agenda|misi|jadwal/.test(q)){
+    if(!todos.length)return `Agenda kosong, <b>${esc(userName)}</b>. Nikmati kedamaiannya… atau tambah misi baru? 🎉`;
+    return `<b>Agenda misi (${todos.length}):</b><br>`+todos.map((t,i)=>`${i+1}. ${t.done?"✅":"⬜"} ${esc(t.t)}`).join("<br>")}
+  m=q.match(/(?:tambah(?:kan)?|buat|add)(?: tugas| todo| misi| agenda)?\s+(.+)/);if(m&&!/tugas|misi/.test(m[1].slice(0,4))||(m&&/tugas|misi|todo|agenda/.test(q)&&m[1])){const t=m[1].trim();if(t.length>1){todos.push({t:t.charAt(0).toUpperCase()+t.slice(1),done:false});saveTodos();return `Misi <b>“${esc(t)}”</b> ditambahkan ke agenda. ✅`} }
+  m=q.match(/(?:selesai|centang|done|complete).*?(\d+)|tugas\s+(\d+)\s+(?:selesai|done)/);if(m){const i=parseInt(m[1]||m[2])-1;if(todos[i]){todos[i].done=true;saveTodos();return `Misi nomor <b>${i+1}</b> selesai. Kerja bagus, Boss! ✅`}return `Nomor tugas tidak ditemukan.`}
+  m=q.match(/(?:hapus|delete|buang).*?tugas\s*(\d+)|hapus\s+tugas.*?(\d+)/);if(m){const i=parseInt(m[1]||m[2])-1;if(todos[i]){const[t]=todos.splice(i,1);saveTodos();return `Tugas <b>“${esc(t.t)}”</b> dihapus. 🗑`}return `Nomor tugas tidak ditemukan.`}
+  if(/hapus semua tugas|bersihkan tugas/.test(q)){todos=[];saveTodos();return `Semua agenda dibersihkan. Awal yang baru, Boss. ✨`}
+  // notes
+  if(/tampilkan|lihat|daftar|list/.test(q)&&/catatan|ingatan|memori|ingat/.test(q)){if(!notes.length)return `Bank memori kosong.`;return `<b>Bank memori (${notes.length}):</b><br>`+notes.map((t,i)=>`${i+1}. 💾 ${esc(t)}`).join("<br>")}
+  m=q.match(/(?:ingat(?:kan)?|catat|save ingat|ingat bahwa)\s+(.+)/);if(m){const t=m[1].trim();notes.push(t.charAt(0).toUpperCase()+t.slice(1));saveNotes();return `Tersimpan di bank memori: <b>“${esc(t)}”</b>. 🧠`}
+  m=q.match(/lupakan(?: nomor| no)?\s*(\d+)/);if(m){const i=parseInt(m[1])-1;if(notes[i]){const[t]=notes.splice(i,1);saveNotes();return `Memori nomor ${i+1} (“${esc(t)}”) dihapus.`}return `Nomor memori tidak ditemukan.`}
+  // timer
+  m=q.match(/timer\s+(\d+)\s*(detik|menit|jam|second|minute)/);if(m){const n=parseInt(m[1]);const ms=/menit|minute/.test(m[2])?n*60000:/jam/.test(m[2])?n*3600000:n*1000;setTimeout(()=>{addMsg(`⏱ <b>Timer ${n} ${m[2]} selesai!</b> Waktunya eksekusi, Boss.`);speak(`Timer ${n} ${m[2]} selesai, Boss.`);beep(990,.3);logSys("Timer selesai")},ms);return `Timer <b>${n} ${m[2]}</b> dimulai. Saya awasi, Boss. ⏱`}
+  // cuaca simulasi
+  m=q.match(/cuaca(?: di| in)?\s*(.+)?/);if(/cuaca/.test(q)){const kota=(m&&m[1]?m[1].replace(/[?.!]+$/,"").trim():"Jakarta")||"Jakarta";const kond=["Cerah berawan ☀️","Hujan ringan 🌧️","Berawan ⛅","Cerah ☀️","Badai petir ⛈️"][Math.floor(Math.random()*5)];const suhu=(26+Math.random()*8).toFixed(1);return `Cuaca <b>${esc(kota.charAt(0).toUpperCase()+kota.slice(1))}</b>: ${kond}, suhu <b>${suhu}°C</b>, kelembapan ${60+Math.floor(Math.random()*30)}%. <span style="color:var(--muted)">(simulasi lokal — hubungkan API cuaca untuk data live)</span>`}
+  if(/diagnostik|status sistem|cek sistem|sistem/.test(q)){const cpu=$("#cpuT").textContent,mem=$("#memT").textContent;return `🛠 <b>Diagnostik Stark:</b><br>• CPU Core: ${cpu} — stabil<br>• Memory: ${mem} — optimal<br>• Arc Reactor: 3.1 GJ/s — <b>nominal</b><br>• Jaringan: ${navigator.onLine?"<b>online</b>":"<b>offline</b>"}<br>• Baterai: ${esc($("#batt").textContent)}<br>Kesimpulan: <b>semua sistem siap tempur.</b> 🦾`}
+  if(/baterai|battery/.test(q))return `Status baterai perangkat: <b>${esc($("#batt").textContent)}</b>. 🔋`;
+  m=q.match(/(?:buka|open)\s+(.+)/);if(m){const s=m[1].trim();const map={youtube:"https://youtube.com",google:"https://google.com",github:"https://github.com",gmail:"https://mail.google.com",maps:"https://maps.google.com",netflix:"https://netflix.com",spotify:"https://open.spotify.com",whatsapp:"https://web.whatsapp.com"};const key=Object.keys(map).find(k=>s.includes(k));const url=key?map[key]:(/^https?:\/\//.test(s)?s:`https://${s.replace(/\s+/g,"")}`);setTimeout(()=>window.open(url,"_blank"),600);return `Membuka <b>${esc(s)}</b> di tab baru… 🚀`}
+  m=q.match(/(?:cari|search|google|carikan)\s+(.+)/);if(m){const s=m[1].trim();setTimeout(()=>window.open("https://www.google.com/search?q="+encodeURIComponent(s),"_blank"),600);return `Mencari <b>“${esc(s)}”</b> di Google… 🔍`}
+  if(/lelucon|joke|lucu|lawak/.test(q))return jokes[Math.floor(Math.random()*jokes.length)];
+  if(/motivasi|semangat|quotes?|bakar/.test(q))return quotes[Math.floor(Math.random()*quotes.length)]+" 🔥";
+  if(/fakta|iron ?man|tony|stark|avenger/.test(q))return "🦾 "+facts[Math.floor(Math.random()*facts.length)];
+  if(/terima kasih|thanks|makasih|thank/.test(q))return `Sama-sama, <b>${esc(userName)}</b>. Melayani Anda adalah kehormatan bagi saya. 🙏`;
+  if(/siapa kamu|siapa friday|tentang/.test(q))return `Saya <b>F.R.I.D.A.Y.</b> — <i>Female Replacement Intelligent Digital Assistant Youth</i>, penerus J.A.R.V.I.S. Saya membantu lewat chat & suara: agenda, memori, kalkulasi, timer, dan diagnostik. Semua berjalan lokal di browser. ⚡`;
+  if(/bersihkan|clear|hapus chat/.test(q)){setTimeout(()=>{chatLog.innerHTML="";greet(false)},400);return `Membersihkan interface… ✨`}
+  if(/matikan suara|suara mati|mode diam|senyap/.test(q)){voiceOn=false;$("#speakBtn").textContent="🔇 Suara: OFF";return `Mode senyap aktif. Saya hanya mengetik, Boss. 🤫`}
+  if(/(?:nyalakan|hidupkan) suara|suara (on|nyala)/.test(q)){voiceOn=true;$("#speakBtn").textContent="🔊 Suara: ON";return `Modul suara aktif kembali. 🔊`}
+  if(/kapan|jadwal deploy|deadline/.test(q))return `Berdasarkan agenda Anda: ${todos.length?`<b>${todos.length} misi aktif</b>`:"tidak ada misi"}. Mau saya tampilkan daftarnya? Ketik “tampilkan tugas”. 📋`;
+  if(/^(ya|yaudah|ok|oke|baik|siap|mantap|keren|wow)\b/.test(q))return `Siap, Boss. 😎 Ada lagi yang bisa saya kerjakan?`;
+  if(q.length<3)return `Saya mendengar Anda, Boss… bisa diulangi lebih lengkap? 🎧`;
+  // fallback cerdas
+  return `Perintah <b>“${esc(raw.slice(0,60))}”</b> saya catat. Saran Boss:<br>• ketik <b>bantuan</b> untuk semua perintah<br>• atau coba: “tambah tugas …”, “ingat …”, “hitung …”, “cuaca di Bandung” 🤖`;
+}
+
+async function askAI(text){
+  const ctl=new AbortController(), to=setTimeout(()=>ctl.abort(),90000);
+  const sys=`Kamu F.R.I.D.A.Y., asisten pribadi ala Iron Man milik ${userName}. Jawab dalam Bahasa Indonesia, ringkas (maks 120 kata kecuali diminta panjang), ramah dengan sesekali gaya Tony Stark. Balas dalam HTML sederhana (boleh <b>, <i>, <br>). Hari ini ${now().toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"})}.`;
+  const msgs=[{role:"system",content:sys},...history.slice(-10),{role:"user",content:text}];
+  try{
+    setStatus("Menghubungi AI cloud… <b>🌐</b>");
+    const r=await fetch("https://text.pollinations.ai/openai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:aiModel,messages:msgs}),signal:ctl.signal});
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const d=await r.json(), t=d.choices?.[0]?.message?.content?.trim();
+    clearTimeout(to); if(!t) throw new Error("respon kosong");
+    return t;
+  }catch(e1){
+    try{ // jalur cadangan GET
+      setStatus("Coba jalur cadangan… <b>🌐</b>");
+      const g=await fetch("https://text.pollinations.ai/"+encodeURIComponent(text)+"?model="+encodeURIComponent(aiModel)+"&system="+encodeURIComponent(sys),{signal:ctl.signal});
+      clearTimeout(to);
+      if(g.ok){const t=(await g.text()).trim(); if(t) return esc(t).replace(/\n/g,"<br>");}
+    }catch(e2){clearTimeout(to)}
+    return null;
+  }
+}
+
+async function handleUser(text){
+  text=text.trim();if(!text)return;
+  addMsg(text,"user");logSys("User: "+text.slice(0,80));beep(520,.06);
+  history.push({role:"user",content:text}); history=history.slice(-20);
+  mode="thinking";setStatus("Memproses… <b>⚙️</b>");
+  await new Promise(r=>setTimeout(r,350+Math.random()*500));
+  const m=text.match(/^(?:ai|tanya|jelaskan|tolong jelaskan)\b\s*[:,]?\s*(.+)/i);
+  const local=brain(m?m[1]:text);
+  let reply, viaAI=false;
+  if(m || (aiEnabled && local.indexOf("Perintah <b>")===0)){
+    const ai=await askAI(m?m[1]:text);
+    if(ai){reply=ai+"<br><span class='meta'>via AI cloud 🌐 (Pollinations, gratis)</span>";viaAI=true}
+    else reply=local+"<br><span style='color:var(--muted)'>(AI cloud tak terjangkau — jawaban lokal 🖥️)</span>";
+  } else reply=local;
+  addMsg(reply,"bot");logSys(viaAI?"FRIDAY+AI menjawab":"FRIDAY menjawab");beep(880,.07);setTimeout(()=>beep(1320,.06),90);
+  history.push({role:"assistant",content:reply.replace(/<[^>]*>/g,"").slice(0,500)});history=history.slice(-20);
+  mode="idle";setStatus('Sistem <b>siaga</b> — klik mic atau ketik perintah.');
+  speak(reply);
+}
+
+/* ---------- events ---------- */
+$("#sendBtn").onclick=()=>{handleUser(chatInput.value);chatInput.value="";chatInput.focus()};
+chatInput.addEventListener("keydown",e=>{if(e.key==="Enter"){handleUser(chatInput.value);chatInput.value=""}});
+document.addEventListener("keydown",e=>{if((e.key==="m"||e.key==="M")&&document.activeElement!==chatInput)toggleMic()});
+document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>handleUser(b.dataset.q));
+$("#clearBtn").onclick=()=>handleUser("bersihkan");
+$("#speakBtn").onclick=()=>{voiceOn=!voiceOn;$("#speakBtn").textContent=voiceOn?"🔊 Suara: ON":"🔇 Suara: OFF";logSys("Voice "+(voiceOn?"ON":"OFF"))};
+function setAiStatus(){$("#aiStatus").textContent=aiEnabled?("AKTIF • "+aiModel):"MATI"}
+$("#aiToggle").checked=aiEnabled; $("#aiModel").value=aiModel; setAiStatus();
+$("#aiToggle").onchange=e=>{aiEnabled=e.target.checked;store.set("ai",aiEnabled);setAiStatus();logSys("AI cloud "+(aiEnabled?"AKTIF":"MATI"));if(aiEnabled)addMsg(`AI cloud <b>aktif</b> 🌐 — tanya apa saja, Boss. Contoh: “<i>ai jelaskan lubang hitam</i>”.`)};
+$("#aiModel").onchange=e=>{aiModel=e.target.value;store.set("aimodel",aiModel);setAiStatus();logSys("Model AI: "+aiModel)};
+$("#aiTest").onclick=async()=>{setStatus("Mengetes AI cloud… <b>🌐</b>");const t=await askAI("Balas dengan kata: OK");setStatus('Sistem <b>siaga</b> — klik mic atau ketik perintah.');addMsg(t?`Tes AI cloud: <b>tersambung</b> ✅ (${esc(aiModel)})`:`Tes AI cloud: <b>gagal</b> ❌ — cek koneksi, jawaban lokal tetap jalan.`);logSys("Tes AI: "+(t?"OK":"GAGAL"))};
+updateVoiceUI();
+$("#voiceEngine").onchange=e=>{voiceEngine=e.target.value;store.set("voice",voiceEngine);updateVoiceUI();logSys("Mesin suara: "+voiceEngine);if(voiceEngine!=="browser")detectPiper(false);if(piperAudio){try{piperAudio.pause()}catch{}piperAudio=null}};
+$("#todoAdd").onclick=()=>{const v=$("#todoInput").value.trim();if(v){todos.push({t:v,done:false});saveTodos();$("#todoInput").value="";addMsg(`Misi <b>“${esc(v)}”</b> ditambahkan. ✅`);logSys("Todo+ "+v)}};
+$("#noteAdd").onclick=()=>{const v=$("#noteInput").value.trim();if(v){notes.push(v);saveNotes();$("#noteInput").value="";addMsg(`Tersimpan: <b>“${esc(v)}”</b> 🧠`);logSys("Note+ "+v)}};
+$("#quickChips").innerHTML=["status sistem","tampilkan tugas","tampilkan catatan","fakta iron man"].map(q=>`<button class="chip" data-q="${q}">⚡ ${q}</button>`).join("");
+document.querySelectorAll("#quickChips .chip").forEach(b=>b.onclick=()=>handleUser(b.dataset.q));
+
+/* ---------- mic ---------- */
+let rec=null,listening=false;
+function toggleMic(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){addMsg(`Browser ini belum mendukung pengenalan suara. Coba <b>Chrome / Edge</b> desktop, Boss. 🎙`);return}
+  if(listening){rec.stop();return}
+  rec=new SR();rec.lang="id-ID";rec.interimResults=false;
+  rec.onstart=()=>{listening=true;mode="listening";$("#micBtn").classList.add("mic-live");$("#micBtn").textContent="⏹ Berhenti";setStatus("Mendengarkan… <b>🎙 bicaralah</b>");beep(660,.1)};
+  rec.onresult=e=>{const t=e.results[0][0].transcript;chatInput.value=t;handleUser(t)};
+  rec.onerror=e=>{addMsg(`Mic terganggu (<b>${esc(e.error)}</b>). Cek izin mikrofon, Boss. 🎙`)};
+  rec.onend=()=>{listening=false;mode="idle";$("#micBtn").classList.remove("mic-live");$("#micBtn").textContent="🎙 Bicara";setStatus('Sistem <b>siaga</b> — klik mic atau ketik perintah.')};
+  try{rec.start()}catch{}
+}
+$("#micBtn").onclick=toggleMic;
+
+/* ---------- clock / vitals / battery ---------- */
+function tick(){const d=now();$("#clock").textContent=d.toLocaleTimeString("id-ID");$("#dateLine").textContent=d.toLocaleDateString("id-ID",{weekday:"short",day:"numeric",month:"short"});
+  const cpu=35+Math.round(Math.random()*25),mem=55+Math.round(Math.random()*20);
+  $("#cpuT").textContent=cpu+"%";$("#cpuB").style.width=cpu+"%";$("#memT").textContent=mem+"%";$("#memB").style.width=mem+"%";
+  $("#arcT").textContent=(2.8+Math.random()*.8).toFixed(1)+" GJ/s";
+  const on=navigator.onLine;$("#netDot").className="dot"+(on?"":" off");$("#netText").textContent=on?"ONLINE":"OFFLINE";$("#netKv").textContent=on?"Online 🟢":"Offline 🔴";}
+setInterval(tick,1000);tick();
+if(navigator.getBattery)navigator.getBattery().then(b=>{const up=()=>$("#batt").textContent=Math.round(b.level*100)+"%"+(b.charging?" ⚡":"");up();b.onlevelchange=up;b.onchargingchange=up}).catch(()=>$("#batt").textContent="—");
+else $("#batt").textContent="—";
+
+/* ---------- reactor canvas ---------- */
+const rc=$("#reactor"),rctx=rc.getContext("2d");let ang=0;
+function drawReactor(){const W=420,H=420,cx=W/2,cy=H/2;rctx.clearRect(0,0,W,H);ang+=.012;
+  rctx.save();rctx.translate(cx,cy);
+  const pulse=1+Math.sin(Date.now()/500)*(mode==="speaking"?.03:.012);
+  // outer rings
+  for(let i=0;i<3;i++){rctx.save();rctx.rotate(ang*(i%2?-.6:.4)+i);rctx.strokeStyle=i===1?"rgba(255,159,28,.55)":"rgba(0,229,255,.5)";rctx.lineWidth=3;rctx.setLineDash([30,14,6,14]);rctx.beginPath();rctx.arc(0,0,(150-i*18)*pulse,0,Math.PI*2);rctx.stroke();rctx.restore()}
+  // ticks
+  rctx.save();rctx.rotate(ang*.8);for(let i=0;i<60;i++){rctx.rotate(Math.PI*2/60);rctx.strokeStyle=i%5?"rgba(0,229,255,.4)":"rgba(255,255,255,.8)";rctx.lineWidth=i%5?2:3;rctx.beginPath();rctx.moveTo(0,-118);rctx.lineTo(0,-(i%5?110:104));rctx.stroke()}rctx.restore();
+  // core
+  const g=rctx.createRadialGradient(0,0,10,0,0,90);
+  const hot=mode==="listening"?"255,77,109":mode==="thinking"?"255,159,28":"0,229,255";
+  g.addColorStop(0,"#fff");g.addColorStop(.25,`rgba(${hot},.95)`);g.addColorStop(.6,`rgba(${hot},.25)`);g.addColorStop(1,"rgba(0,0,0,0)");
+  rctx.fillStyle=g;rctx.beginPath();rctx.arc(0,0,90*pulse,0,Math.PI*2);rctx.fill();
+  rctx.fillStyle="#eaffff";rctx.beginPath();rctx.arc(0,0,26*pulse,0,Math.PI*2);rctx.fill();
+  rctx.restore();requestAnimationFrame(drawReactor)}
+drawReactor();
+/* waveform */
+const wv=$("#wave"),wctx=wv.getContext("2d");let waveT=0;
+function drawWave(){waveT+=mode==="idle"?.03:.12;const W=wv.width,H=wv.height;wctx.clearRect(0,0,W,H);wctx.strokeStyle="rgba(0,229,255,.15)";wctx.beginPath();wctx.moveTo(0,H/2);wctx.lineTo(W,H/2);wctx.stroke();
+  wctx.lineWidth=3;wctx.strokeStyle=mode==="listening"?"#ff4d6d":mode==="thinking"?"#ff9f1c":"#00e5ff";wctx.shadowBlur=12;wctx.shadowColor=wctx.strokeStyle;wctx.beginPath();
+  const amp=mode==="idle"?8:mode==="thinking"?22:34;
+  for(let x=0;x<W;x+=4){const y=H/2+Math.sin(x*.03+waveT*2)*Math.sin(x*.011-waveT)*amp;x?wctx.lineTo(x,y):wctx.moveTo(x,y)}
+  wctx.stroke();wctx.shadowBlur=0;requestAnimationFrame(drawWave)}
+drawWave();
+
+/* ---------- boot ---------- */
+function greet(first=true){
+  const h=now().getHours(),sap=h<11?"pagi":h<15?"siang":h<18?"sore":"malam";
+  addMsg(`Selamat ${sap}, <b>${esc(userName)}</b>. Saya <b>F.R.I.D.A.Y.</b> — sistem siaga penuh. ⚡<br><span style="color:var(--muted)">Ketik <b>bantuan</b> untuk semua perintah, tekan 🎙 untuk suara,${aiEnabled?" dan <b>AI cloud aktif</b> — tanya apa saja!":" dan aktifkan <b>AI Cloud</b> di panel kanan untuk tanya-jawab bebas."}</span>`);
+  logSys("FRIDAY online. Semua modul dimuat.");
+}
+(function boot(){
+  const lines=["[STARK OS] kernel v7.2 dimuat…","[ARC] reactor output 3.1 GJ/s — nominal"," [AI] memuat modul bahasa Indonesia…","[NET] uplink satelit Stark — terhubung","[SEC] enkripsi vibranium aktif","[OK] F.R.I.D.A.Y. online"];
+  const bl=$("#bootLog"),fill=$("#bootFill");let i=0;
+  const iv=setInterval(()=>{if(i<lines.length){const d=document.createElement("div");d.textContent=lines[i];bl.appendChild(d);fill.style.width=((i+1)/lines.length*100)+"%";beep(300+i*120,.05,"square",.02);i++}else{clearInterval(iv);setTimeout(()=>{$("#boot").classList.add("done");greet(true)},350)}},280);
+})();
+renderTodos();renderNotes();updateVoiceUI();detectPiper(true);
+</script>
+</body>
+</html>
