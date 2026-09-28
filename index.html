@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'><path d='M4 26 L12 26 L16 10 L22 34 L28 16 L32 26 L44 26' stroke='%232f8bff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>">
+<title>Friday — Teman AI, selalu ada untuk hari yang lebih baik</title>
+<script src="https://js.puter.com/v2/"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#060d1d;--bg2:#0a1530;--card:#0e1c3d;--card2:#122449;--border:rgba(90,140,255,.14);
+--blue:#1f6bff;--blue2:#2f8bff;--cyan:#38e1ff;--text:#e8eefc;--muted:#8ea0c5;--muted2:#5d7196;
+--green:#22dd7a;--yellow:#ffb020;--radius:16px;
+}
+body{background:radial-gradient(1200px 800px at 20% -10%,#12306e 0%,transparent 60%),radial-gradient(900px 700px at 95% 10%,#0e3a6e 0%,transparent 55%),var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Roboto,Inter,Arial,sans-serif;min-height:100vh}
+.app{display:grid;grid-template-columns:272px minmax(0,1fr) 330px;min-height:100vh;max-width:1560px;margin:0 auto}
+/* ===== LEFT ===== */
+.sidebar{background:linear-gradient(180deg,#0a1430,#070f26);border-right:1px solid var(--border);padding:22px 16px;display:flex;flex-direction:column;gap:14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{display:flex;align-items:center;gap:12px;padding:4px 8px}
+.logo-mark{width:44px;height:44px;flex:0 0 44px}
+.logo h1{font-size:38px;letter-spacing:.5px;line-height:1}
+.tagline{color:var(--muted);font-size:14.5px;line-height:1.45;padding:0 8px}
+.nav{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.nav button{display:flex;align-items:center;gap:12px;width:100%;border:0;cursor:pointer;background:transparent;color:#c6d3ef;font-size:15.5px;padding:13px 14px;border-radius:12px;text-align:left;transition:.18s}
+.nav button .ic{font-size:20px;width:26px;text-align:center;filter:saturate(1.2)}
+.nav button:hover{background:rgba(60,120,255,.12)}
+.nav button.active{background:linear-gradient(90deg,#1a5cff,#0f3fc0);color:#fff;box-shadow:0 8px 24px rgba(31,107,255,.35)}
+.mini-profile{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:8px}
+.mini-top{display:flex;gap:12px;align-items:center}
+.avatar{width:52px;height:52px;border-radius:50%;background:conic-gradient(from 200deg,#1f6bff,#38e1ff,#7a5cff,#1f6bff);display:grid;place-items:center;font-size:30px;flex:0 0 52px;box-shadow:0 0 0 3px rgba(56,225,255,.18),0 0 22px rgba(56,180,255,.5)}
+.online-dot{width:9px;height:9px;background:var(--green);border-radius:50%;display:inline-block;box-shadow:0 0 8px var(--green)}
+.mini-profile .name{font-weight:700;font-size:18px}
+.mini-profile .st{color:var(--green);font-size:13px}
+.quote{margin-top:12px;color:#c9d6f2;font-size:15px;line-height:1.5;font-style:italic}
+.wake{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;color:var(--muted)}
+.wake strong{color:var(--text);display:block;font-size:14px}
+.mic-circle{width:42px;height:42px;border-radius:50%;background:#16295a;display:grid;place-items:center;font-size:20px;flex:0 0 42px}
+.ver{color:var(--muted2);font-size:12.5px;padding:0 6px}
+/* ===== CENTER ===== */
+.main{display:flex;flex-direction:column;min-width:0;height:100vh;position:relative;background:linear-gradient(180deg,rgba(10,22,52,.6),rgba(6,13,29,.9))}
+.topbar{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(8,16,38,.85);backdrop-filter:blur(10px);position:sticky;top:0;z-index:5}
+.backbtn{display:none;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:10px;padding:8px 10px;cursor:pointer}
+.top-avatar{width:44px;height:44px;border-radius:50%;background:conic-gradient(from 200deg,#1f6bff,#38e1ff,#7a5cff,#1f6bff);display:grid;place-items:center;font-size:26px}
+.topbar .t-name{font-weight:700;font-size:19px;display:flex;align-items:center;gap:8px}
+.topbar .t-sub{color:var(--green);font-size:13.5px}
+.top-actions{margin-left:auto;display:flex;gap:6px}
+.icon-btn{background:transparent;border:0;color:#c6d3ef;font-size:21px;cursor:pointer;padding:8px;border-radius:10px}
+.icon-btn:hover{background:rgba(80,140,255,.14)}
+.views{flex:1;overflow-y:auto;padding:22px 22px 10px;display:flex;flex-direction:column}
+#view-chat{display:flex;flex-direction:column;gap:14px;max-width:760px;margin:0 auto;width:100%;padding-bottom:10px}
+.bubble-row{display:flex;gap:10px;align-items:flex-end}
+.bubble-row.me{justify-content:flex-end}
+.bubble{max-width:82%;padding:13px 15px;border-radius:16px;line-height:1.55;font-size:15px;position:relative;word-wrap:break-word}
+.me .bubble{background:linear-gradient(135deg,#1f6bff,#1550d6);border-bottom-right-radius:6px;box-shadow:0 8px 22px rgba(31,107,255,.3)}
+.ai .bubble{background:#10224e;border:1px solid var(--border);border-bottom-left-radius:6px}
+.bubble .time{font-size:11.5px;opacity:.7;margin-left:8px;white-space:nowrap}
+.checks{color:#4be1ff}
+.small-avatar{width:38px;height:38px;border-radius:50%;background:conic-gradient(from 200deg,#1f6bff,#38e1ff,#7a5cff,#1f6bff);display:grid;place-items:center;font-size:22px;flex:0 0 38px}
+.card-in{border:1px solid var(--border);background:rgba(10,25,60,.7);border-radius:12px;padding:12px 13px;margin-top:10px}
+.card-in h4{font-size:15.5px;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.card-in ul{margin-left:18px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:#d3def7}
+.pill{display:inline-block;padding:3px 12px;border-radius:8px;font-weight:800;font-size:13.5px;margin-right:8px}
+.pill.luck{background:#3ddc84;color:#06351c}.pill.suri{background:#8ec5ff;color:#0a2350}
+.warn{border:1px solid rgba(255,176,32,.45);background:rgba(255,176,32,.08)}
+.warn h4{color:var(--yellow)}
+.typing{display:inline-flex;gap:5px;padding:6px 2px}
+.typing span{width:8px;height:8px;border-radius:50%;background:#7ea6ff;animation:bl 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,100%{opacity:.3}50%{opacity:1}}
+.composer{position:sticky;bottom:0;padding:14px 20px 10px;background:linear-gradient(180deg,transparent,#060d1d 30%)}
+.inputbar{display:flex;gap:10px;align-items:center;max-width:760px;margin:0 auto}
+.plus{width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:24px;cursor:pointer;flex:0 0 44px}
+.textbox{flex:1;display:flex;align-items:center;background:#0d1d42;border:1px solid var(--border);border-radius:26px;padding:6px 6px 6px 18px}
+.textbox input{flex:1;background:transparent;border:0;outline:0;color:var(--text);font-size:15px;padding:10px 4px}
+.send{width:44px;height:44px;border-radius:50%;border:0;background:linear-gradient(135deg,#1f6bff,#00c2ff);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 6px 18px rgba(31,107,255,.5)}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.chips button{border:1px solid var(--border);background:rgba(14,28,61,.9);color:#c9d6f2;border-radius:20px;padding:8px 14px;font-size:13.5px;cursor:pointer}
+.chips button:hover{border-color:var(--blue2)}
+/* generic view panels */
+.panel{max-width:760px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:14px;padding-bottom:20px}
+.glass{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.glass h3{font-size:17px;margin-bottom:10px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.inp{background:#0b1a3c;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px 12px;font-size:14px;outline:0}
+.inp:focus{border-color:var(--blue2)}
+.btn{background:linear-gradient(90deg,#1f6bff,#0f3fc0);border:0;color:#fff;border-radius:10px;padding:10px 16px;font-size:14px;cursor:pointer;font-weight:600}
+.btn.ghost{background:#16295a}
+.todo{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:12px;margin-top:8px;background:rgba(10,25,60,.6)}
+.todo.done span.t{text-decoration:line-through;opacity:.6}
+.switch{margin-left:auto;width:44px;height:24px;border-radius:20px;background:#22345f;position:relative;cursor:pointer;border:1px solid var(--border)}
+.switch.on{background:linear-gradient(90deg,#1f6bff,#00c2ff)}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.switch.on::after{left:22px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid rgba(90,140,255,.12)}
+th{color:var(--muted);font-weight:600;font-size:13px}
+.up{color:var(--green);font-weight:700}.down{color:#ff6b6b;font-weight:700}
+/* ===== RIGHT ===== */
+.right{background:linear-gradient(180deg,#0a1430,#070f26);border-left:1px solid var(--border);padding:18px 16px;height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.profile{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;display:flex;gap:14px;align-items:center}
+.big-avatar{width:72px;height:72px;border-radius:50%;background:conic-gradient(from 200deg,#1f6bff,#38e1ff,#7a5cff,#1f6bff);display:grid;place-items:center;font-size:44px;box-shadow:0 0 0 3px rgba(56,225,255,.2),0 0 26px rgba(56,180,255,.55)}
+.profile h2{font-size:24px}.profile small{color:var(--muted);font-size:12px}
+.qquote{margin-top:10px;background:#16295a;border-radius:12px;padding:8px 12px;font-style:italic;font-size:13.5px;color:#d3def7}
+.side-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 15px}
+.side-card h3{font-size:16px;margin-bottom:10px}
+.kv{display:flex;gap:10px;align-items:center;font-size:14px;color:#cfdbf5;padding:6px 0}
+.kv .ic{width:22px;text-align:center}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.quick button{background:#13234d;border:1px solid var(--border);border-radius:14px;padding:12px 6px;color:#d3def7;cursor:pointer;display:flex;flex-direction:column;gap:8px;align-items:center;font-size:12.5px}
+.quick button:hover{border-color:var(--blue2);transform:translateY(-1px)}
+.quick .qi{font-size:22px}
+.act{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(90,140,255,.08);font-size:13.5px}
+.act:last-child{border:0}
+.act .dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:16px;flex:0 0 32px}
+.link{color:#4da3ff;font-size:13.5px;cursor:pointer;background:none;border:0;margin-top:6px}
+.sig{text-align:center;color:#9db1d8;font-family:cursive;font-size:22px;line-height:1.3}
+.hidden{display:none!important}
+@media(max-width:1180px){.app{grid-template-columns:250px minmax(0,1fr)}.right{display:none}}
+@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:20;left:0;top:0;bottom:0;width:272px;transform:translateX(-105%);transition:.25s}.sidebar.open{transform:none;box-shadow:20px 0 60px rgba(0,0,0,.5)}.backbtn{display:block}.bubble{max-width:92%}}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#13234d;border:1px solid var(--blue2);padding:10px 18px;border-radius:24px;font-size:14px;display:none;z-index:50}
+</style>
+</head>
+<body>
+<div class="app">
+<!-- LEFT -->
+<aside class="sidebar" id="sidebar">
+<div class="logo">
+<svg class="logo-mark" viewBox="0 0 48 48" fill="none"><path d="M4 26 L12 26 L16 10 L22 34 L28 16 L32 26 L44 26" stroke="url(#g)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="g" x1="0" y1="0" x2="48" y2="48"><stop stop-color="#2f8bff"/><stop offset="1" stop-color="#38e1ff"/></linearGradient></defs></svg>
+<h1>Friday</h1>
+</div>
+<div class="tagline">Teman AI, selalu ada<br>untuk hari yang lebih baik</div>
+<nav class="nav" id="nav"></nav>
+<div class="mini-profile">
+<div class="mini-top"><div class="avatar">👦</div><div><div class="name">Friday</div><div class="st"><span class="online-dot"></span> Online</div></div></div>
+<div class="quote">“Siap membantu, Grezio. Ada yang bisa Friday bantu hari ini?”</div>
+</div>
+<div class="wake"><div class="mic-circle">🎙️</div><div><strong>Wake Word</strong>Hey Friday</div></div>
+<div class="ver">v1.3.0 • AI + Super Offline</div>
+</aside>
+
+<!-- CENTER -->
+<main class="main">
+<div class="topbar">
+<button class="backbtn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+<div class="top-avatar">👦</div>
+<div><div class="t-name">Friday <span class="online-dot"></span></div><div class="t-sub"><span class="online-dot"></span> Online</div></div>
+<div class="top-actions"><button class="icon-btn" onclick="toast('Panggilan suara segera hadir 📞')" title="Call">📞</button><button class="icon-btn" onclick="toast('Pencarian chat: ketik di bawah lalu Friday carikan 🔍')" title="Search">🔍</button><button class="icon-btn" onclick="toast('Menu: gunakan sidebar kiri ⋮')" title="Menu">⋮</button></div>
+</div>
+
+<div class="views">
+<!-- CHAT -->
+<div id="view-chat">
+<div class="bubble-row me"><div class="bubble">Halo Friday, tolong buatkan ringkasan kondisi pasar saham hari ini dan rekomendasi untuk LUCK dan SURI. Jangan lupa sertakan risikonya ya.<span class="time">16:20 <span class="checks">✓✓</span></span></div></div>
+<div class="bubble-row ai"><div class="small-avatar">👦</div><div class="bubble" id="seedAnswer">
+Baik, Grezio. Berikut ringkasan pasar saham hari ini dan analisa singkat untuk LUCK dan SURI.
+<div class="card-in"><h4>📊 Ringkasan Pasar Hari Ini</h4><ul><li>IHSG ditutup menguat 0,82% ke 7.719,12</li><li>Sektor yang menguat: perbankan, energi, dan konsumsi</li><li>Investor asing masih net buy, terutama di saham blue chip</li></ul></div>
+<div class="card-in"><h4>📶 Analisa &amp; Rekomendasi</h4><div style="margin:8px 0"><span class="pill luck">📈 LUCK</span> 715 lot @111 &nbsp;(cash: 2.000.000)</div><ul><li>Tren: masih dalam fase konsolidasi</li><li>Rekomendasi: hold / tambah jika ada koreksi di area 108–110</li><li>Target jangka pendek: 118–125</li><li>Risiko: koreksi jika IHSG melemah / aksi profit taking</li></ul><div style="margin:12px 0 8px"><span class="pill suri">⭕ SURI</span> 623 lot @89,7 &nbsp;(+ opsi 600 lot @68)</div><ul><li>Tren: mulai menunjukkan momentum positif</li><li>Rekomendasi: hold, bisa tambah di area 85–88</li><li>Target jangka pendek: 95–102</li><li>Risiko: volatilitas tinggi, pergerakan bisa cepat</li></ul></div>
+<div class="card-in warn"><h4>⚠️ Penting</h4><div style="font-size:14px;color:#e8d9b8">Ini bukan ajakan beli/jual, ya. Selalu konfirmasi sebelum mengambil tindakan, terutama untuk transaksi trading.</div></div>
+<span class="time" style="display:block;text-align:right;margin-top:8px">16:22</span>
+</div></div>
+<div class="bubble-row me"><div class="bubble">Terima kasih Friday, info-nya sangat membantu.<span class="time">16:23 <span class="checks">✓✓</span></span></div></div>
+<div id="chatFeed" style="display:flex;flex-direction:column;gap:14px"></div>
+</div>
+
+<!-- OTHER VIEWS -->
+<div id="view-rencana" class="panel hidden"><div class="glass"><h3>📅 Rencana Harian — <span id="planDate"></span></h3><div class="row"><input class="inp" id="todoInput" placeholder="Tambah rencana baru... (mis. Meeting 09:00)" style="flex:1"><button class="btn" onclick="addTodo()">Tambah</button></div><div id="todoList"></div></div>
+<div class="glass"><h3>⏰ Jadwal Rutin</h3><div id="routineList"></div></div></div>
+
+<div id="view-notion" class="panel hidden"><div class="glass"><h3>📝 Notion — Catatan Cepat</h3><div class="row"><input class="inp" id="noteTitle" placeholder="Judul catatan" style="flex:1"><button class="btn" onclick="addNote()">Simpan</button></div><div class="row" style="margin-top:8px"><textarea class="inp" id="noteBody" placeholder="Tulis isi catatan..." rows="3" style="flex:1"></textarea></div><div id="noteList"></div></div></div>
+
+<div id="view-saham" class="panel hidden"><div class="glass"><h3>📈 Keuangan &amp; Saham — Portofolio</h3><table><tr><th>Saham</th><th>Lot</th><th>Avg</th><th>Harga</th><th>P/L</th></tr><tbody id="stockBody"></tbody></table><div class="row" style="margin-top:12px"><button class="btn" onclick="refreshStocks()">🔄 Refresh Harga (Simulasi)</button><button class="btn ghost" onclick="go('chat');askFriday('ringkasan pasar saham hari ini')">Minta Analisa Friday</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">⚠️ Data simulasi lokal untuk demo. Bukan rekomendasi investasi.</p></div></div>
+
+<div id="view-peta" class="panel hidden"><div class="glass"><h3>📍 Peta &amp; Navigasi</h3><div class="row"><input class="inp" id="navFrom" value="Tambun, Bekasi" style="flex:1"><input class="inp" id="navTo" value="BSD City" placeholder="Tujuan..." style="flex:1"><button class="btn" onclick="navigasi()">Rute</button></div><div id="navOut" style="margin-top:12px;color:#cfdbf5;font-size:14px;line-height:1.7">Pilih tujuan lalu tekan Rute. Friday akan hitungkan estimasi jarak &amp; waktu.</div><div class="glass" style="margin-top:12px;background:linear-gradient(135deg,#0d2a5e,#0a1a40)"><div style="font-size:40px">🗺️</div><div style="font-size:14px;color:var(--muted)">Peta offline • Lokasi: Tambun, Bekasi (-6.26, 107.05)<br>Buka di Google Maps: <a href="#" onclick="window.open('https://maps.google.com/?q=Tambun,Bekasi','_blank');return false" style="color:#4da3ff">maps.google.com/?q=Tambun,Bekasi</a></div></div></div></div>
+
+<div id="view-pengingat" class="panel hidden"><div class="glass"><h3>🔔 Pengingat</h3><div class="row"><input class="inp" id="remText" placeholder="Mis. Minum air" style="flex:2"><input class="inp" id="remTime" type="time" value="18:00" style="flex:1"><button class="btn" onclick="addReminder()">Atur</button></div><div id="remList"></div></div></div>
+
+<div id="view-rutin" class="panel hidden"><div class="glass"><h3>⚙️ Rutin &amp; Otomasi</h3><div id="autoList"></div></div></div>
+
+<div id="view-device" class="panel hidden"><div class="glass"><h3>📱 Perangkat Android</h3><div id="devInfo" style="font-size:14px;line-height:2;color:#cfdbf5"></div><div class="row" style="margin-top:10px"><button class="btn" onclick="speak('Halo Grezio, semua sistem perangkat berjalan normal.')">🔊 Tes Suara</button><button class="btn ghost" onclick="toast('Mode hemat baterai aktif 🔋')">🔋 Hemat Baterai</button></div></div></div>
+
+<div id="view-ilmu" class="panel hidden"><div class="glass"><h3>📚 Pengetahuan</h3><div class="row"><input class="inp" id="q" placeholder="Tanya apa saja... (mis. apa itu IHSG?)" style="flex:1"><button class="btn" onclick="tanyaIlmu()">Tanya</button></div><div id="ilmuOut" style="margin-top:10px;font-size:14.5px;line-height:1.7;color:#d3def7">Friday siap menjawab seputar saham, produktivitas, dan pengetahuan umum.</div></div></div>
+
+<div id="view-setting" class="panel hidden"><div class="glass"><h3>🧠 Mesin AI Gratis</h3><div class="row"><label style="font-size:14px;flex:1">Mode:<br><select class="inp" id="aiModeSel" style="width:100%;margin-top:4px"><option value="auto">✨ Otomatis Tanpa Login (Nano → AI gratis → offline)</option><option value="offline">📴 Offline saja (otak lokal, tercepat)</option><option value="premium">💎 Premium Puter (perlu login 1x)</option><option value="custom">🔑 Kunci sendiri (Gemini/Groq/dll)</option><option value="super">📦 Super Offline (unduh model 1x ±500MB)</option></select></label><label style="font-size:14px;flex:1">Model:<br><select class="inp" id="aiModelSel" style="width:100%;margin-top:4px"></select></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveAI()">Simpan AI</button><button class="btn ghost" onclick="testAI()">Tes AI</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Tanpa login: Friday memakai <b>AI bawaan browser</b> (Chrome/Edge baru, Gemini Nano, 100% di HP) lalu <b>AI gratis Pollinations</b> bila ada internet. Gagal? Otomatis ke otak lokal — chat tidak pernah mati. Ada juga mode 📦 <b>Super Offline</b>: unduh model AI ±500MB sekali via WiFi, lalu pintar selamanya tanpa internet & tanpa login (butuh Chrome/Edge baru).</p><details style="margin-top:10px"><summary style="font-size:13.5px;color:#4da3ff;cursor:pointer">Model premium / kunci sendiri — opsional</summary><div class="row" style="margin-top:8px"><input class="inp" id="customUrl" placeholder="Endpoint OpenAI-compatible (mis. https://api.groq.com/openai/v1)" style="flex:1"></div><div class="row" style="margin-top:8px"><input class="inp" id="customKey" type="password" placeholder="API key (hanya tersimpan di HP ini)" style="flex:1"><input class="inp" id="customModel" placeholder="Model (mis. llama-3.3-70b-versatile)" style="flex:1"></div></details></div><div class="glass"><h3>⚙️ Pengaturan</h3><div class="row"><label style="font-size:14px">Nama panggilan: <input class="inp" id="setName" value="Grezio"></label><label style="font-size:14px">Lokasi: <input class="inp" id="setLoc" value="Tambun, Bekasi"></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveSettings()">Simpan</button><button class="btn ghost" onclick="clearAll()">Hapus Semua Data</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Otak lokal selalu aktif sebagai cadangan • Memori percakapan: Aktif • <span id="aiFoot">Engine: gpt-4o-mini (gratis)</span></p></div></div>
+</div>
+
+<div class="composer" id="composer">
+<div class="inputbar"><button class="plus" onclick="toast('Lampiran: foto, file, audio segera hadir 📎')">+</button>
+<div class="textbox"><input id="msg" placeholder="Ketik pesan atau ucapkan..." autocomplete="off"><button class="send" onclick="sendMsg()" title="Kirim">🎙️</button></div></div>
+<div class="chips"><button id="engineBtn" onclick="toggleEngine()">🧠 AI: gpt-4o-mini</button><button onclick="voice()">🎙️ Voice</button><button onclick="toast('Kamera dibuka 📷 (demo)')">📷 Kamera</button><button onclick="go('peta')">🗺️ Maps</button><button onclick="toast('Pilih file 📎 (demo)')">📎 Lampiran</button></div>
+</div>
+</main>
+
+<!-- RIGHT -->
+<aside class="right">
+<div class="profile"><div class="big-avatar">👦</div><div><h2>Friday</h2><small>Versi Nemotron 3.5 Lightning</small><div style="color:var(--green);font-size:13px;margin-top:4px"><span class="online-dot"></span> Online</div></div></div>
+<div class="qquote">“Selalu belajar,<br>selalu membantu.”</div>
+<div class="side-card"><h3>Konteks Sekarang</h3>
+<div class="kv"><span class="ic">📅</span><span id="ctxDate">Hari ini: —</span></div>
+<div class="kv"><span class="ic">🕓</span><span id="ctxTime">Waktu: —</span></div>
+<div class="kv"><span class="ic">📍</span><span id="ctxLoc">Lokasi: Tambun, Bekasi</span></div>
+<div class="kv"><span class="ic">☁️</span><span>Cuaca: 32°C &nbsp;Cerah berawan</span></div></div>
+<div class="side-card"><h3>Quick Actions</h3><div class="quick">
+<button onclick="go('saham')"><span class="qi">📈</span>Cek Saham</button>
+<button onclick="go('notion')"><span class="qi">📝</span>Buka Notion</button>
+<button onclick="go('peta')"><span class="qi">📍</span>Navigasi</button>
+<button onclick="go('rencana')"><span class="qi">📅</span>Jadwal</button>
+<button onclick="go('pengingat')"><span class="qi">🔔</span>Pengingat</button>
+<button onclick="go('rutin')"><span class="qi">⚙️</span>Rutin Harian</button>
+</div></div>
+<div class="side-card"><h3>Aktivitas Terbaru</h3><div id="activity"></div><button class="link" onclick="toast('Semua aktivitas dimuat ✅')">Lihat semua →</button></div>
+<div class="side-card"><h3>Status Sistem</h3>
+<div class="kv"><span class="ic">⚙️</span><span id="aiModelRow">Model: gpt-4o-mini (gratis)</span></div>
+<div class="kv"><span class="ic">🌐</span><span id="aiModeRow">Mode: Otomatis Pintar</span></div>
+<div class="kv"><span class="ic">🧠</span><span>Memori: Aktif</span></div>
+<div class="kv"><span class="ic">🔋</span><span id="batt">Baterai: 78%</span></div></div>
+<div class="sig">Friday<br><span style="font-size:15px">Selalu di sini, untuk kamu ♡</span></div>
+</aside>
+</div>
+<div id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const store={get:(k,d)=>{try{const v=localStorage.getItem('friday_'+k);return v?JSON.parse(v):d}catch{return d}},set:(k,v)=>localStorage.setItem('friday_'+k,JSON.stringify(v))};
+let userName=store.get('name','Grezio');
+const MENU=[['chat','💬','Chat'],['rencana','📅','Rencana Harian'],['notion','📝','Notion'],['saham','📊','Keuangan & Saham'],['peta','📍','Peta & Navigasi'],['pengingat','🔔','Pengingat'],['rutin','🔁','Rutin & Otomasi'],['device','📱','Perangkat Android'],['ilmu','📚','Pengetahuan'],['setting','⚙️','Pengaturan']];
+let cur='chat';
+function buildNav(){$('nav').innerHTML=MENU.map(m=>`<button data-v="${m[0]}" class="${m[0]===cur?'active':''}" onclick="go('${m[0]}')"><span class="ic">${m[1]}</span>${m[2]}</button>`).join('')}
+function go(v){cur=v;buildNav();['chat','rencana','notion','saham','peta','pengingat','rutin','device','ilmu','setting'].forEach(x=>{const el=$('view-'+(x==='chat'?'chat':x));if(el)el.classList.toggle('hidden',x!==v)});$('composer').style.display=v==='chat'?'block':'none';document.getElementById('sidebar').classList.remove('open');window.scrollTo(0,0);document.querySelector('.views').scrollTop=0}
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2400)}
+function now(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='id-ID';speechSynthesis.speak(u)}catch{}}
+/* clock */
+function tick(){const d=new Date();const hari=['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];const bln=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];$('ctxDate').textContent=`Hari ini: ${hari[d.getDay()]}, ${d.getDate()} ${bln[d.getMonth()]} ${d.getFullYear()}`;$('ctxTime').textContent='Waktu: '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');$('planDate').textContent=`${hari[d.getDay()]}, ${d.getDate()} ${bln[d.getMonth()]} ${d.getFullYear()}`}
+setInterval(tick,1000);tick();
+if(navigator.getBattery)navigator.getBattery().then(b=>{const f=()=>$('batt').textContent='Baterai: '+Math.round(b.level*100)+'%'+(b.charging?' (mengisi)':'');f();b.onlevelchange=f});
+/* chat */
+function bubbleMe(t){const r=document.createElement('div');r.className='bubble-row me';r.innerHTML=`<div class="bubble"></div>`;r.querySelector('.bubble').textContent=t;const s=document.createElement('span');s.className='time';s.innerHTML=` ${now()} <span class="checks">✓✓</span>`;r.querySelector('.bubble').appendChild(s);$('chatFeed').appendChild(r);r.scrollIntoView({behavior:'smooth'})}
+function bubbleAI(html,plain){const r=document.createElement('div');r.className='bubble-row ai';r.innerHTML=`<div class="small-avatar">👦</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;$('chatFeed').appendChild(r);r.scrollIntoView({behavior:'smooth'});setTimeout(()=>{r.querySelector('.bubble').innerHTML=html+`<span class="time" style="display:block;text-align:right;margin-top:8px">${now()}</span>`;r.scrollIntoView({behavior:'smooth'});speak(plain||r.querySelector('.bubble').innerText.slice(0,160));pushActivity('💬',html.replace(/<[^>]+>/g,'').slice(0,42)+'...')},900)}
+/* ===== Mesin AI tanpa login (Nano → Pollinations → lokal) ===== */
+const POLLI_MODELS=['openai','mistral','llama'];
+const PUTER_MODELS=['gpt-4o-mini','gpt-4o','claude-sonnet-4','gemini-2.5-flash','deepseek-chat'];
+let aiMode=store.get('aiMode','auto');
+if(!['auto','offline','premium','custom','super'].includes(aiMode))aiMode='auto';
+let aiModel=store.get('aiModel','openai');
+let customCfg=store.get('custom',{url:'',key:'',model:''});
+let hist=store.get('hist',[]);
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^### (.+)$/gm,'<b>$1</b>').replace(/^## (.+)$/gm,'<b>$1</b>').replace(/\n/g,'<br>')}
+function sysPrompt(){return `Kamu Friday, teman AI pribadi ${userName} dari Indonesia. Bahasa: Indonesia santai & hangat. Lokasi user: ${store.get('loc','Tambun, Bekasi')}. Waktu sekarang: ${new Date().toLocaleString('id-ID')}. Portofolio: LUCK 715 lot @111, SURI 623 lot @89,7. Aturan: jawaban ringkas (maks 220 kata), gunakan daftar bila cocok, SELALU sertakan risiko untuk topik saham dan tegaskan bukan ajakan beli/jual, tutup dengan satu kalimat hangat bila pas.`}
+function pushHist(role,text){hist.push({role,text:text.slice(0,1200)});hist=hist.slice(-20);store.set('hist',hist)}
+function typingPh(){const r=document.createElement('div');r.className='bubble-row ai';r.innerHTML=`<div class="small-avatar">👦</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;$('chatFeed').appendChild(r);r.scrollIntoView({behavior:'smooth'});return r}
+function fillPh(row,html,plain){row.querySelector('.bubble').innerHTML=html+`<span class="time" style="display:block;text-align:right;margin-top:8px">${now()}</span>`;row.scrollIntoView({behavior:'smooth'});if(plain)speak(plain.slice(0,180));pushActivity('💬',row.querySelector('.bubble').innerText.slice(0,42)+'...')}
+function extractPuter(r){if(typeof r==='string')return r;if(r?.message?.content){const c=r.message.content;if(typeof c==='string')return c;if(Array.isArray(c))return c.map(x=>x.text||x.content||'').join('')}if(r?.text)return r.text;return JSON.stringify(r).slice(0,2000)}
+let llmEngine=null;
+async function superEngine(userText){
+  if(!navigator.gpu)throw new Error('webgpu-unavailable');
+  if(!llmEngine){
+    if(!store.get('llmOk',false)&&!confirm('Unduh model AI ±500MB SEKALI (disarankan via WiFi)? Setelah itu Friday pintar tanpa internet & tanpa login.'))throw new Error('download-batal');
+    const m=await import('https://esm.sh/@mlc-ai/web-llm');
+    const eb=$('engineBtn');
+    llmEngine=await m.CreateMLCEngine('Qwen2.5-0.5B-Instruct-q4f16_1-MLC',{initProgressCallback:p=>{const pc=Math.round((p.progress||0)*100);if(eb)eb.textContent='📦 '+pc+'%';toast('📦 Mengunduh model: '+pc+'%')}});
+    store.set('llmOk',true)}
+  const r=await llmEngine.chat.completions.create({messages:[{role:'system',content:sysPrompt()},...hist.slice(-8).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}],temperature:.7,max_tokens:400});
+  return ((r.choices&&r.choices[0]&&r.choices[0].message&&r.choices[0].message.content)||'...').trim()}
+async function nanoEngine(userText){
+  if(window.LanguageModel&&LanguageModel.availability){
+    const st=await LanguageModel.availability();
+    if(st!=='available')throw new Error('nano-'+st);
+    const s=await LanguageModel.create({systemPrompt:sysPrompt(),temperature:.7});
+    try{return await s.prompt(userText)}finally{if(s.destroy)s.destroy()}
+  }
+  if(window.ai&&ai.canCreateTextSession){
+    const c=await ai.canCreateTextSession();
+    if(c!=='readily')throw new Error('nano-'+c);
+    const s=await ai.createTextSession({systemPrompt:sysPrompt()});
+    try{return await s.prompt(userText)}finally{if(s.destroy)s.destroy()}
+  }
+  throw new Error('nano-unavailable')}
+async function polliEngine(userText){
+  const ctx=hist.slice(-6).map(h=>(h.role==='ai'?'Friday: ':'Grezio: ')+h.text).join('\n').slice(-1200);
+  const prompt=(sysPrompt()+'\n'+(ctx?('Riwayat:\n'+ctx+'\n'):'')+'Grezio: '+userText+'\nFriday:').slice(0,1800);
+  const r=await fetch('https://text.pollinations.ai/'+encodeURIComponent(prompt)+'?model='+encodeURIComponent(aiModel)+'&private=true',{headers:{Accept:'text/plain'}});
+  const t=await r.text();
+  if(!r.ok||/^\s*\{"error"/.test(t))throw new Error('pollinations-busy');
+  return t.trim()}
+function errHint(e){const m=(e&&e.message)||'koneksi';if(m.indexOf('nano')===0)return 'AI bawaan browser belum tersedia di perangkat ini';if(m==='webgpu-unavailable')return 'perangkat/browser tidak mendukung WebGPU (pakai Chrome/Edge baru)';if(m==='download-batal')return 'unduhan model dibatalkan';if(m==='pollinations-busy')return 'server AI gratis sedang sibuk';if(m==='key-belum-diisi')return 'endpoint/kunci sendiri belum diisi (lihat Pengaturan)';if(m==='puter-belum-muat')return 'Puter.js belum termuat';return m}
+async function fridayOnline(userText){
+  const msgs=()=>[ {role:'system',content:sysPrompt()},...hist.slice(-10).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}];
+  if(aiMode==='premium'){
+    if(!(window.puter&&puter.ai))throw new Error('puter-belum-muat');
+    const out=extractPuter(await puter.ai.chat(msgs(),{model:aiModel}));
+    pushHist('user',userText);pushHist('ai',out);return out}
+  if(aiMode==='custom'){
+    if(!(customCfg.url&&customCfg.key))throw new Error('key-belum-diisi');
+    const out=await customChat(msgs());
+    pushHist('user',userText);pushHist('ai',out);return out}
+  if(aiMode==='super'){const t=await superEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}
+  try{const t=await nanoEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}catch(e){if(e.message!=='nano-unavailable'&&e.message.indexOf('nano-')!==0)throw e}
+  const t=await polliEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}
+const canOnline=()=>aiMode!=='offline';
+async function customChat(msgs){const u=customCfg.url.replace(/\/$/,'');const r=await fetch(u+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+customCfg.key},body:JSON.stringify({model:customCfg.model||'gpt-4o-mini',messages:msgs,max_tokens:600,temperature:0.7})});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();return j.choices?.[0]?.message?.content||'...'}
+async function askFriday(text){go('chat');bubbleMe(text);if(canOnline()){const ph=typingPh();try{const t=await fridayOnline(text);fillPh(ph,mdLite(t),t)}catch(e){const a=fridayBrain(text);fillPh(ph,a.html+`<div class="card-in warn"><h4>⚠️ Mode offline</h4><div style="font-size:13.5px">${errHint(e)} — jawaban dari otak lokal. Coba lagi nanti ya.</div></div>`,a.plain);toast('AI online tak tersedia, pakai otak lokal 📴')}}else{const a=fridayBrain(text);setTimeout(()=>bubbleAI(a.html,a.plain),400)}}
+async function sendMsg(){const v=$('msg').value.trim();if(!v)return;$('msg').value='';bubbleMe(v);if(canOnline()){const ph=typingPh();try{const t=await fridayOnline(v);fillPh(ph,mdLite(t),t)}catch(e){const a=fridayBrain(v);fillPh(ph,a.html+`<div class="card-in warn"><h4>⚠️ Mode offline</h4><div style="font-size:13.5px">${errHint(e)} — jawaban dari otak lokal. Coba lagi nanti ya.</div></div>`,a.plain);toast('AI online tak tersedia, pakai otak lokal 📴')}}else{const a=fridayBrain(v);setTimeout(()=>bubbleAI(a.html,a.plain),500)}}
+function toggleEngine(){aiMode=aiMode==='auto'?'offline':'auto';store.set('aiMode',aiMode);updateEngineUI();toast(aiMode==='auto'?'✨ Otomatis Tanpa Login aktif':'📴 Mode Offline aktif')}
+function modeLabel(){return aiMode==='auto'?'Otomatis Tanpa Login':aiMode==='offline'?'Offline saja':aiMode==='premium'?'Premium Puter':aiMode==='super'?'Super Offline':'Kunci sendiri'}
+function modelList(){return aiMode==='premium'?PUTER_MODELS:aiMode==='super'?['Qwen2.5-0.5B (di HP)']:POLLI_MODELS}
+function updateEngineUI(){const eb=$('engineBtn');if(eb)eb.textContent=aiMode==='auto'?'✨ Tanpa Login':aiMode==='offline'?'📴 Offline':aiMode==='super'?'📦 Super':aiMode==='premium'?('💎 '+aiModel):'🔑 Key';const mr=$('aiModelRow');if(mr)mr.textContent='Model: '+(aiMode==='offline'?'Otak lokal Friday':aiModel+(aiMode==='auto'?' (gratis, tanpa login)':aiMode==='premium'?' (puter)':aiMode==='super'?' (di HP)':' (key sendiri)'));const mo=$('aiModeRow');if(mo)mo.textContent='Mode: '+modeLabel();const ft=$('aiFoot');if(ft)ft.textContent='Engine: '+(aiMode==='offline'?'otak lokal':aiModel);const ms=$('aiModeSel');if(ms)ms.value=aiMode;const ml=$('aiModelSel');if(ml){const L=modelList();if(!L.includes(aiModel)){aiModel=L[0];store.set('aiModel',aiModel)}ml.innerHTML=L.map(m=>`<option ${m===aiModel?'selected':''}>${m}</option>`).join('');ml.value=aiModel;ml.disabled=(aiMode==='offline'||aiMode==='custom'||aiMode==='super')}const u=$('customUrl'),k=$('customKey'),cm=$('customModel');if(u){u.value=customCfg.url||'';k.value=customCfg.key||'';cm.value=customCfg.model||''}}
+function saveAI(){aiMode=$('aiModeSel').value;aiModel=$('aiModelSel').value;customCfg={url:$('customUrl').value.trim(),key:$('customKey').value.trim(),model:$('customModel').value.trim()};store.set('aiMode',aiMode);store.set('aiModel',aiModel);store.set('custom',customCfg);updateEngineUI();toast('Pengaturan AI disimpan ✅')}
+async function testAI(){if(!canOnline()){toast('Mode offline aktif — ganti ke Otomatis Tanpa Login dulu 📴');return}toast('🧪 Mengetes AI...');try{const t=await fridayOnline('Balas persis: Friday AI online OK');toast('✅ '+t.slice(0,60))}catch(e){toast('❌ Gagal: '+(e.message||'koneksi'))}}
+$('msg').addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
+function voice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Browser tidak mendukung voice — ketik saja 🎙️');return}const r=new SR();r.lang='id-ID';toast('🎙️ Mendengarkan... bicara sekarang');r.onresult=e=>{const t=e.results[0][0].transcript;$('msg').value=t;sendMsg()};r.start()}
+function fridayBrain(raw){const t=raw.toLowerCase();const n=userName;
+if(/saham|ihsg|luck|suri|pasar|rekomendasi|trading|portofolio/.test(t)){return{html:`Baik, ${n}. Ini update pasar & portofolio kamu:<div class="card-in"><h4>📊 IHSG Hari Ini</h4><ul><li>IHSG menguat 0,82% ke <b>7.719,12</b> — sektor perbankan & energi memimpin</li><li>Asing net buy di blue chip, volume sehat</li></ul></div><div class="card-in"><h4>📶 LUCK & SURI</h4><ul><li><b>LUCK</b> (715 lot @111): hold, tambah di 108–110, target 118–125</li><li><b>SURI</b> (623 lot @89,7): momentum positif, tambah 85–88, target 95–102</li><li>Risiko: volatilitas & profit taking jika IHSG melemah</li></ul></div><div class="card-in warn"><h4>⚠️ Penting</h4><div style="font-size:14px">Bukan ajakan beli/jual. Konfirmasi dulu sebelum transaksi ya.</div></div>`,plain:`Ringkasan pasar: IHSG menguat ke 7719. LUCK hold, SURI momentum positif. Ingat risikonya ya ${n}.`}}
+if(/jadwal|rencana|agenda|hari ini|besok|meeting/.test(t)){const todos=store.get('todos',[]);const list=todos.length?todos.map(x=>`<li>${x.done?'✅':'⬜'} ${x.text}</li>`).join(''):'<li>Jadwal perjalanan (BSD) — Besok 05:30</li><li>Doa malam — Hari ini 20:00</li>';return{html:`Siap, ${n}! Ini rencana kamu:<div class="card-in"><h4>📅 Rencana Harian</h4><ul>${list}</ul></div>Buka menu <b>Rencana Harian</b> untuk menambah / mencentang.`,plain:`Ini rencana harianmu ${n}. Sudah Friday siapkan.`}}
+if(/pengingat|ingatkan|reminder|alarm|minum/.test(t)){return{html:`Baik, ${n}! 🔔 Pengingat dicatat.<div class="card-in"><h4>🔔 Pengingat Aktif</h4><ul><li>Minum air — Hari ini 18:00</li><li>Doa malam — Hari ini 20:00</li><li>Berangkat BSD — Besok 05:30</li></ul></div>Ketik mis. <i>"ingatkan minum obat jam 21:00"</i> untuk menambah.`,plain:`Pengingat dicatat ${n}.`}}
+if(/cuaca|hujan|panas|suhu/.test(t)){return{html:`☁️ Cuaca <b>${store.get('loc','Tambun, Bekasi')}</b>: <b>32°C, cerah berawan</b>.<br>Kelembapan 65%, angin 12 km/jam. Aman untuk perjalanan sore ini, ${n}!`,plain:`Cuaca cerah berawan 32 derajat.`}}
+if(/notion|catat|catatan|note/.test(t)){return{html:`📝 Siap mencatat, ${n}! Buka menu <b>Notion</b> — semua catatan tersimpan otomatis di perangkat ini.`,plain:`Siap mencatat.`}}
+if(/peta|navigasi|rute|jalan|bsd|lokasi|arah/.test(t)){return{html:`📍 Rute <b>Tambun → BSD City</b>: ±58 km, ±1 jam 20 mnt via Tol JORR.<br>Buka menu <b>Peta & Navigasi</b> untuk detail & link Google Maps, ${n}.`,plain:`Rute ke BSD sekitar 1 jam 20 menit.`}}
+if(/halo|hai|hello|pagi|siang|sore|malam|assalamu/.test(t)){return{html:`Halo juga, ${n}! 👋 Senang bertemu lagi.<br>Ada yang bisa Friday bantu hari ini? Coba: <i>"ringkasan saham"</i>, <i>"jadwalku"</i>, atau <i>"ingatkan minum air"</i>.`,plain:`Halo juga ${n}! Ada yang bisa Friday bantu?`}}
+if(/terima kasih|makasih|thanks|mantap|bagus/.test(t)){return{html:`Sama-sama, ${n}! 🥰 Senang bisa membantu.<br><i>"Selalu belajar, selalu membantu."</i> ♡`,plain:`Sama sama ${n}!`}}
+if(/siapa|nama|kamu|friday/.test(t)){return{html:`Aku <b>Friday</b> 🤖 — teman AI kamu, versi Nemotron 3.5 Lightning.<br>Mode: Offline + Internet Updates. Memori aktif, selalu di sini untuk kamu, ${n}!`,plain:`Aku Friday, teman AI kamu.`}}
+if(/jam|tanggal|hari apa|waktu/.test(t)){return{html:`🕓 Sekarang pukul <b>${now()}</b>, ${$('ctxDate').textContent}.<br>Lokasi: ${store.get('loc','Tambun, Bekasi')}.`,plain:`Sekarang pukul ${now()}.`}}
+if(/bantu|bisa apa|fitur|help|menu/.test(t)){return{html:`Friday bisa bantu banyak hal, ${n}:<div class="card-in"><ul><li>📊 Ringkasan & analisa saham (LUCK, SURI)</li><li>📅 Rencana harian & jadwal</li><li>📝 Catatan Notion</li><li>📍 Navigasi & rute</li><li>🔔 Pengingat & otomasi</li><li>🎙️ Perintah suara "Hey Friday"</li></ul></div>`,plain:`Friday bisa bantu saham, jadwal, catatan, dan navigasi.`}}
+if(/lucu|lelucon|joke/.test(t)){return{html:`😄 Kenapa trader suka kopi? Karena kalau <i>cut loss</i>, yang manis tinggal kopinya, ${n}! ☕`,plain:`Haha, semoga harimu menyenangkan!`}}
+return{html:`Mengerti, ${n}! 🤔 "<i>${raw.slice(0,80)}</i>" sudah Friday catat.<br>Coba lebih spesifik ya — mis. <b>"ringkasan saham"</b>, <b>"jadwalku hari ini"</b>, atau <b>"cuaca"</b>. Friday selalu belajar untuk membantu. 💙`,plain:`Mengerti ${n}, coba tanyakan soal saham, jadwal, atau cuaca.`}}
+/* todos */
+function getTodos(){return store.get('todos',[{text:'Jadwal perjalanan (BSD) — Besok 05:30',done:false},{text:'Pengingat: Minum air — Hari ini 18:00',done:false},{text:'Doa malam — Hari ini 20:00',done:false},{text:'Rangkuman pasar saham — 16:20',done:true}])}
+function renderTodos(){const l=getTodos();$('todoList').innerHTML=l.map((x,i)=>`<div class="todo ${x.done?'done':''}"><input type="checkbox" ${x.done?'checked':''} onchange="toggleTodo(${i})"><span class="t">${x.text}</span><button class="link" style="margin-left:auto" onclick="delTodo(${i})">Hapus</button></div>`).join('');$('routineList').innerHTML=[['🌅 Ringkasan pagi saham','06:30',true],['💧 Minum air tiap 2 jam','08:00',true],['🌙 Doa malam','20:00',false]].map(r=>`<div class="todo"><span class="t">${r[0]} <small style="color:var(--muted)">• ${r[1]}</small></span><div class="switch ${r[2]?'on':''}" onclick="this.classList.toggle('on');toast('Otomasi diperbarui ✅')"></div></div>`).join('')}
+function addTodo(){const v=$('todoInput').value.trim();if(!v)return;const l=getTodos();l.unshift({text:v,done:false});store.set('todos',l);$('todoInput').value='';renderTodos();pushActivity('📅',v);toast('Rencana ditambahkan ✅')}
+function toggleTodo(i){const l=getTodos();l[i].done=!l[i].done;store.set('todos',l);renderTodos()}
+function delTodo(i){const l=getTodos();l.splice(i,1);store.set('todos',l);renderTodos()}
+/* notes */
+function getNotes(){return store.get('notes',[{t:'Ide Trading',b:'Pantau LUCK di 108-110, SURI 85-88. Jangan FOMO.'}])}
+function renderNotes(){$('noteList').innerHTML=getNotes().map((x,i)=>`<div class="todo" style="align-items:flex-start"><div><b>${x.t}</b><div style="color:var(--muted);font-size:13.5px;margin-top:4px">${x.b}</div></div><button class="link" style="margin-left:auto" onclick="delNote(${i})">Hapus</button></div>`).join('')}
+function addNote(){const t=$('noteTitle').value.trim()||'Tanpa judul';const b=$('noteBody').value.trim();if(!b){toast('Isi catatan dulu ✍️');return}const l=getNotes();l.unshift({t,b});store.set('notes',l);$('noteTitle').value='';$('noteBody').value='';renderNotes();pushActivity('📝',t);toast('Catatan tersimpan ✅')}
+function delNote(i){const l=getNotes();l.splice(i,1);store.set('notes',l);renderNotes()}
+/* stocks */
+let stocks=store.get('stocks',[{s:'LUCK',lot:715,avg:111,px:114},{s:'SURI',lot:623,avg:89.7,px:92.5},{s:'IHSG',lot:0,avg:0,px:7719.12}]);
+function renderStocks(){$('stockBody').innerHTML=stocks.map(x=>{if(x.s==='IHSG')return `<tr><td><b>IHSG</b></td><td>—</td><td>—</td><td>${x.px.toLocaleString('id-ID')}</td><td class="up">+0,82%</td></tr>`;const pl=((x.px-x.avg)*x.lot*100);const pct=((x.px-x.avg)/x.avg*100);return `<tr><td><b>${x.s}</b></td><td>${x.lot}</td><td>${x.avg}</td><td>${x.px}</td><td class="${pl>=0?'up':'down'}">${pl>=0?'+':''}${Math.round(pl).toLocaleString('id-ID')} (${pct.toFixed(1)}%)</td></tr>`}).join('')}
+function refreshStocks(){stocks.forEach(x=>{if(x.s!=='IHSG')x.px=+(x.px*(1+(Math.random()-0.45)*0.04)).toFixed(1)});store.set('stocks',stocks);renderStocks();toast('Harga diperbarui 🔄')}
+/* nav */
+function navigasi(){const a=$('navFrom').value||'Tambun, Bekasi';const b=$('navTo').value||'BSD City';const km=Math.round(40+Math.random()*40);$('navOut').innerHTML=`✅ Rute <b>${a} → ${b}</b>: ±${km} km, ±${Math.round(km/45*60)} mnt via tol.<br>💡 Berangkat 30 mnt lebih awal untuk hindari macet. <a href="#" onclick="window.open('https://maps.google.com/?saddr=${encodeURIComponent(a)}&daddr=${encodeURIComponent(b)}','_blank');return false" style="color:#4da3ff">Buka di Google Maps →</a>`;pushActivity('📍',`Rute ${a} → ${b}`)}
+/* reminders */
+function getRems(){return store.get('rems',[{t:'Minum air',time:'18:00'},{t:'Doa malam',time:'20:00'},{t:'Berangkat ke BSD',time:'05:30'}])}
+function renderRems(){$('remList').innerHTML=getRems().map((x,i)=>`<div class="todo"><span style="font-size:20px">🔔</span><span class="t"><b>${x.t}</b> <small style="color:var(--muted)">• ${x.time}</small></span><button class="link" style="margin-left:auto" onclick="delRem(${i})">Hapus</button></div>`).join('')}
+function addReminder(){const t=$('remText').value.trim();if(!t)return;const l=getRems();l.unshift({t,time:$('remTime').value||'18:00'});store.set('rems',l);$('remText').value='';renderRems();pushActivity('🔔',t);toast('Pengingat diatur ✅')}
+function delRem(i){const l=getRems();l.splice(i,1);store.set('rems',l);renderRems()}
+/* automation */
+function renderAuto(){const items=[['📊 Ringkasan pasar otomatis tiap 16:00',1],['📅 Sinkron jadwal harian',1],['🔔 Pengingat minum air',1],['🌙 Mode malam otomatis 21:00',0],['💾 Backup memori lokal',1]];$('autoList').innerHTML=items.map(x=>`<div class="todo"><span class="t">${x[0]}</span><div class="switch ${x[1]?'on':''}" onclick="this.classList.toggle('on');toast('Otomasi diperbarui ✅')"></div></div>`).join('')}
+/* ilmu */
+function tanyaIlmu(){const q=$('q').value.trim().toLowerCase();if(!q)return;let a='Menarik! Friday sudah catat pertanyaanmu. Intinya: pelajari bertahap, mulai dari dasar, dan selalu verifikasi sumber. 💙';if(q.includes('ihsg'))a='IHSG (Indeks Harga Saham Gabungan) adalah indeks semua saham di BEI. Naik 0,82% ke 7.719 artinya pasar optimis, terutama sektor perbankan & energi.';else if(q.includes('lot'))a='1 lot = 100 lembar saham. Contoh: 715 lot LUCK = 71.500 lembar. Modal = lot × 100 × harga.';else if(q.includes('saham'))a='Saham = bukti kepemilikan perusahaan. Untung dari selisih harga & dividen. Risiko: harga bisa turun — gunakan uang dingin & diversifikasi.';$('ilmuOut').innerHTML='💡 '+a;pushActivity('📚',q.slice(0,40))}
+/* device */
+function renderDevice(){$('devInfo').innerHTML=`📱 <b>${navigator.userAgent.includes('Android')?'Perangkat Android':'Browser'} terhubung</b><br>🌐 Online: ${navigator.onLine?'Ya':'Tidak'} • Bahasa: id-ID<br>💾 Memori Friday: aktif (local) • 🔋 <span id="dBatt">${$('batt').textContent}</span><br>🎙️ Wake word: "Hey Friday" • 🔊 TTS: Indonesia`;setInterval(()=>{const e=document.getElementById('dBatt');if(e)e.textContent=$('batt').textContent},2000)}
+/* settings */
+function saveSettings(){userName=$('setName').value.trim()||'Grezio';store.set('name',userName);store.set('loc',$('setLoc').value);$('ctxLoc').textContent='Lokasi: '+store.get('loc','Tambun, Bekasi');toast('Pengaturan disimpan ✅')}
+function clearAll(){localStorage.clear();location.reload()}
+/* activity */
+function getActs(){return store.get('acts',[{i:'📈',t:'Rangkuman pasar saham',w:'16:20'},{i:'📅',t:'Jadwal perjalanan (BSD)',w:'Besok 05:30'},{i:'🔔',t:'Pengingat: Minum air',w:'Hari ini 18:00'},{i:'🔥',t:'Doa malam',w:'Hari ini 20:00'}])}
+function renderActs(){$('activity').innerHTML=getActs().slice(0,5).map(a=>`<div class="act"><div class="dot" style="background:#13234d">${a.i}</div><div><div>${a.t}</div><small style="color:var(--muted)">${a.w}</small></div></div>`).join('')}
+function pushActivity(i,t){const l=getActs();l.unshift({i,t,w:now()});store.set('acts',l.slice(0,10));renderActs()}
+/* init */
+$('setName').value=userName;$('setLoc').value=store.get('loc','Tambun, Bekasi');$('ctxLoc').textContent='Lokasi: '+store.get('loc','Tambun, Bekasi');
+buildNav();renderTodos();renderNotes();renderStocks();renderRems();renderAuto();renderActs();renderDevice();updateEngineUI();
+</script>
+</body>
+</html>
