@@ -136,7 +136,7 @@ th{color:var(--muted);font-weight:600;font-size:13px}
 <div class="quote">“Siap membantu, Grezio. Ada yang bisa Friday bantu hari ini?”</div>
 </div>
 <div class="wake"><div class="mic-circle">🎙️</div><div><strong>Wake Word</strong>Hey Friday</div></div>
-<div class="ver">v1.3.0 • AI + Super Offline</div>
+<div class="ver">v1.4.0 • AI Gratis + Zen</div>
 </aside>
 
 <!-- CENTER -->
@@ -181,7 +181,7 @@ Baik, Grezio. Berikut ringkasan pasar saham hari ini dan analisa singkat untuk L
 
 <div id="view-ilmu" class="panel hidden"><div class="glass"><h3>📚 Pengetahuan</h3><div class="row"><input class="inp" id="q" placeholder="Tanya apa saja... (mis. apa itu IHSG?)" style="flex:1"><button class="btn" onclick="tanyaIlmu()">Tanya</button></div><div id="ilmuOut" style="margin-top:10px;font-size:14.5px;line-height:1.7;color:#d3def7">Friday siap menjawab seputar saham, produktivitas, dan pengetahuan umum.</div></div></div>
 
-<div id="view-setting" class="panel hidden"><div class="glass"><h3>🧠 Mesin AI Gratis</h3><div class="row"><label style="font-size:14px;flex:1">Mode:<br><select class="inp" id="aiModeSel" style="width:100%;margin-top:4px"><option value="auto">✨ Otomatis Tanpa Login (Nano → AI gratis → offline)</option><option value="offline">📴 Offline saja (otak lokal, tercepat)</option><option value="premium">💎 Premium Puter (perlu login 1x)</option><option value="custom">🔑 Kunci sendiri (Gemini/Groq/dll)</option><option value="super">📦 Super Offline (unduh model 1x ±500MB)</option></select></label><label style="font-size:14px;flex:1">Model:<br><select class="inp" id="aiModelSel" style="width:100%;margin-top:4px"></select></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveAI()">Simpan AI</button><button class="btn ghost" onclick="testAI()">Tes AI</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Tanpa login: Friday memakai <b>AI bawaan browser</b> (Chrome/Edge baru, Gemini Nano, 100% di HP) lalu <b>AI gratis Pollinations</b> bila ada internet. Gagal? Otomatis ke otak lokal — chat tidak pernah mati. Ada juga mode 📦 <b>Super Offline</b>: unduh model AI ±500MB sekali via WiFi, lalu pintar selamanya tanpa internet & tanpa login (butuh Chrome/Edge baru).</p><details style="margin-top:10px"><summary style="font-size:13.5px;color:#4da3ff;cursor:pointer">Model premium / kunci sendiri — opsional</summary><div class="row" style="margin-top:8px"><input class="inp" id="customUrl" placeholder="Endpoint OpenAI-compatible (mis. https://api.groq.com/openai/v1)" style="flex:1"></div><div class="row" style="margin-top:8px"><input class="inp" id="customKey" type="password" placeholder="API key (hanya tersimpan di HP ini)" style="flex:1"><input class="inp" id="customModel" placeholder="Model (mis. llama-3.3-70b-versatile)" style="flex:1"></div></details></div><div class="glass"><h3>⚙️ Pengaturan</h3><div class="row"><label style="font-size:14px">Nama panggilan: <input class="inp" id="setName" value="Grezio"></label><label style="font-size:14px">Lokasi: <input class="inp" id="setLoc" value="Tambun, Bekasi"></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveSettings()">Simpan</button><button class="btn ghost" onclick="clearAll()">Hapus Semua Data</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Otak lokal selalu aktif sebagai cadangan • Memori percakapan: Aktif • <span id="aiFoot">Engine: gpt-4o-mini (gratis)</span></p></div></div>
+<div id="view-setting" class="panel hidden"><div class="glass"><h3>🧠 Mesin AI Gratis</h3><div class="row"><label style="font-size:14px;flex:1">Mode:<br><select class="inp" id="aiModeSel" style="width:100%;margin-top:4px"><option value="auto">✨ Otomatis Tanpa Login (Nano → AI gratis → offline)</option><option value="offline">📴 Offline saja (otak lokal, tercepat)</option><option value="premium">💎 Premium Puter (perlu login 1x)</option><option value="custom">🔑 Kunci sendiri (Gemini/Groq/dll)</option><option value="super">📦 Super Offline (unduh model 1x ±500MB)</option><option value="zen">🌌 OpenCode Zen (model gratis OpenCode)</option></select></label><label style="font-size:14px;flex:1">Model:<br><select class="inp" id="aiModelSel" style="width:100%;margin-top:4px"></select></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveAI()">Simpan AI</button><button class="btn ghost" onclick="testAI()">Tes AI</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Tanpa login: Friday memakai <b>AI bawaan browser</b> (Chrome/Edge baru, Gemini Nano, 100% di HP) lalu <b>AI gratis Pollinations</b> (GPT-OSS 20B, tanpa login) bila ada internet. Gagal? Otomatis ke otak lokal — chat tidak pernah mati. Ada juga mode 📦 <b>Super Offline</b>: unduh model AI ±500MB sekali via WiFi, lalu pintar selamanya tanpa internet & tanpa login (butuh Chrome/Edge baru). Mode 🌌 <b>OpenCode Zen</b>: memakai 13 model gratis OpenCode (mis. space-bunny-free, DeepSeek, Muse Spark, Nemotron) — bila browser/kuota menolak, otomatis dialihkan ke AI gratis.</p><details style="margin-top:10px"><summary style="font-size:13.5px;color:#4da3ff;cursor:pointer">Model premium / kunci sendiri — opsional</summary><div class="row" style="margin-top:8px"><input class="inp" id="customUrl" placeholder="Endpoint OpenAI-compatible (mis. https://api.groq.com/openai/v1)" style="flex:1"></div><div class="row" style="margin-top:8px"><input class="inp" id="customKey" type="password" placeholder="API key (hanya tersimpan di HP ini)" style="flex:1"><input class="inp" id="customModel" placeholder="Model (mis. llama-3.3-70b-versatile)" style="flex:1"></div></details></div><div class="glass"><h3>⚙️ Pengaturan</h3><div class="row"><label style="font-size:14px">Nama panggilan: <input class="inp" id="setName" value="Grezio"></label><label style="font-size:14px">Lokasi: <input class="inp" id="setLoc" value="Tambun, Bekasi"></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveSettings()">Simpan</button><button class="btn ghost" onclick="clearAll()">Hapus Semua Data</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Otak lokal selalu aktif sebagai cadangan • Memori percakapan: Aktif • <span id="aiFoot">Engine: gpt-4o-mini (gratis)</span></p></div></div>
 </div>
 
 <div class="composer" id="composer">
@@ -236,12 +236,16 @@ if(navigator.getBattery)navigator.getBattery().then(b=>{const f=()=>$('batt').te
 /* chat */
 function bubbleMe(t){const r=document.createElement('div');r.className='bubble-row me';r.innerHTML=`<div class="bubble"></div>`;r.querySelector('.bubble').textContent=t;const s=document.createElement('span');s.className='time';s.innerHTML=` ${now()} <span class="checks">✓✓</span>`;r.querySelector('.bubble').appendChild(s);$('chatFeed').appendChild(r);r.scrollIntoView({behavior:'smooth'})}
 function bubbleAI(html,plain){const r=document.createElement('div');r.className='bubble-row ai';r.innerHTML=`<div class="small-avatar">👦</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;$('chatFeed').appendChild(r);r.scrollIntoView({behavior:'smooth'});setTimeout(()=>{r.querySelector('.bubble').innerHTML=html+`<span class="time" style="display:block;text-align:right;margin-top:8px">${now()}</span>`;r.scrollIntoView({behavior:'smooth'});speak(plain||r.querySelector('.bubble').innerText.slice(0,160));pushActivity('💬',html.replace(/<[^>]+>/g,'').slice(0,42)+'...')},900)}
-/* ===== Mesin AI tanpa login (Nano → Pollinations → lokal) ===== */
-const POLLI_MODELS=['openai','mistral','llama'];
+/* ===== Mesin AI tanpa login (Nano → Pollinations gratis → lokal) + OpenCode Zen ===== */
+const POLLI_MODELS=['openai-fast','openai','mistral','llama'];
+const ZEN_FREE_MODELS=['space-bunny-free','mimo-v2.6-flash-free','deepseek-v4-flash-free','muse-spark-1.3-contributor-free','muse-spark-1.2-contributor-free','longcat-2.5-preview-free','ling-3.1-flash-free','ling-3.0-flash-fin-free','nemotron-3-ultra-free','nemotron-3.5-lightning-free','jev-1.13-free','fledge-alpha-free','mimo-v2.5-free'];
 const PUTER_MODELS=['gpt-4o-mini','gpt-4o','claude-sonnet-4','gemini-2.5-flash','deepseek-chat'];
 let aiMode=store.get('aiMode','auto');
-if(!['auto','offline','premium','custom','super'].includes(aiMode))aiMode='auto';
-let aiModel=store.get('aiModel','openai');
+if(!['auto','offline','premium','custom','super','zen'].includes(aiMode))aiMode='auto';
+let aiModel=store.get('aiModel','openai-fast');
+if(!POLLI_MODELS.includes(aiModel)&&!PUTER_MODELS.includes(aiModel))aiModel='openai-fast';
+let zenModel=store.get('zenModel','space-bunny-free');
+if(!ZEN_FREE_MODELS.includes(zenModel))zenModel='space-bunny-free';
 let customCfg=store.get('custom',{url:'',key:'',model:''});
 let hist=store.get('hist',[]);
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
@@ -279,11 +283,27 @@ async function nanoEngine(userText){
 async function polliEngine(userText){
   const ctx=hist.slice(-6).map(h=>(h.role==='ai'?'Friday: ':'Grezio: ')+h.text).join('\n').slice(-1200);
   const prompt=(sysPrompt()+'\n'+(ctx?('Riwayat:\n'+ctx+'\n'):'')+'Grezio: '+userText+'\nFriday:').slice(0,1800);
-  const r=await fetch('https://text.pollinations.ai/'+encodeURIComponent(prompt)+'?model='+encodeURIComponent(aiModel)+'&private=true',{headers:{Accept:'text/plain'}});
-  const t=await r.text();
-  if(!r.ok||/^\s*\{"error"/.test(t))throw new Error('pollinations-busy');
-  return t.trim()}
-function errHint(e){const m=(e&&e.message)||'koneksi';if(m.indexOf('nano')===0)return 'AI bawaan browser belum tersedia di perangkat ini';if(m==='webgpu-unavailable')return 'perangkat/browser tidak mendukung WebGPU (pakai Chrome/Edge baru)';if(m==='download-batal')return 'unduhan model dibatalkan';if(m==='pollinations-busy')return 'server AI gratis sedang sibuk';if(m==='key-belum-diisi')return 'endpoint/kunci sendiri belum diisi (lihat Pengaturan)';if(m==='puter-belum-muat')return 'Puter.js belum termuat';return m}
+  const tries=[...new Set([aiModel,'openai-fast','openai'])];
+  let lastErr=null;
+  for(const m of tries){
+    try{
+      const r=await fetch('https://text.pollinations.ai/'+encodeURIComponent(prompt)+'?model='+encodeURIComponent(m)+'&private=true',{headers:{Accept:'text/plain'}});
+      const t=await r.text();
+      if(!r.ok||/^\s*\{"error"/.test(t))throw new Error('pollinations-busy');
+      return t.trim()}catch(e){lastErr=e}
+  }
+  throw lastErr||new Error('pollinations-busy')}
+async function zenEngine(userText){
+  const body={model:zenModel,messages:[{role:'system',content:sysPrompt()},...hist.slice(-10).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}],max_tokens:500,temperature:.7,stream:false};
+  let r;
+  try{r=await fetch('https://opencode.ai/zen/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer public','X-Opencode-Client':'cli','X-Opencode-Project':'global'},body:JSON.stringify(body)})}catch(e){throw new Error('zen-cors')}
+  let j=null;try{j=await r.json()}catch{throw new Error('zen-bad-response')}
+  const msg=j&&j.choices&&j.choices[0]&&j.choices[0].message;
+  const out=msg&&(msg.content||msg.reasoning_content);
+  if(out&&out.trim())return out.trim();
+  const srv=(j&&(j.error&&j.error.message||j.message))||('HTTP '+r.status);
+  throw new Error('zen: '+String(srv).slice(0,140))}
+function errHint(e){const m=(e&&e.message)||'koneksi';if(m.indexOf('nano')===0)return 'AI bawaan browser belum tersedia di perangkat ini';if(m==='webgpu-unavailable')return 'perangkat/browser tidak mendukung WebGPU (pakai Chrome/Edge baru)';if(m==='download-batal')return 'unduhan model dibatalkan';if(m==='pollinations-busy')return 'server AI gratis sedang sibuk';if(m==='zen-cors')return 'browser memblokir akses langsung ke OpenCode (butuh perantara server) — Friday pakai AI gratis lain';if(m.indexOf('zen: Error from provider (Console):')===0)return m.replace('zen: Error from provider (Console): ','OpenCode: ').slice(0,140);if(m.indexOf('zen:')===0)return m.slice(5,145);if(m==='key-belum-diisi')return 'endpoint/kunci sendiri belum diisi (lihat Pengaturan)';if(m==='puter-belum-muat')return 'Puter.js belum termuat';return m}
 async function fridayOnline(userText){
   const msgs=()=>[ {role:'system',content:sysPrompt()},...hist.slice(-10).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}];
   if(aiMode==='premium'){
@@ -295,6 +315,10 @@ async function fridayOnline(userText){
     const out=await customChat(msgs());
     pushHist('user',userText);pushHist('ai',out);return out}
   if(aiMode==='super'){const t=await superEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}
+  if(aiMode==='zen'){
+    try{const t=await zenEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}
+    catch(ze){try{const t=await polliEngine(userText);const out=t+'\n\n_(dicoba via OpenCode Zen dulu: '+errHint(ze)+')';pushHist('user',userText);pushHist('ai',out);return out}catch{throw ze}}
+  }
   try{const t=await nanoEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}catch(e){if(e.message!=='nano-unavailable'&&e.message.indexOf('nano-')!==0)throw e}
   const t=await polliEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}
 const canOnline=()=>aiMode!=='offline';
@@ -302,10 +326,12 @@ async function customChat(msgs){const u=customCfg.url.replace(/\/$/,'');const r=
 async function askFriday(text){go('chat');bubbleMe(text);if(canOnline()){const ph=typingPh();try{const t=await fridayOnline(text);fillPh(ph,mdLite(t),t)}catch(e){const a=fridayBrain(text);fillPh(ph,a.html+`<div class="card-in warn"><h4>⚠️ Mode offline</h4><div style="font-size:13.5px">${errHint(e)} — jawaban dari otak lokal. Coba lagi nanti ya.</div></div>`,a.plain);toast('AI online tak tersedia, pakai otak lokal 📴')}}else{const a=fridayBrain(text);setTimeout(()=>bubbleAI(a.html,a.plain),400)}}
 async function sendMsg(){const v=$('msg').value.trim();if(!v)return;$('msg').value='';bubbleMe(v);if(canOnline()){const ph=typingPh();try{const t=await fridayOnline(v);fillPh(ph,mdLite(t),t)}catch(e){const a=fridayBrain(v);fillPh(ph,a.html+`<div class="card-in warn"><h4>⚠️ Mode offline</h4><div style="font-size:13.5px">${errHint(e)} — jawaban dari otak lokal. Coba lagi nanti ya.</div></div>`,a.plain);toast('AI online tak tersedia, pakai otak lokal 📴')}}else{const a=fridayBrain(v);setTimeout(()=>bubbleAI(a.html,a.plain),500)}}
 function toggleEngine(){aiMode=aiMode==='auto'?'offline':'auto';store.set('aiMode',aiMode);updateEngineUI();toast(aiMode==='auto'?'✨ Otomatis Tanpa Login aktif':'📴 Mode Offline aktif')}
-function modeLabel(){return aiMode==='auto'?'Otomatis Tanpa Login':aiMode==='offline'?'Offline saja':aiMode==='premium'?'Premium Puter':aiMode==='super'?'Super Offline':'Kunci sendiri'}
-function modelList(){return aiMode==='premium'?PUTER_MODELS:aiMode==='super'?['Qwen2.5-0.5B (di HP)']:POLLI_MODELS}
-function updateEngineUI(){const eb=$('engineBtn');if(eb)eb.textContent=aiMode==='auto'?'✨ Tanpa Login':aiMode==='offline'?'📴 Offline':aiMode==='super'?'📦 Super':aiMode==='premium'?('💎 '+aiModel):'🔑 Key';const mr=$('aiModelRow');if(mr)mr.textContent='Model: '+(aiMode==='offline'?'Otak lokal Friday':aiModel+(aiMode==='auto'?' (gratis, tanpa login)':aiMode==='premium'?' (puter)':aiMode==='super'?' (di HP)':' (key sendiri)'));const mo=$('aiModeRow');if(mo)mo.textContent='Mode: '+modeLabel();const ft=$('aiFoot');if(ft)ft.textContent='Engine: '+(aiMode==='offline'?'otak lokal':aiModel);const ms=$('aiModeSel');if(ms)ms.value=aiMode;const ml=$('aiModelSel');if(ml){const L=modelList();if(!L.includes(aiModel)){aiModel=L[0];store.set('aiModel',aiModel)}ml.innerHTML=L.map(m=>`<option ${m===aiModel?'selected':''}>${m}</option>`).join('');ml.value=aiModel;ml.disabled=(aiMode==='offline'||aiMode==='custom'||aiMode==='super')}const u=$('customUrl'),k=$('customKey'),cm=$('customModel');if(u){u.value=customCfg.url||'';k.value=customCfg.key||'';cm.value=customCfg.model||''}}
-function saveAI(){aiMode=$('aiModeSel').value;aiModel=$('aiModelSel').value;customCfg={url:$('customUrl').value.trim(),key:$('customKey').value.trim(),model:$('customModel').value.trim()};store.set('aiMode',aiMode);store.set('aiModel',aiModel);store.set('custom',customCfg);updateEngineUI();toast('Pengaturan AI disimpan ✅')}
+function modeLabel(){return aiMode==='auto'?'Otomatis Tanpa Login':aiMode==='offline'?'Offline saja':aiMode==='premium'?'Premium Puter':aiMode==='super'?'Super Offline':aiMode==='zen'?'OpenCode Zen (gratis)':'Kunci sendiri'}
+function modelList(){return aiMode==='premium'?PUTER_MODELS:aiMode==='super'?['Qwen2.5-0.5B (di HP)']:aiMode==='zen'?ZEN_FREE_MODELS:POLLI_MODELS}
+function curModel(){return aiMode==='zen'?zenModel:aiModel}
+function setCurModel(v){if(aiMode==='zen'){zenModel=v;store.set('zenModel',v)}else{aiModel=v;store.set('aiModel',v)}}
+function updateEngineUI(){const L0=modelList();let cv0=curModel();if(!L0.includes(cv0)){cv0=L0[0];setCurModel(cv0)}const eb=$('engineBtn');if(eb)eb.textContent=aiMode==='auto'?'✨ Tanpa Login':aiMode==='offline'?'📴 Offline':aiMode==='super'?'📦 Super':aiMode==='zen'?'🌌 Zen':aiMode==='premium'?('💎 '+aiModel):'🔑 Key';const mr=$('aiModelRow');if(mr)mr.textContent='Model: '+(aiMode==='offline'?'Otak lokal Friday':curModel()+(aiMode==='auto'?' (gratis, tanpa login)':aiMode==='premium'?' (puter)':aiMode==='super'?' (di HP)':aiMode==='zen'?' (OpenCode gratis)':' (key sendiri)'));const mo=$('aiModeRow');if(mo)mo.textContent='Mode: '+modeLabel();const ft=$('aiFoot');if(ft)ft.textContent='Engine: '+(aiMode==='offline'?'otak lokal':curModel());const ms=$('aiModeSel');if(ms)ms.value=aiMode;const ml=$('aiModelSel');if(ml){const L=modelList();let cv=curModel();if(!L.includes(cv)){cv=L[0];setCurModel(cv)}ml.innerHTML=L.map(m=>`<option ${m===cv?'selected':''}>${m}</option>`).join('');ml.value=cv;ml.disabled=(aiMode==='offline'||aiMode==='custom'||aiMode==='super')}const u=$('customUrl'),k=$('customKey'),cm=$('customModel');if(u){u.value=customCfg.url||'';k.value=customCfg.key||'';cm.value=customCfg.model||''}}
+function saveAI(){aiMode=$('aiModeSel').value;setCurModel($('aiModelSel').value);customCfg={url:$('customUrl').value.trim(),key:$('customKey').value.trim(),model:$('customModel').value.trim()};store.set('aiMode',aiMode);store.set('custom',customCfg);updateEngineUI();toast('Pengaturan AI disimpan ✅')}
 async function testAI(){if(!canOnline()){toast('Mode offline aktif — ganti ke Otomatis Tanpa Login dulu 📴');return}toast('🧪 Mengetes AI...');try{const t=await fridayOnline('Balas persis: Friday AI online OK');toast('✅ '+t.slice(0,60))}catch(e){toast('❌ Gagal: '+(e.message||'koneksi'))}}
 $('msg').addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
 function voice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Browser tidak mendukung voice — ketik saja 🎙️');return}const r=new SR();r.lang='id-ID';toast('🎙️ Mendengarkan... bicara sekarang');r.onresult=e=>{const t=e.results[0][0].transcript;$('msg').value=t;sendMsg()};r.start()}
