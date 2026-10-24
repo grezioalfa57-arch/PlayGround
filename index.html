@@ -82,7 +82,7 @@ body{background:radial-gradient(1200px 800px at 20% -10%,#12306e 0%,transparent 
 .glass{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
 .glass h3{font-size:17px;margin-bottom:10px}
 .row{display:flex;gap:10px;flex-wrap:wrap}
-.inp{background:#0b1a3c;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px 12px;font-size:14px;outline:0}
+.inp{background:#0b1a3c;border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px 12px;font-size:14px;outline:0;min-width:0}
 .inp:focus{border-color:var(--blue2)}
 .btn{background:linear-gradient(90deg,#1f6bff,#0f3fc0);border:0;color:#fff;border-radius:10px;padding:10px 16px;font-size:14px;cursor:pointer;font-weight:600}
 .btn.ghost{background:#16295a}
@@ -115,10 +115,44 @@ th{color:var(--muted);font-weight:600;font-size:13px}
 .act .dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:16px;flex:0 0 32px}
 .link{color:#4da3ff;font-size:13.5px;cursor:pointer;background:none;border:0;margin-top:6px}
 .sig{text-align:center;color:#9db1d8;font-family:cursive;font-size:22px;line-height:1.3}
+.agent-badge{font-size:10.5px;padding:2px 7px;border-radius:6px;background:linear-gradient(90deg,#1f6bff,#00c2ff);color:#fff;letter-spacing:.6px;font-weight:800;cursor:pointer;vertical-align:middle}
+.side-card .kv .agent-badge{font-size:10px}
 .hidden{display:none!important}
 @media(max-width:1180px){.app{grid-template-columns:250px minmax(0,1fr)}.right{display:none}}
-@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:20;left:0;top:0;bottom:0;width:272px;transform:translateX(-105%);transition:.25s}.sidebar.open{transform:none;box-shadow:20px 0 60px rgba(0,0,0,.5)}.backbtn{display:block}.bubble{max-width:92%}}
+@media(max-width:760px){.top-actions .icon-btn:nth-child(n+2){display:none}.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:20;left:0;top:0;bottom:0;width:272px;transform:translateX(-105%);transition:.25s}.sidebar.open{transform:none;box-shadow:20px 0 60px rgba(0,0,0,.5)}.backbtn{display:block}.bubble{max-width:92%}}
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#13234d;border:1px solid var(--blue2);padding:10px 18px;border-radius:24px;font-size:14px;display:none;z-index:50}
+/* ===== Mode sederhana ala WhatsApp ===== */
+body.wa{background:#0B141A}
+body.wa .app{grid-template-columns:1fr;max-width:860px;box-shadow:0 0 60px rgba(0,0,0,.6)}
+body.wa .sidebar,body.wa .right{display:none!important}
+body.wa .main{height:100vh;background:#0B141A}
+body.wa .topbar{background:#202C33;border-bottom:1px solid #111B21;padding:8px 12px}
+body.wa .backbtn{display:block;background:none;border:0;color:#AEBAC1;font-size:22px;padding:4px 8px;cursor:pointer}
+body.wa .top-avatar{width:40px;height:40px;font-size:23px;background:#3A4A54;box-shadow:none}
+body.wa .t-name{font-size:16px;color:#E9EDEF}
+body.wa .t-sub{color:#8696A0;font-size:12.5px}
+body.wa .top-actions .icon-btn{color:#AEBAC1;font-size:19px;padding:6px}
+body.wa .views{background:#0B141A;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:18px 18px;padding:12px 10px}
+body.wa #view-chat{max-width:100%;gap:6px}
+body.wa .bubble-row{gap:6px}
+body.wa .small-avatar{display:none}
+body.wa .bubble{max-width:86%;border:0;border-radius:10px;padding:8px 11px 20px;font-size:14.6px;box-shadow:0 1px 1px rgba(0,0,0,.3);line-height:1.45;position:relative}
+body.wa .me .bubble{background:#005C4B;color:#E9EDEF;border-top-right-radius:3px}
+body.wa .ai .bubble{background:#202C33;color:#E9EDEF;border-top-left-radius:3px}
+body.wa .bubble .time{position:absolute!important;right:8px!important;bottom:4px!important;margin:0!important;display:inline!important;color:rgba(233,237,239,.6)!important;font-size:11px;line-height:1}
+body.wa .bubble .time[style]{display:inline!important;text-align:right!important;margin:0!important}
+body.wa .card-in{background:rgba(0,0,0,.18);border:0;border-radius:8px;padding:9px 10px}
+body.wa .card-in h4{font-size:14.5px}
+body.wa .card-in ul{font-size:14px}
+body.wa .warn{border:0;background:rgba(255,176,32,.12)}
+body.wa .composer{background:#0B141A;padding:7px 10px 11px}
+body.wa .inputbar{gap:8px;max-width:100%}
+body.wa .plus{display:none}
+body.wa .textbox{background:#2A3942;border:0;border-radius:24px;padding:3px 5px 3px 16px}
+body.wa .textbox input{color:#E9EDEF;font-size:15px}
+body.wa .send{background:#00A884;width:42px;height:42px;font-size:17px;box-shadow:none}
+body.wa .chips{display:none}
+@media(max-width:760px){body.wa .app{max-width:100%}#view-skills .row>.inp,#view-skills .row>select{flex:1 1 100%!important}#view-skills .row>.btn{flex:0 0 auto}}
 </style>
 </head>
 <body>
@@ -136,16 +170,16 @@ th{color:var(--muted);font-weight:600;font-size:13px}
 <div class="quote">“Siap membantu, Grezio. Ada yang bisa Friday bantu hari ini?”</div>
 </div>
 <div class="wake"><div class="mic-circle">🎙️</div><div><strong>Wake Word</strong>Hey Friday</div></div>
-<div class="ver">v1.4.0 • AI Gratis + Zen</div>
+<div class="ver">v1.9.0 • Web + Memori</div>
 </aside>
 
 <!-- CENTER -->
 <main class="main">
 <div class="topbar">
-<button class="backbtn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+<button class="backbtn" onclick="backAction()">☰</button>
 <div class="top-avatar">👦</div>
-<div><div class="t-name">Friday <span class="online-dot"></span></div><div class="t-sub"><span class="online-dot"></span> Online</div></div>
-<div class="top-actions"><button class="icon-btn" onclick="toast('Panggilan suara segera hadir 📞')" title="Call">📞</button><button class="icon-btn" onclick="toast('Pencarian chat: ketik di bawah lalu Friday carikan 🔍')" title="Search">🔍</button><button class="icon-btn" onclick="toast('Menu: gunakan sidebar kiri ⋮')" title="Menu">⋮</button></div>
+<div><div class="t-name">Friday <span class="online-dot"></span><span id="agentBadge" class="agent-badge" onclick="toggleAgent()" title="Aktif/nonaktifkan mode agen">AGENT</span><span id="orchBadge" class="agent-badge" style="background:rgba(56,225,255,.14);color:#38e1ff;border-color:rgba(56,225,255,.4)" onclick="go('setting')" title="Orchestrator: rencana multi-langkah">ORCH</span></div><div class="t-sub"><span class="online-dot"></span> Online</div></div>
+<div class="top-actions"><button class="icon-btn" id="waBtn" onclick="toggleWA()" title="Mode sederhana ala WhatsApp">💬</button><button class="icon-btn" onclick="toast('Panggilan suara segera hadir 📞')" title="Call">📞</button><button class="icon-btn" onclick="toast('Pencarian chat: ketik di bawah lalu Friday carikan 🔍')" title="Search">🔍</button><button class="icon-btn" onclick="toast('Menu: gunakan sidebar kiri ⋮')" title="Menu">⋮</button></div>
 </div>
 
 <div class="views">
@@ -177,23 +211,38 @@ Baik, Grezio. Berikut ringkasan pasar saham hari ini dan analisa singkat untuk L
 
 <div id="view-rutin" class="panel hidden"><div class="glass"><h3>⚙️ Rutin &amp; Otomasi</h3><div id="autoList"></div></div></div>
 
+<div id="view-skills" class="panel hidden">
+<div class="glass"><h3>🧩 Skills Friday</h3><p style="color:var(--muted);font-size:13.5px;margin-bottom:10px">Friday bisa mengusulkan skill baru saat butuh. Semua skill <b>harus kamu ACC</b> dulu sebelum aktif. Skill berisi pemicu + rangkaian alat yang sudah ada (aman, tanpa kode asing).</p>
+<div class="row"><input class="inp" id="skName" placeholder="Nama skill (mis. Laporan Pagi)" style="flex:1"><input class="inp" id="skTrig" placeholder="Pemicu, pisah koma (mis. laporan pagi,pagi ini)" style="flex:1.4"></div>
+<div class="row" style="margin-top:8px"><select class="inp" id="skType" onchange="document.getElementById('skReply').style.display=this.value==='balas'?'block':'none';document.getElementById('stepRow').style.display=this.value==='balas'?'none':'flex'"><option value="langkah">Langkah alat</option><option value="balas">Balasan tetap</option></select><select class="inp" id="skTool"></select><input class="inp" id="skArgs" placeholder='Args JSON (mis. {"teks":"..."})' style="flex:1"><button class="btn" onclick="addSkillStep()">+ Langkah</button></div>
+<div id="skSteps" style="margin-top:8px;font-size:13px;color:var(--muted)"></div>
+<textarea class="inp" id="skReply" rows="2" placeholder="Balasan tetap..." style="width:100%;margin-top:8px;display:none"></textarea>
+<div class="row" style="margin-top:10px"><button class="btn" onclick="saveSkill()">Simpan Skill</button><button class="btn ghost" onclick="document.getElementById('skName').value='';document.getElementById('skTrig').value='';tempSteps=[];renderStepDraft()">Reset</button></div>
+</div>
+<div class="glass"><h3>✅ Skill Aktif</h3><div id="skillList"></div></div>
+<div class="glass"><h3>⏳ Menunggu ACC</h3><div id="pendingList"></div></div>
+</div>
+
+<div id="view-memori" class="panel hidden"><div class="glass"><h3>🧠 Memori Jangka Panjang</h3><p style="color:var(--muted);font-size:13.5px;margin-bottom:10px">Friday mengingat fakta & preferensi ini di semua mode. Tersimpan lokal di perangkat, bisa dihapus kapan saja.</p><div class="row"><input class="inp" id="memInput" placeholder="Mis. Aku suka kopi tanpa gula" style="flex:1"><input class="inp" id="memTag" placeholder="tag (opsional)" style="flex:.5"><button class="btn" onclick="saveMemoryUI()">Simpan</button></div><div id="memList" style="margin-top:8px"></div></div></div>
 <div id="view-device" class="panel hidden"><div class="glass"><h3>📱 Perangkat Android</h3><div id="devInfo" style="font-size:14px;line-height:2;color:#cfdbf5"></div><div class="row" style="margin-top:10px"><button class="btn" onclick="speak('Halo Grezio, semua sistem perangkat berjalan normal.')">🔊 Tes Suara</button><button class="btn ghost" onclick="toast('Mode hemat baterai aktif 🔋')">🔋 Hemat Baterai</button></div></div></div>
 
 <div id="view-ilmu" class="panel hidden"><div class="glass"><h3>📚 Pengetahuan</h3><div class="row"><input class="inp" id="q" placeholder="Tanya apa saja... (mis. apa itu IHSG?)" style="flex:1"><button class="btn" onclick="tanyaIlmu()">Tanya</button></div><div id="ilmuOut" style="margin-top:10px;font-size:14.5px;line-height:1.7;color:#d3def7">Friday siap menjawab seputar saham, produktivitas, dan pengetahuan umum.</div></div></div>
 
-<div id="view-setting" class="panel hidden"><div class="glass"><h3>🧠 Mesin AI Gratis</h3><div class="row"><label style="font-size:14px;flex:1">Mode:<br><select class="inp" id="aiModeSel" style="width:100%;margin-top:4px"><option value="auto">✨ Otomatis Tanpa Login (Nano → AI gratis → offline)</option><option value="offline">📴 Offline saja (otak lokal, tercepat)</option><option value="premium">💎 Premium Puter (perlu login 1x)</option><option value="custom">🔑 Kunci sendiri (Gemini/Groq/dll)</option><option value="super">📦 Super Offline (unduh model 1x ±500MB)</option><option value="zen">🌌 OpenCode Zen (model gratis OpenCode)</option></select></label><label style="font-size:14px;flex:1">Model:<br><select class="inp" id="aiModelSel" style="width:100%;margin-top:4px"></select></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveAI()">Simpan AI</button><button class="btn ghost" onclick="testAI()">Tes AI</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Tanpa login: Friday memakai <b>AI bawaan browser</b> (Chrome/Edge baru, Gemini Nano, 100% di HP) lalu <b>AI gratis Pollinations</b> (GPT-OSS 20B, tanpa login) bila ada internet. Gagal? Otomatis ke otak lokal — chat tidak pernah mati. Ada juga mode 📦 <b>Super Offline</b>: unduh model AI ±500MB sekali via WiFi, lalu pintar selamanya tanpa internet & tanpa login (butuh Chrome/Edge baru). Mode 🌌 <b>OpenCode Zen</b>: memakai 13 model gratis OpenCode (mis. space-bunny-free, DeepSeek, Muse Spark, Nemotron) — bila browser/kuota menolak, otomatis dialihkan ke AI gratis.</p><details style="margin-top:10px"><summary style="font-size:13.5px;color:#4da3ff;cursor:pointer">Model premium / kunci sendiri — opsional</summary><div class="row" style="margin-top:8px"><input class="inp" id="customUrl" placeholder="Endpoint OpenAI-compatible (mis. https://api.groq.com/openai/v1)" style="flex:1"></div><div class="row" style="margin-top:8px"><input class="inp" id="customKey" type="password" placeholder="API key (hanya tersimpan di HP ini)" style="flex:1"><input class="inp" id="customModel" placeholder="Model (mis. llama-3.3-70b-versatile)" style="flex:1"></div></details></div><div class="glass"><h3>⚙️ Pengaturan</h3><div class="row"><label style="font-size:14px">Nama panggilan: <input class="inp" id="setName" value="Grezio"></label><label style="font-size:14px">Lokasi: <input class="inp" id="setLoc" value="Tambun, Bekasi"></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveSettings()">Simpan</button><button class="btn ghost" onclick="clearAll()">Hapus Semua Data</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Otak lokal selalu aktif sebagai cadangan • Memori percakapan: Aktif • <span id="aiFoot">Engine: gpt-4o-mini (gratis)</span></p></div></div>
+<div id="view-setting" class="panel hidden"><div class="glass"><h3>🧠 Mesin AI Gratis</h3><div class="row"><label style="font-size:14px;flex:1">Mode:<br><select class="inp" id="aiModeSel" style="width:100%;margin-top:4px"><option value="auto">✨ Otomatis Tanpa Login (Nano → AI gratis → offline)</option><option value="offline">📴 Offline saja (otak lokal, tercepat)</option><option value="premium">💎 Premium Puter (perlu login 1x)</option><option value="custom">🔑 Kunci sendiri (Gemini/Groq/dll)</option><option value="super">📦 Super Offline — Hermes (unduh 1x)</option><option value="zen">🌌 OpenCode Zen (model gratis OpenCode)</option></select></label><label style="font-size:14px;flex:1">Model:<br><select class="inp" id="aiModelSel" style="width:100%;margin-top:4px"></select></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveAI()">Simpan AI</button><button class="btn ghost" onclick="testAI()">Tes AI</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Tanpa login: Friday memakai <b>AI bawaan browser</b> (Chrome/Edge baru, Gemini Nano, 100% di HP) lalu <b>AI gratis Pollinations</b> (GPT-OSS 20B, tanpa login) bila ada internet. Gagal? Otomatis ke otak lokal — chat tidak pernah mati. Ada juga mode 📦 <b>Super Offline — Hermes</b>: pilih model <b>Hermes 3</b> (Llama 3.2 3B ±2GB atau Llama 3.1 8B ±4,6GB), unduh sekali via WiFi, lalu Friday pintar selamanya tanpa internet & tanpa login (butuh Chrome/Edge baru + WebGPU). Mode 🌌 <b>OpenCode Zen</b>: memakai 13 model gratis OpenCode (mis. space-bunny-free, DeepSeek, Muse Spark, Nemotron) — bila browser/kuota menolak, otomatis dialihkan ke AI gratis.</p><details style="margin-top:10px"><summary style="font-size:13.5px;color:#4da3ff;cursor:pointer">Model premium / kunci sendiri — opsional</summary><div class="row" style="margin-top:8px"><input class="inp" id="customUrl" placeholder="Endpoint OpenAI-compatible (mis. https://api.groq.com/openai/v1)" style="flex:1"></div><div class="row" style="margin-top:8px"><input class="inp" id="customKey" type="password" placeholder="API key (hanya tersimpan di HP ini)" style="flex:1"><input class="inp" id="customModel" placeholder="Model (mis. llama-3.3-70b-versatile)" style="flex:1"></div></details></div><div class="glass"><h3>🧠 Orchestrator</h3><div class="todo"><span class="t"><b>Rencana multi-langkah</b><br><small style="color:var(--muted)">Pecah tugas, jalankan paralel, lalu verifikasi.</small></span><div class="switch on" id="orchSwitch" onclick="toggleOrch()"></div></div><div class="todo"><span class="t"><b>ACC untuk aksi batch</b><br><small style="color:var(--muted)">Minta persetujuan bila ≥2 aksi mengubah data.</small></span><div class="switch on" id="safeSwitch" onclick="toggleSafe()"></div></div><div class="todo"><span class="t"><b>Balas multi-bahasa</b><br><small style="color:var(--muted)">Ikuti bahasa user (Indonesia/English/dll).</small></span><div class="switch on" id="langSwitch" onclick="toggleMultiLang()"></div></div></div><div class="glass"><h3>⚙️ Pengaturan</h3><div class="row"><label style="font-size:14px">Nama panggilan: <input class="inp" id="setName" value="Grezio"></label><label style="font-size:14px">Lokasi: <input class="inp" id="setLoc" value="Tambun, Bekasi"></label></div><div class="row" style="margin-top:10px"><button class="btn" onclick="saveSettings()">Simpan</button><button class="btn ghost" onclick="clearAll()">Hapus Semua Data</button></div><p style="color:var(--muted);font-size:13px;margin-top:10px">Otak lokal selalu aktif sebagai cadangan • Memori percakapan: Aktif • <span id="aiFoot">Engine: gpt-4o-mini (gratis)</span></p></div></div>
 </div>
 
 <div class="composer" id="composer">
-<div class="inputbar"><button class="plus" onclick="toast('Lampiran: foto, file, audio segera hadir 📎')">+</button>
-<div class="textbox"><input id="msg" placeholder="Ketik pesan atau ucapkan..." autocomplete="off"><button class="send" onclick="sendMsg()" title="Kirim">🎙️</button></div></div>
-<div class="chips"><button id="engineBtn" onclick="toggleEngine()">🧠 AI: gpt-4o-mini</button><button onclick="voice()">🎙️ Voice</button><button onclick="toast('Kamera dibuka 📷 (demo)')">📷 Kamera</button><button onclick="go('peta')">🗺️ Maps</button><button onclick="toast('Pilih file 📎 (demo)')">📎 Lampiran</button></div>
+<div id="attachBar" class="chips" style="display:none"></div>
+<input type="file" id="fileInput" multiple accept=".txt,.md,.csv,.json,.pdf,image/*" style="display:none" onchange="handleFiles(this.files)">
+<div class="inputbar"><button class="plus" onclick="document.getElementById('fileInput').click()" title="Lampirkan file / gambar">+</button>
+<div class="textbox"><input id="msg" placeholder="Ketik pesan atau ucapkan..." autocomplete="off"><button class="send" id="sendBtn" onclick="sendMsg()" title="Kirim">🎙️</button></div></div>
+<div class="chips"><button id="agentBtn" onclick="toggleAgent()">🤖 Agent: ON</button><button id="engineBtn" onclick="toggleEngine()">🧠 AI: gpt-4o-mini</button><button onclick="voice()">🎙️ Voice</button><button onclick="toast('Kamera dibuka 📷 (demo)')">📷 Kamera</button><button onclick="go('peta')">🗺️ Maps</button><button onclick="toast('Pilih file 📎 (demo)')">📎 Lampiran</button></div>
 </div>
 </main>
 
 <!-- RIGHT -->
 <aside class="right">
-<div class="profile"><div class="big-avatar">👦</div><div><h2>Friday</h2><small>Versi Nemotron 3.5 Lightning</small><div style="color:var(--green);font-size:13px;margin-top:4px"><span class="online-dot"></span> Online</div></div></div>
+<div class="profile"><div class="big-avatar">👦</div><div><h2>Friday</h2><small>Agent AI • Hermes 3</small><div style="color:var(--green);font-size:13px;margin-top:4px"><span class="online-dot"></span> Online</div></div></div>
 <div class="qquote">“Selalu belajar,<br>selalu membantu.”</div>
 <div class="side-card"><h3>Konteks Sekarang</h3>
 <div class="kv"><span class="ic">📅</span><span id="ctxDate">Hari ini: —</span></div>
@@ -222,10 +271,10 @@ Baik, Grezio. Berikut ringkasan pasar saham hari ini dan analisa singkat untuk L
 const $=id=>document.getElementById(id);
 const store={get:(k,d)=>{try{const v=localStorage.getItem('friday_'+k);return v?JSON.parse(v):d}catch{return d}},set:(k,v)=>localStorage.setItem('friday_'+k,JSON.stringify(v))};
 let userName=store.get('name','Grezio');
-const MENU=[['chat','💬','Chat'],['rencana','📅','Rencana Harian'],['notion','📝','Notion'],['saham','📊','Keuangan & Saham'],['peta','📍','Peta & Navigasi'],['pengingat','🔔','Pengingat'],['rutin','🔁','Rutin & Otomasi'],['device','📱','Perangkat Android'],['ilmu','📚','Pengetahuan'],['setting','⚙️','Pengaturan']];
+const MENU=[['chat','💬','Chat'],['rencana','📅','Rencana Harian'],['notion','📝','Notion'],['saham','📊','Keuangan & Saham'],['peta','📍','Peta & Navigasi'],['pengingat','🔔','Pengingat'],['rutin','🔁','Rutin & Otomasi'],['skills','🧩','Skills'],['memori','🧠','Memori'],['device','📱','Perangkat Android'],['ilmu','📚','Pengetahuan'],['setting','⚙️','Pengaturan']];
 let cur='chat';
 function buildNav(){$('nav').innerHTML=MENU.map(m=>`<button data-v="${m[0]}" class="${m[0]===cur?'active':''}" onclick="go('${m[0]}')"><span class="ic">${m[1]}</span>${m[2]}</button>`).join('')}
-function go(v){cur=v;buildNav();['chat','rencana','notion','saham','peta','pengingat','rutin','device','ilmu','setting'].forEach(x=>{const el=$('view-'+(x==='chat'?'chat':x));if(el)el.classList.toggle('hidden',x!==v)});$('composer').style.display=v==='chat'?'block':'none';document.getElementById('sidebar').classList.remove('open');window.scrollTo(0,0);document.querySelector('.views').scrollTop=0}
+function go(v){cur=v;buildNav();['chat','rencana','notion','saham','peta','pengingat','rutin','skills','memori','device','ilmu','setting'].forEach(x=>{const el=$('view-'+(x==='chat'?'chat':x));if(el)el.classList.toggle('hidden',x!==v)});$('composer').style.display=v==='chat'?'block':'none';document.getElementById('sidebar').classList.remove('open');window.scrollTo(0,0);document.querySelector('.views').scrollTop=0}
 function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e._t);e._t=setTimeout(()=>e.style.display='none',2400)}
 function now(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
 function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='id-ID';speechSynthesis.speak(u)}catch{}}
@@ -238,6 +287,12 @@ function bubbleMe(t){const r=document.createElement('div');r.className='bubble-r
 function bubbleAI(html,plain){const r=document.createElement('div');r.className='bubble-row ai';r.innerHTML=`<div class="small-avatar">👦</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;$('chatFeed').appendChild(r);r.scrollIntoView({behavior:'smooth'});setTimeout(()=>{r.querySelector('.bubble').innerHTML=html+`<span class="time" style="display:block;text-align:right;margin-top:8px">${now()}</span>`;r.scrollIntoView({behavior:'smooth'});speak(plain||r.querySelector('.bubble').innerText.slice(0,160));pushActivity('💬',html.replace(/<[^>]+>/g,'').slice(0,42)+'...')},900)}
 /* ===== Mesin AI tanpa login (Nano → Pollinations gratis → lokal) + OpenCode Zen ===== */
 const POLLI_MODELS=['openai-fast','openai','mistral','llama'];
+const LOCAL_MODELS=[
+ {id:'Qwen2.5-0.5B-Instruct-q4f16_1-MLC',label:'Qwen2.5 0.5B — ringan ±0.4GB'},
+ {id:'Hermes-3-Llama-3.2-3B-q4f16_1-MLC',label:'Hermes 3 (Llama 3.2 3B) — seimbang ±2GB'},
+ {id:'Hermes-3-Llama-3.1-8B-q4f16_1-MLC',label:'Hermes 3 (Llama 3.1 8B) — paling pintar ±4,6GB'},
+ {id:'Hermes-2-Pro-Mistral-7B-q4f16_1-MLC',label:'Hermes 2 Pro (Mistral 7B) ±4GB'}
+];
 const ZEN_FREE_MODELS=['space-bunny-free','mimo-v2.6-flash-free','deepseek-v4-flash-free','muse-spark-1.3-contributor-free','muse-spark-1.2-contributor-free','longcat-2.5-preview-free','ling-3.1-flash-free','ling-3.0-flash-fin-free','nemotron-3-ultra-free','nemotron-3.5-lightning-free','jev-1.13-free','fledge-alpha-free','mimo-v2.5-free'];
 const PUTER_MODELS=['gpt-4o-mini','gpt-4o','claude-sonnet-4','gemini-2.5-flash','deepseek-chat'];
 let aiMode=store.get('aiMode','auto');
@@ -246,43 +301,54 @@ let aiModel=store.get('aiModel','openai-fast');
 if(!POLLI_MODELS.includes(aiModel)&&!PUTER_MODELS.includes(aiModel))aiModel='openai-fast';
 let zenModel=store.get('zenModel','space-bunny-free');
 if(!ZEN_FREE_MODELS.includes(zenModel))zenModel='space-bunny-free';
+let llmModel=store.get('llmModel','Hermes-3-Llama-3.2-3B-q4f16_1-MLC');
+if(!LOCAL_MODELS.some(x=>x.id===llmModel))llmModel=LOCAL_MODELS[0].id;
 let customCfg=store.get('custom',{url:'',key:'',model:''});
 let hist=store.get('hist',[]);
+let memories=store.get('memory',[]);
+let multiLang=store.get('multiLang',true);
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function mdLite(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^### (.+)$/gm,'<b>$1</b>').replace(/^## (.+)$/gm,'<b>$1</b>').replace(/\n/g,'<br>')}
-function sysPrompt(){return `Kamu Friday, teman AI pribadi ${userName} dari Indonesia. Bahasa: Indonesia santai & hangat. Lokasi user: ${store.get('loc','Tambun, Bekasi')}. Waktu sekarang: ${new Date().toLocaleString('id-ID')}. Portofolio: LUCK 715 lot @111, SURI 623 lot @89,7. Aturan: jawaban ringkas (maks 220 kata), gunakan daftar bila cocok, SELALU sertakan risiko untuk topik saham dan tegaskan bukan ajakan beli/jual, tutup dengan satu kalimat hangat bila pas.`}
+function sysPrompt(){const mem=memories.slice(-12).map(m=>'- '+m.t).join('\n');const lang=multiLang?'Balas dalam bahasa yang sama dengan pesan user (Indonesia, English, atau lainnya).':'Balas selalu dalam Bahasa Indonesia santai.';return `Kamu Friday, teman AI pribadi ${userName} dari Indonesia. ${lang} Lokasi user: ${store.get('loc','Tambun, Bekasi')}. Waktu sekarang: ${new Date().toLocaleString('id-ID')}. Portofolio: LUCK 715 lot @111, SURI 623 lot @89,7. Aturan: jawaban ringkas (maks 220 kata), gunakan daftar bila cocok, SELALU sertakan risiko untuk topik saham dan tegaskan bukan ajakan beli/jual, tutup dengan satu kalimat hangat bila pas. Jika memakai info dari web, sebutkan sumbernya.`+(mem?'\nMemori user (pakai bila relevan):\n'+mem:'')}
 function pushHist(role,text){hist.push({role,text:text.slice(0,1200)});hist=hist.slice(-20);store.set('hist',hist)}
 function typingPh(){const r=document.createElement('div');r.className='bubble-row ai';r.innerHTML=`<div class="small-avatar">👦</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;$('chatFeed').appendChild(r);r.scrollIntoView({behavior:'smooth'});return r}
 function fillPh(row,html,plain){row.querySelector('.bubble').innerHTML=html+`<span class="time" style="display:block;text-align:right;margin-top:8px">${now()}</span>`;row.scrollIntoView({behavior:'smooth'});if(plain)speak(plain.slice(0,180));pushActivity('💬',row.querySelector('.bubble').innerText.slice(0,42)+'...')}
 function extractPuter(r){if(typeof r==='string')return r;if(r?.message?.content){const c=r.message.content;if(typeof c==='string')return c;if(Array.isArray(c))return c.map(x=>x.text||x.content||'').join('')}if(r?.text)return r.text;return JSON.stringify(r).slice(0,2000)}
-let llmEngine=null;
-async function superEngine(userText){
+let llmEngine=null,llmLoaded=null;
+async function superEngine(userText,sys){
+  sys=sys||sysPrompt();
   if(!navigator.gpu)throw new Error('webgpu-unavailable');
-  if(!llmEngine){
-    if(!store.get('llmOk',false)&&!confirm('Unduh model AI ±500MB SEKALI (disarankan via WiFi)? Setelah itu Friday pintar tanpa internet & tanpa login.'))throw new Error('download-batal');
+  if(!llmEngine||llmLoaded!==llmModel){
+    const info=LOCAL_MODELS.find(x=>x.id===llmModel)||LOCAL_MODELS[0];
+    const done=store.get('llmDone',[]);
+    if(!done.includes(llmModel)&&!confirm('Unduh '+info.label+' SEKALI (disarankan via WiFi)? Setelah itu Friday pintar tanpa internet & tanpa login.'))throw new Error('download-batal');
     const m=await import('https://esm.sh/@mlc-ai/web-llm');
     const eb=$('engineBtn');
-    llmEngine=await m.CreateMLCEngine('Qwen2.5-0.5B-Instruct-q4f16_1-MLC',{initProgressCallback:p=>{const pc=Math.round((p.progress||0)*100);if(eb)eb.textContent='📦 '+pc+'%';toast('📦 Mengunduh model: '+pc+'%')}});
-    store.set('llmOk',true)}
-  const r=await llmEngine.chat.completions.create({messages:[{role:'system',content:sysPrompt()},...hist.slice(-8).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}],temperature:.7,max_tokens:400});
+    if(llmEngine){try{await llmEngine.unload()}catch{}llmEngine=null;llmLoaded=null}
+    llmEngine=await m.CreateMLCEngine(llmModel,{initProgressCallback:p=>{const pc=Math.round((p.progress||0)*100);if(eb)eb.textContent='📦 '+pc+'%';toast('📦 '+info.label.split(' — ')[0]+': '+pc+'%')}});
+    llmLoaded=llmModel;
+    if(!done.includes(llmModel))store.set('llmDone',[...done,llmModel])}
+  const r=await llmEngine.chat.completions.create({messages:[{role:'system',content:sys},...hist.slice(-8).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}],temperature:.7,max_tokens:400});
   return ((r.choices&&r.choices[0]&&r.choices[0].message&&r.choices[0].message.content)||'...').trim()}
-async function nanoEngine(userText){
+async function nanoEngine(userText,sys){
+  sys=sys||sysPrompt();
   if(window.LanguageModel&&LanguageModel.availability){
     const st=await LanguageModel.availability();
     if(st!=='available')throw new Error('nano-'+st);
-    const s=await LanguageModel.create({systemPrompt:sysPrompt(),temperature:.7});
+    const s=await LanguageModel.create({systemPrompt:sys,temperature:.7});
     try{return await s.prompt(userText)}finally{if(s.destroy)s.destroy()}
   }
   if(window.ai&&ai.canCreateTextSession){
     const c=await ai.canCreateTextSession();
     if(c!=='readily')throw new Error('nano-'+c);
-    const s=await ai.createTextSession({systemPrompt:sysPrompt()});
+    const s=await ai.createTextSession({systemPrompt:sys});
     try{return await s.prompt(userText)}finally{if(s.destroy)s.destroy()}
   }
   throw new Error('nano-unavailable')}
-async function polliEngine(userText){
+async function polliEngine(userText,sys){
+  sys=sys||sysPrompt();
   const ctx=hist.slice(-6).map(h=>(h.role==='ai'?'Friday: ':'Grezio: ')+h.text).join('\n').slice(-1200);
-  const prompt=(sysPrompt()+'\n'+(ctx?('Riwayat:\n'+ctx+'\n'):'')+'Grezio: '+userText+'\nFriday:').slice(0,1800);
+  const prompt=(sys+'\n'+(ctx?('Riwayat:\n'+ctx+'\n'):'')+'Grezio: '+userText+'\nFriday:').slice(0,1800);
   const tries=[...new Set([aiModel,'openai-fast','openai'])];
   let lastErr=null;
   for(const m of tries){
@@ -293,8 +359,9 @@ async function polliEngine(userText){
       return t.trim()}catch(e){lastErr=e}
   }
   throw lastErr||new Error('pollinations-busy')}
-async function zenEngine(userText){
-  const body={model:zenModel,messages:[{role:'system',content:sysPrompt()},...hist.slice(-10).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}],max_tokens:500,temperature:.7,stream:false};
+async function zenEngine(userText,sys){
+  sys=sys||sysPrompt();
+  const body={model:zenModel,messages:[{role:'system',content:sys},...hist.slice(-10).map(h=>({role:h.role==='ai'?'assistant':'user',content:h.text})),{role:'user',content:userText}],max_tokens:500,temperature:.7,stream:false};
   let r;
   try{r=await fetch('https://opencode.ai/zen/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer public','X-Opencode-Client':'cli','X-Opencode-Project':'global'},body:JSON.stringify(body)})}catch(e){throw new Error('zen-cors')}
   let j=null;try{j=await r.json()}catch{throw new Error('zen-bad-response')}
@@ -323,15 +390,408 @@ async function fridayOnline(userText){
   const t=await polliEngine(userText);pushHist('user',userText);pushHist('ai',t);return t}
 const canOnline=()=>aiMode!=='offline';
 async function customChat(msgs){const u=customCfg.url.replace(/\/$/,'');const r=await fetch(u+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+customCfg.key},body:JSON.stringify({model:customCfg.model||'gpt-4o-mini',messages:msgs,max_tokens:600,temperature:0.7})});if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();return j.choices?.[0]?.message?.content||'...'}
-async function askFriday(text){go('chat');bubbleMe(text);if(canOnline()){const ph=typingPh();try{const t=await fridayOnline(text);fillPh(ph,mdLite(t),t)}catch(e){const a=fridayBrain(text);fillPh(ph,a.html+`<div class="card-in warn"><h4>⚠️ Mode offline</h4><div style="font-size:13.5px">${errHint(e)} — jawaban dari otak lokal. Coba lagi nanti ya.</div></div>`,a.plain);toast('AI online tak tersedia, pakai otak lokal 📴')}}else{const a=fridayBrain(text);setTimeout(()=>bubbleAI(a.html,a.plain),400)}}
-async function sendMsg(){const v=$('msg').value.trim();if(!v)return;$('msg').value='';bubbleMe(v);if(canOnline()){const ph=typingPh();try{const t=await fridayOnline(v);fillPh(ph,mdLite(t),t)}catch(e){const a=fridayBrain(v);fillPh(ph,a.html+`<div class="card-in warn"><h4>⚠️ Mode offline</h4><div style="font-size:13.5px">${errHint(e)} — jawaban dari otak lokal. Coba lagi nanti ya.</div></div>`,a.plain);toast('AI online tak tersedia, pakai otak lokal 📴')}}else{const a=fridayBrain(v);setTimeout(()=>bubbleAI(a.html,a.plain),500)}}
+/* ===== AGENT: alat + loop Hermes ===== */
+let agentMode=store.get('agentMode',true);
+const TOOLS=[
+ {n:'tambah_rencana',a:'{"teks":"..."}',d:'Tambah agenda / rencana harian'},
+ {n:'selesai_rencana',a:'{"cari":"kata kunci"}',d:'Tandai rencana selesai'},
+ {n:'tambah_pengingat',a:'{"teks":"...","jam":"HH:MM"}',d:'Atur pengingat'},
+ {n:'tambah_catatan',a:'{"judul":"...","isi":"..."}',d:'Simpan catatan'},
+ {n:'daftar_rencana',a:'{}',d:'Lihat semua rencana'},
+ {n:'daftar_pengingat',a:'{}',d:'Lihat semua pengingat'},
+ {n:'portofolio',a:'{}',d:'Lihat saham LUCK/SURI + untung-rugi'},
+ {n:'ringkasan_pasar',a:'{}',d:'Ringkasan IHSG hari ini'},
+ {n:'rute',a:'{"dari":"...","ke":"..."}',d:'Rute perjalanan real (OSRM/OpenStreetMap)'},
+ {n:'cari_web',a:'{"q":"..."}',d:'Cari info aktual di web (Wikipedia) + sumber'},
+ {n:'cuaca',a:'{"lokasi":"..."}',d:'Cuaca real-time (Open-Meteo)'},
+ {n:'ingat',a:'{"teks":"...","tag":"..."}',d:'Simpan memori jangka panjang tentang user'},
+ {n:'cari_memori',a:'{"q":"..."}',d:'Cari memori tersimpan'},
+ {n:'lupa',a:'{"q":"..."}',d:'Hapus memori yang cocok'},
+ {n:'daftar_memori',a:'{}',d:'Lihat semua memori'},
+ {n:'waktu',a:'{}',d:'Tanggal & jam sekarang'},
+ {n:'baca_aktivitas',a:'{}',d:'Aktivitas terakhir'}
+];
+function agentPrompt(){return sysPrompt()+`\n\nMODE AGENT AKTIF. Kamu boleh memakai alat berikut:\n`+allTools().map(t=>`- ${t.n}(${t.a}): ${t.d}`).join('\n')+`\n\nATURAN: balas HANYA satu objek JSON tanpa code fence. Jika butuh alat: {"tool":"nama_alat","args":{...}}. Jika sudah cukup: {"final":"jawaban akhir untuk user"}. Jika permintaan user butuh kemampuan yang BELUM ADA di daftar alat, ajukan skill baru: {"propose_skill":{"nama":"...","deskripsi":"...","pemicu":["kata pemicu"],"langkah":[{"tool":"alat_yang_ada","args":{...}}]}} — hanya boleh memakai alat yang ada. Jangan mengarang hasil alat. Gunakan cari_web untuk info aktual, cuaca untuk cuaca, rute untuk perjalanan, dan ingat bila user menyebut fakta/preferensi penting. Jawaban final tetap ringkas, Bahasa Indonesia, sertakan risiko untuk saham dan sumber bila memakai web.`}
+function parsePlan(raw){if(!raw)return null;let s=raw.trim().replace(/^```(?:json)?/i,'').replace(/```$/,'').trim();const tryParse=t=>{try{const o=JSON.parse(t);return(o&&typeof o==='object')?o:null}catch{return null}};let o=tryParse(s);if(o)return o;const m=s.match(/\{[\s\S]*\}/);if(m){o=tryParse(m[0]);if(o)return o}return null}
+function jget(o,k){return (o&&o[k]!=null)?String(o[k]).trim():''}
+/* ===== SKILLS: Friday mengusulkan, user ACC ===== */
+let skills=store.get('skills',[]);
+let pendingSkills={};
+let tempSteps=[];
+function allTools(){return TOOLS.concat(skills.map(s=>({n:'skill_'+s.id,a:'{}',d:'Skill "'+s.nama+'": '+(s.deskripsi||'')+(s.jenis==='langkah'?' (langkah: '+(s.langkah||[]).map(x=>x.tool).join(' → ')+')':'')})))}
+async function runSkill(s){
+  if(s.jenis==='balas')return{ok:true,text:s.jawaban||'(kosong)',html:mdLite(s.jawaban||'(kosong)')};
+  const steps=(s.langkah||[]).slice(0,5);
+  if(!steps.length)return{ok:false,text:'skill belum punya langkah',html:'Skill belum punya langkah.'};
+  const res=[];
+  for(const st of steps){if(String(st.tool).indexOf('skill_')===0)continue;const r=await execTool(st.tool,st.args||{});res.push({tool:st.tool,ok:r.ok,text:r.text,html:r.html});if(!r.ok)break}
+  return{ok:res.every(x=>x.ok),text:res.map(x=>x.text).join('; '),html:res.map(x=>x.html).join('<br>'),steps:res};
+}
+function normalizeSkill(o){
+  const nama=String(o.nama||o.name||'Skill baru').slice(0,60);
+  const rawT=o.pemicu||o.trigger||o.triggers||nama;
+  const pemicu=(Array.isArray(rawT)?rawT:String(rawT).split(',')).map(x=>String(x).trim()).filter(Boolean).slice(0,8);
+  const rawS=Array.isArray(o.langkah||o.steps)?(o.langkah||o.steps):[];
+  const langkah=rawS.filter(x=>x&&x.tool&&TOOLS.some(t=>t.n===x.tool)).map(x=>({tool:String(x.tool),args:(x.args&&typeof x.args==='object')?x.args:{}})).slice(0,5);
+  const jawaban=String(o.jawaban||o.reply||'');
+  const jenis=(o.jenis==='balas'||(!langkah.length&&jawaban))?'balas':'langkah';
+  return{id:'sk'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),nama,deskripsi:String(o.deskripsi||o.desc||'').slice(0,160),pemicu,jenis,langkah,jawaban,dibuat:new Date().toISOString()};
+}
+function skillProposalCard(s){
+  const row=document.createElement('div');row.className='bubble-row ai';row.id='card-'+s.id;
+  row.innerHTML=`<div class="small-avatar">👦</div><div class="bubble"><b>🧩 Friday butuh skill baru</b><div class="card-in"><b>${esc(s.nama)}</b><div style="font-size:13.5px;color:var(--muted);margin-top:3px">${esc(s.deskripsi||'-')}</div><div style="font-size:13px;margin-top:6px">Pemicu: ${s.pemicu.map(x=>esc(x)).join(', ')}</div><div style="font-size:13px">Aksi: ${s.jenis==='balas'?'balasan tetap':(s.langkah||[]).map(x=>esc(x.tool)).join(' → ')}</div></div><div class="row" style="margin-top:8px"><button class="btn" onclick="approveSkill('${s.id}')">✅ ACC</button><button class="btn ghost" onclick="rejectSkill('${s.id}')">❌ Tolak</button></div><span class="time">${now()}</span></div>`;
+  $('chatFeed').appendChild(row);row.scrollIntoView({behavior:'smooth'});
+}
+function approveSkill(id){const s=pendingSkills[id];if(!s)return;skills=skills.concat([s]);store.set('skills',skills);delete pendingSkills[id];renderSkills();renderPending();const c=$('card-'+id);if(c)c.querySelector('.bubble').innerHTML='<b>🧩 Skill di-ACC ✅</b><div class="card-in">Skill <b>'+esc(s.nama)+'</b> aktif. Coba ucapkan: <i>'+esc(s.pemicu[0]||s.nama)+'</i></div><span class="time">'+now()+'</span>';toast('Skill di-ACC ✅');pushActivity('🧩',s.nama)}
+function rejectSkill(id){const s=pendingSkills[id];if(!s)return;delete pendingSkills[id];renderPending();const c=$('card-'+id);if(c)c.querySelector('.bubble').innerHTML='<b>🧩 Usulan skill ditolak ❌</b><span class="time">'+now()+'</span>';toast('Usulan skill ditolak')}
+function renderPending(){const el=$('pendingList');if(!el)return;const l=Object.values(pendingSkills);el.innerHTML=l.length?l.map(s=>`<div class="todo" style="align-items:flex-start"><div><b>${esc(s.nama)}</b><div style="font-size:13px;color:var(--muted)">${esc(s.deskripsi||'-')} • pemicu: ${s.pemicu.map(esc).join(', ')}</div></div><div style="margin-left:auto;display:flex;gap:6px"><button class="btn" onclick="approveSkill('${s.id}')">ACC</button><button class="btn ghost" onclick="rejectSkill('${s.id}')">Tolak</button></div></div>`).join(''):'<div style="color:var(--muted);font-size:13.5px">Belum ada usulan.</div>'}
+function renderSkills(){const el=$('skillList');if(!el)return;el.innerHTML=skills.length?skills.map(s=>`<div class="todo"><span class="t"><b>${esc(s.nama)}</b><br><small style="color:var(--muted)">pemicu: ${s.pemicu.map(esc).join(', ')} • ${s.jenis==='balas'?'balasan tetap':'langkah: '+(s.langkah||[]).map(x=>esc(x.tool)).join(' → ')}</small></span><button class="link" style="margin-left:auto" onclick="delSkill('${s.id}')">Hapus</button></div>`).join(''):'<div style="color:var(--muted);font-size:13.5px">Belum ada skill. Minta Friday membuat, atau buat manual di atas.</div>'}
+function delSkill(id){skills=skills.filter(s=>s.id!==id);store.set('skills',skills);renderSkills();toast('Skill dihapus')}
+function populateSkillTools(){const sel=$('skTool');if(sel)sel.innerHTML=TOOLS.map(t=>`<option value="${t.n}">${t.n}</option>`).join('')}
+function addSkillStep(){const tool=$('skTool').value;let args={};try{args=$('skArgs').value.trim()?JSON.parse($('skArgs').value):{}}catch{toast('Args harus JSON valid');return}tempSteps.push({tool,args});$('skArgs').value='';renderStepDraft()}
+function renderStepDraft(){const el=$('skSteps');if(el)el.innerHTML=tempSteps.length?('Langkah: '+tempSteps.map((x,i)=>`${i+1}. <b>${esc(x.tool)}</b> ${esc(JSON.stringify(x.args))} <a href="#" onclick="tempSteps.splice(${i},1);renderStepDraft();return false" style="color:#4da3ff">hapus</a>`).join(' • ')):'Belum ada langkah.'}
+function saveSkill(){const nama=$('skName').value.trim();const trig=$('skTrig').value.split(',').map(x=>x.trim()).filter(Boolean);const jenis=$('skType').value;const jawaban=$('skReply').value.trim();if(!nama){toast('Nama skill dulu');return}if(!trig.length){toast('Isi minimal 1 pemicu');return}if(jenis==='langkah'&&!tempSteps.length){toast('Tambah minimal 1 langkah');return}if(jenis==='balas'&&!jawaban){toast('Isi balasan tetap');return}const s=normalizeSkill({nama,deskripsi:'Dibuat manual',pemicu:trig,jenis,langkah:tempSteps,jawaban});skills=skills.concat([s]);store.set('skills',skills);tempSteps=[];renderStepDraft();renderSkills();$('skName').value='';$('skTrig').value='';$('skReply').value='';toast('Skill disimpan ✅');pushActivity('🧩',nama)}
+
+/* ===== SUMBER NYATA: web, cuaca, rute ===== */
+function wmoDesc(c){if(c===0)return'Cerah';if(c===1)return'Cerah berawan';if(c===2)return'Berawan';if(c===3)return'Mendung';if(c===45||c===48)return'Kabut';if(c>=51&&c<=57)return'Gerimis';if(c>=61&&c<=67)return'Hujan';if(c>=71&&c<=77)return'Salju';if(c>=80&&c<=82)return'Hujan lokal';if(c>=95)return'Badai petir';return'Awan'}
+async function fetchJson(url,ms=12000){const ctl=new AbortController();const t=setTimeout(()=>ctl.abort(),ms);try{const r=await fetch(url,{signal:ctl.signal,headers:{'Accept':'application/json'}});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}}
+async function webSearch(q){
+  let lastErr='';
+  for(const l of ['id','en']){
+    try{
+      const s=await fetchJson(`https://${l}.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(q)}&format=json&origin=*&srlimit=3`);
+      const hits=(s.query&&s.query.search)||[];if(!hits.length)continue;
+      const title=hits[0].title;
+      const ex=await fetchJson(`https://${l}.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&exintro=1&titles=${encodeURIComponent(title)}&format=json&origin=*`);
+      const page=Object.values((ex.query&&ex.query.pages)||{})[0]||{};
+      const text=String(page.extract||'').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,3).join(' ').slice(0,700);
+      const sources=hits.map(h=>({title:h.title,url:`https://${l}.wikipedia.org/wiki/${encodeURIComponent(h.title.replace(/ /g,'_'))}`}));
+      const links=sources.map(x=>`<a href="${x.url}" target="_blank" rel="noopener" style="color:#4da3ff">${esc(x.title)}</a>`).join(' · ');
+      return{ok:true,text:(text||('Hasil: '+hits.map(h=>h.title).join('; ')))+' — sumber: '+sources[0].url,html:`🔎 <b>${esc(title)}</b><br>${esc(text||'')}<div class="card-in" style="font-size:12.5px">📚 Sumber: ${links}</div>`,sources};
+    }catch(e){lastErr=e.message}
+  }
+  return{ok:false,text:'pencarian web gagal: '+(lastErr||'tidak ada hasil')};
+}
+async function weatherTool(loc){
+  const q=loc||store.get('loc','Tambun, Bekasi');
+  const g=await fetchJson(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=1&language=id&format=json`);
+  const p=g.results&&g.results[0];if(!p)throw new Error('lokasi tidak ditemukan');
+  const w=await fetchJson(`https://api.open-meteo.com/v1/forecast?latitude=${p.latitude}&longitude=${p.longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1`);
+  const c=w.current||{},d=w.daily||{},desc=wmoDesc(c.weather_code);
+  const max=d.temperature_2m_max?d.temperature_2m_max[0]:'-',min=d.temperature_2m_min?d.temperature_2m_min[0]:'-';
+  const place=[p.name,p.admin1,p.country].filter(Boolean).join(', ');
+  return{ok:true,text:`Cuaca ${place}: ${desc}, ${c.temperature_2m}°C (min ${min}°, max ${max}°), kelembapan ${c.relative_humidity_2m}%, angin ${c.wind_speed_10m} km/jam — sumber open-meteo.com`,html:`☁️ <b>Cuaca ${esc(place)}</b><br>${desc}, <b>${c.temperature_2m}°C</b> (min ${min}°, max ${max}°)<br>💧 ${c.relative_humidity_2m}% • 🌬️ ${c.wind_speed_10m} km/jam<div class="card-in" style="font-size:12.5px">📚 Sumber: <a href="https://open-meteo.com/" target="_blank" rel="noopener" style="color:#4da3ff">Open-Meteo</a></div>`,sources:[{title:'Open-Meteo',url:'https://open-meteo.com/'}]};
+}
+async function routeTool(from,to){
+  const a=from||'Tambun, Bekasi',b=to||'BSD City';
+  const geo=async q=>{const j=await fetchJson(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`);const r=j&&j[0];if(!r)throw new Error('lokasi tidak ditemukan: '+q);return{lat:+r.lat,lon:+r.lon}};
+  const A=await geo(a);await new Promise(r=>setTimeout(r,1100));const B=await geo(b);
+  const o=await fetchJson(`https://router.project-osrm.org/route/v1/driving/${A.lon},${A.lat};${B.lon},${B.lat}?overview=false`);
+  const r=o.routes&&o.routes[0];if(!r)throw new Error('rute tidak ditemukan');
+  const km=Math.round(r.distance/1000),min=Math.round(r.duration/60);
+  const maps=`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(a)}&destination=${encodeURIComponent(b)}`;
+  return{ok:true,text:`${a} → ${b}: ±${km} km, ±${min} menit (OSRM/OpenStreetMap)`,html:`📍 <b>${esc(a)} → ${esc(b)}</b>: ±${km} km, ±${min} menit<div class="card-in" style="font-size:12.5px">📚 Sumber: OpenStreetMap/OSRM • <a href="${maps}" target="_blank" rel="noopener" style="color:#4da3ff">Buka Google Maps</a></div>`,sources:[{title:'OSRM',url:'https://project-osrm.org/'}]};
+}
+/* ===== MEMORI JANGKA PANJANG ===== */
+function addMemory(t,tag){t=String(t||'').trim();if(!t)return null;const rest=memories.filter(x=>x.t.toLowerCase()!==t.toLowerCase());const m={id:'m'+Date.now().toString(36)+Math.random().toString(36).slice(2,4),t:t.slice(0,300),tag:String(tag||'').slice(0,24),ts:Date.now()};memories=rest.concat([m]).slice(-50);store.set('memory',memories);renderMemories();return m}
+function findMemories(q){const w=String(q||'').toLowerCase().split(/\s+/).filter(Boolean);if(!w.length)return memories.slice(-8);return memories.filter(m=>w.some(x=>m.t.toLowerCase().includes(x))).slice(-8)}
+function delMemory(id){memories=memories.filter(m=>m.id!==id);store.set('memory',memories);renderMemories();toast('Memori dihapus')}
+function renderMemories(){const el=$('memList');if(!el)return;el.innerHTML=memories.length?memories.slice().reverse().map(m=>`<div class="todo"><span class="t"><b>${esc(m.t)}</b>${m.tag?' <small style="color:var(--muted)">#'+esc(m.tag)+'</small>':''}</span><button class="link" style="margin-left:auto" onclick="delMemory('${m.id}')">Hapus</button></div>`).join(''):'<div style="color:var(--muted);font-size:13.5px">Belum ada memori. Coba: <i>"ingat aku suka kopi tanpa gula"</i>.</div>'}
+function saveMemoryUI(){const t=$('memInput').value.trim();if(!t){toast('Isi memori dulu');return}addMemory(t,$('memTag').value.trim());$('memInput').value='';$('memTag').value='';pushActivity('🧠',t.slice(0,40));toast('Memori disimpan ✅')}
+
+async function execTool(name,args){
+  try{
+    if(name==='tambah_rencana'){const t=jget(args,'teks')||jget(args,'text');if(!t)return{ok:false,text:'teks kosong'};const l=getTodos();l.unshift({text:t,done:false});store.set('todos',l);renderTodos();pushActivity('📅',t);return{ok:true,text:'Rencana ditambahkan: '+t,html:`📅 Rencana ditambahkan: <b>${esc(t)}</b>`}}
+    if(name==='selesai_rencana'){const q=(jget(args,'cari')||jget(args,'teks')).toLowerCase();const l=getTodos();const it=l.find(x=>!x.done&&x.text.toLowerCase().includes(q));if(!it)return{ok:false,text:'rencana tidak ditemukan'};it.done=true;store.set('todos',l);renderTodos();pushActivity('✅',it.text);return{ok:true,text:'Rencana selesai: '+it.text,html:`✅ Selesai: <b>${esc(it.text)}</b>`}}
+    if(name==='tambah_pengingat'){const t=jget(args,'teks')||jget(args,'text');if(!t)return{ok:false,text:'teks kosong'};let jam=jget(args,'jam');if(!/^\d{1,2}[:.]\d{2}$/.test(jam)){const mm=String(t).match(/(\d{1,2})[:.](\d{2})/);jam=mm?String(mm[1]).padStart(2,'0')+':'+mm[2]:'18:00'}jam=jam.replace('.',':');const l=getRems();l.unshift({t,time:jam});store.set('rems',l);renderRems();pushActivity('🔔',t);return{ok:true,text:`Pengingat: ${t} pukul ${jam}`,html:`🔔 Pengingat diatur: <b>${esc(t)}</b> pukul <b>${jam}</b>`}}
+    if(name==='tambah_catatan'){const j=jget(args,'judul')||'Catatan';const i=jget(args,'isi')||jget(args,'teks');const l=getNotes();l.unshift({t:j,b:i});store.set('notes',l);renderNotes();pushActivity('📝',j);return{ok:true,text:'Catatan disimpan: '+j,html:`📝 Catatan disimpan: <b>${esc(j)}</b>`}}
+    if(name==='daftar_rencana'){const l=getTodos();const s=l.length?l.map(x=>(x.done?'✅ ':'⬜ ')+x.text).join('; '):'kosong';return{ok:true,text:s,html:`📅 <b>Rencana kamu:</b><br>`+l.map(x=>(x.done?'✅ ':'⬜ ')+esc(x.text)).join('<br>')}}
+    if(name==='daftar_pengingat'){const l=getRems();const s=l.length?l.map(x=>x.t+' @'+x.time).join('; '):'kosong';return{ok:true,text:s,html:`🔔 <b>Pengingat:</b><br>`+l.map(x=>'• '+esc(x.t)+' — '+x.time).join('<br>')}}
+    if(name==='portofolio'){const rows=stocks.filter(x=>x.s!=='IHSG').map(x=>{const pl=Math.round((x.px-x.avg)*x.lot*100);return `${x.s}: ${x.lot} lot @${x.avg} → ${x.px} (${pl>=0?'+':''}${pl.toLocaleString('id-ID')})`});return{ok:true,text:rows.join('; '),html:`📊 <b>Portofolio:</b><br>`+stocks.map(x=>x.s==='IHSG'?`IHSG ${x.px.toLocaleString('id-ID')}`:`${esc(x.s)} ${x.lot} lot @${x.avg} → ${x.px}`).join('<br>')}}
+    if(name==='ringkasan_pasar'){return{ok:true,text:'IHSG +0,82% ke 7.719,12; sektor perbankan, energi, konsumsi menguat; asing net buy blue chip',html:`📈 <b>IHSG</b> +0,82% ke <b>7.719,12</b><br>Sektor menguat: perbankan, energi, konsumsi<br>Asing net buy di blue chip`}}
+    if(name==='rute'){const a=jget(args,'dari')||'Tambun, Bekasi';const b=jget(args,'ke')||'BSD City';try{return await routeTool(a,b)}catch(e){const km=Math.round(40+Math.random()*40);return{ok:true,text:`${a} → ${b}: ±${km} km, ±${Math.round(km/45*60)} menit (estimasi offline)`,html:`📍 <b>${esc(a)} → ${esc(b)}</b>: ±${km} km, ±${Math.round(km/45*60)} menit<div class="card-in warn" style="font-size:12.5px">⚠️ Estimasi offline — rute real-time tak tersedia (${esc(e.message)})</div>`}}}
+    if(name==='cari_web'){const q=jget(args,'q')||jget(args,'teks');if(!q)return{ok:false,text:'query kosong'};return await webSearch(q)}
+    if(name==='cuaca'){try{return await weatherTool(jget(args,'lokasi'))}catch(e){return{ok:false,text:'cuaca gagal: '+e.message}}}
+    if(name==='ingat'){const t=jget(args,'teks')||jget(args,'text');if(!t)return{ok:false,text:'teks kosong'};const m=addMemory(t,jget(args,'tag'));return{ok:true,text:'Memori disimpan: '+m.t,html:`🧠 Memori disimpan: <b>${esc(m.t)}</b>`,memory:m}}
+    if(name==='cari_memori'){const l=findMemories(jget(args,'q')||jget(args,'teks'));return{ok:true,text:l.length?l.map(m=>m.t).join('; '):'tidak ada memori cocok',html:l.length?'🧠 <b>Memori terkait:</b><br>'+l.map(m=>'• '+esc(m.t)).join('<br>'):'🧠 Tidak ada memori yang cocok.'}}
+    if(name==='lupa'){const q=(jget(args,'q')||jget(args,'teks')).toLowerCase();const n=memories.filter(m=>m.t.toLowerCase().includes(q)).length;memories=memories.filter(m=>!m.t.toLowerCase().includes(q));store.set('memory',memories);renderMemories();return{ok:n>0,text:n?('Dihapus '+n+' memori'):'tidak ada memori cocok',html:n?`🗑️ ${n} memori dihapus`:'Tidak ada memori yang cocok.'}}
+    if(name==='daftar_memori'){return{ok:true,text:memories.length?memories.map(m=>m.t).join('; '):'kosong',html:memories.length?'🧠 <b>Memori:</b><br>'+memories.map(m=>'• '+esc(m.t)).join('<br>'):'🧠 Belum ada memori.'}}
+    if(name==='waktu'){const d=new Date().toLocaleString('id-ID');return{ok:true,text:d,html:`🕓 <b>${esc(d)}</b>`}}
+    if(name==='baca_aktivitas'){const s=getActs().slice(0,5).map(a=>a.t).join('; ');return{ok:true,text:s,html:`🕘 Aktivitas terakhir:<br>`+getActs().slice(0,5).map(a=>'• '+esc(a.t)+' — '+a.w).join('<br>')}}
+    return{ok:false,text:'alat tidak dikenal: '+name}
+  }catch(e){return{ok:false,text:'gagal: '+e.message}}
+}
+async function llmRaw(text,sys){
+  if(aiMode==='super')return superEngine(text,sys);
+  if(aiMode==='zen'){try{return await zenEngine(text,sys)}catch{return await polliEngine(text,sys)}}
+  if(aiMode==='premium'){if(!(window.puter&&puter.ai))throw new Error('puter-belum-muat');return extractPuter(await puter.ai.chat([{role:'system',content:sys},{role:'user',content:text}],{model:aiModel}))}
+  if(aiMode==='custom'){if(!(customCfg.url&&customCfg.key))throw new Error('key-belum-diisi');return customChat([{role:'system',content:sys},{role:'user',content:text}])}
+  try{return await nanoEngine(text,sys)}catch(e){if(!(e.message==='nano-unavailable'||e.message.indexOf('nano-')===0))throw e}
+  return polliEngine(text,sys)
+}
+function traceHtml(trace){return trace.length?`<div class="card-in" style="font-size:13px;color:#cfdbf5">🤖 <b>Langkah agen</b><br>`+trace.map(t=>`🔧 <code>${esc(t.tool)}</code> ${t.ok?'✅':'⚠️'} ${esc(t.text).slice(0,90)}`).join('<br>')+`</div>`:''}
+async function runAgent(text){
+  const sys=agentPrompt();const trace=[];let msg=text;
+  for(let i=0;i<3;i++){
+    const raw=await llmRaw(msg,sys);
+    const p=parsePlan(raw);
+    if(p&&p.propose_skill){
+      const s=normalizeSkill(p.propose_skill);
+      pendingSkills[s.id]=s;
+      skillProposalCard(s);renderPending();
+      pushHist('user',text);pushHist('ai','[usulan skill: '+s.nama+']');
+      return{handled:true}
+    }
+    if(p&&p.tool){
+      const r=await execTool(p.tool,p.args||{});
+      trace.push({tool:p.tool,args:p.args||{},ok:r.ok,text:r.text});
+      msg=text+'\n\nHasil alat sejauh ini: '+JSON.stringify(trace)+'\nSekarang balas {"final":"..."} berisi jawaban akhir (ringkas, Bahasa Indonesia).';
+      continue
+    }
+    const fin=p&&typeof p.final==='string'?p.final:raw;
+    pushHist('user',text);pushHist('ai',fin);
+    return{html:traceHtml(trace)+mdLite(fin),plain:fin}
+  }
+  const last=trace.length?('Sudah saya jalankan: '+trace.map(t=>t.text).join('; ')):'Maaf, agen belum bisa menyelesaikan.';
+  pushHist('user',text);pushHist('ai',last);
+  return{html:traceHtml(trace)+mdLite(last),plain:last}
+}
+/* ===== ORCHESTRATOR: rencana → router → eksekusi → verifikasi ===== */
+let orchestratorOn=store.get('orch',true);
+let safeMode=store.get('safe',true);
+let orchSeq=0;
+const orchResolvers={};
+const WRITE_TOOLS=['tambah_rencana','selesai_rencana','tambah_pengingat','tambah_catatan','ingat','lupa'];
+function updateOrchUI(){const b=$('orchBadge');if(b)b.style.display=(agentMode&&orchestratorOn)?'inline-block':'none';const s=$('orchSwitch');if(s)s.classList.toggle('on',orchestratorOn);const a=$('safeSwitch');if(a)a.classList.toggle('on',safeMode);const lg=$('langSwitch');if(lg)lg.classList.toggle('on',multiLang)}
+function toggleOrch(){orchestratorOn=!orchestratorOn;store.set('orch',orchestratorOn);updateOrchUI();toast(orchestratorOn?'🧠 Orchestrator aktif — rencana multi-langkah':'Loop agen sederhana')}
+function toggleSafe(){safeMode=!safeMode;store.set('safe',safeMode);updateOrchUI();toast(safeMode?'🛡️ ACC batch aktif':'⚡ Aksi batch tanpa ACC')}
+function toggleMultiLang(){multiLang=!multiLang;store.set('multiLang',multiLang);updateOrchUI();toast(multiLang?'🌐 Balas mengikuti bahasa user':'🇮🇩 Selalu Bahasa Indonesia')}
+function isMutating(tool){return WRITE_TOOLS.includes(tool)||String(tool).indexOf('skill_')===0}
+function knownTool(n){return allTools().some(t=>t.n===n)}
+function planNeedsApproval(p){return safeMode&&p.steps.filter(s=>isMutating(s.tool)).length>=2}
+function plannerPrompt(){return `Kamu ORCHESTRATOR Friday. Pecah tujuan user menjadi rencana langkah kecil.\nALAT YANG BOLEH DIPAKAI:\n`+allTools().map(t=>`- ${t.n}(${t.a}): ${t.d}`).join('\n')+`\n\nATURAN:\n- Balas HANYA JSON tanpa code fence.\n- Skema: {"goal":"...","steps":[{"id":"s1","tool":"nama_alat","args":{},"why":"alasan singkat","after":["s1"]}]}\n- Maksimal 5 langkah. Hanya pakai alat di atas.\n- Langkah tanpa "after" dijalankan PARALEL. Pakai "after" hanya jika benar-benar butuh hasil langkah lain.\n- Aksi yang mengubah data: ${WRITE_TOOLS.join(', ')}.\n- Jika tujuan hanya obrolan / pertanyaan yang tidak butuh alat, balas {"chat":true}.\n- Jangan mengarang hasil alat.`}
+function normalizePlan(o,text,source){
+  const raw=Array.isArray(o&&o.steps)?o.steps:[];const steps=[];const ids=new Set();
+  raw.slice(0,6).forEach((s,i)=>{
+    if(!s||!knownTool(s.tool))return;
+    const id='s'+(i+1);
+    const after=(Array.isArray(s.after)?s.after:[]).filter(a=>ids.has(a));
+    steps.push({id,tool:String(s.tool),args:(s.args&&typeof s.args==='object')?s.args:{},why:String(s.why||'').slice(0,120),after,engine:s.engine||'auto'});
+    ids.add(id)
+  });
+  return steps.length?{goal:String((o&&o.goal)||text).slice(0,160),steps,source}:null
+}
+function localStepsFor(c){
+  const t=c.toLowerCase();const out=[];const add=(tool,args,why)=>out.push({tool,args:args||{},why:why||''});
+  for(const s of skills){if((s.pemicu||[]).some(p=>p&&t.includes(String(p).toLowerCase()))){add('skill_'+s.id,{},'Skill: '+s.nama);return out}}
+  const tm=c.match(/(\d{1,2})[:.](\d{2})/);const jam=tm?String(tm[1]).padStart(2,'0')+':'+tm[2]:'';
+  if(/^(ingat|simpan memori|catat memori)\b/.test(t)){const isi=c.replace(/^(ingat|simpan memori|catat memori)\s*/i,'').trim();add('ingat',{teks:isi},'Simpan memori');return out}
+  if(/^(lupa|hapus memori)\b/.test(t)){const q=c.replace(/^(lupa|hapus memori)\s*/i,'').trim();add('lupa',{q},'Hapus memori');return out}
+  if(/memori|kamu ingat|apa yang kamu ingat/.test(t)){add('daftar_memori',{},'Lihat memori');return out}
+  if(/^(cari|carikan|search|googling)\s+|^(apa itu|siapa itu|jelaskan)\s+/.test(t)){const q=c.replace(/^(cari|carikan|search|googling|apa itu|siapa itu|jelaskan)\s+/i,'').trim();add('cari_web',{q},'Cari di web');return out}
+  if(/cuaca|hujan|suhu|prakiraan/.test(t)){const lm=c.match(/\bdi\s+([A-Za-z .]+)/i);const loc=lm?lm[1].replace(/\s+(besok|hari ini|sekarang|ya|dong|min|pak).*$/i,'').trim():'';add('cuaca',{lokasi:loc},'Cek cuaca real-time');return out}
+  if(/ingatkan|pengingat|reminder|alarm/.test(t)&&!/(hapus|lihat|daftar|apa saja|tampilkan)/.test(t)){
+    const isi=c.replace(/^(tolong\s+)?(ingatkan|pengingat|reminder|alarm)( saya| aku)?( untuk| buat)?\s*/i,'').replace(/\s*(jam|pukul)\s*\d{1,2}[:.]\d{2}.*$/i,'').replace(/\s*\d{1,2}[:.]\d{2}.*$/,'').trim()||'Minum air';
+    add('tambah_pengingat',{teks:isi,jam:jam||'18:00'},'Atur pengingat');return out
+  }
+  if(/(tambah|buat|atur|jadwalkan).*(rencana|jadwal|agenda)|^(rencana|jadwal)\b/.test(t)){
+    const isi=c.replace(/^.*?(tambah(kan)?|buat(kan)?|atur|jadwalkan)\s*/i,'').replace(/^(rencana|jadwal|agenda)\s*/i,'').replace(/\s*(ke|di|untuk) (rencana|jadwal|agenda).*$/i,'').trim()||c;
+    add('tambah_rencana',{teks:isi},'Tambah rencana');return out
+  }
+  if(/(tandai|selesai|sudah).*(rencana|jadwal|agenda)/.test(t)){const q=c.replace(/.*(rencana|jadwal|agenda)\s*/i,'').trim();add('selesai_rencana',{cari:q},'Tandai selesai');return out}
+  if(/^(catat|simpan catatan|buat catatan)/.test(t)||/catat(kan)?\s+/.test(t)){const isi=c.replace(/^.*?(catat(kan)?|simpan catatan|buat catatan)\s*/i,'').trim();add('tambah_catatan',{judul:isi.slice(0,40)||'Catatan',isi},'Simpan catatan');return out}
+  if(/(apa saja|apa|lihat|tampilkan|daftar|cek).*(rencana|jadwal|agenda)/.test(t)){add('daftar_rencana',{},'Lihat rencana');return out}
+  if(/(apa saja|apa|lihat|tampilkan|daftar|cek).*(pengingat|reminder)/.test(t)){add('daftar_pengingat',{},'Lihat pengingat');return out}
+  if(/saham|ihsg|luck|suri|portofolio|untung|rugi/.test(t)){add('ringkasan_pasar',{},'Ringkasan pasar');add('portofolio',{},'Portofolio');return out}
+  if(/rute|jalan|peta|navigasi/.test(t)){const f=c.match(/\bdari\s+([^,]+?)(?:\s+ke\s+|$)/i);const m=c.match(/\b(?:ke|tujuan)\s+([^,]+)/i);add('rute',{dari:f?f[1].trim():'',ke:m?m[1].trim():'BSD City'},'Rute real (OSRM)');return out}
+  if(/jam|tanggal|hari apa|waktu/.test(t)){add('waktu',{},'Cek waktu');return out}
+  if(/aktivitas/.test(t)){add('baca_aktivitas',{},'Baca aktivitas');return out}
+  return out
+}
+function planLocal(text){
+  const parts=text.split(/\b(?:lalu|kemudian|setelah itu|terus|dan juga|serta)\b|\s+dan\s+(?=(?:ingatkan|pengingat|tambah|buat|atur|jadwalkan|tampilkan|lihat|daftar|catat|simpan|tandai|selesai)\b)/i).map(x=>x.trim()).filter(Boolean);
+  const raw=[];const seen=new Set();
+  for(const p of parts){for(const st of localStepsFor(p)){const k=st.tool+'|'+JSON.stringify(st.args);if(!seen.has(k)){seen.add(k);raw.push(st)}}}
+  if(!raw.length)return null;
+  let lastWrite=null;
+  const steps=raw.slice(0,6).map((s,i)=>{const id='s'+(i+1);const after=[];if(isMutating(s.tool)&&lastWrite)after.push(lastWrite);if(isMutating(s.tool))lastWrite=id;return{id,tool:s.tool,args:s.args,why:s.why,after,engine:'auto'}});
+  return{goal:text,steps,source:'lokal'}
+}
+function looksActionable(text){const t=String(text).toLowerCase();if(skills.some(s=>(s.pemicu||[]).some(p=>p&&t.includes(String(p).toLowerCase()))))return true;return /ingatkan|pengingat|reminder|alarm|rencana|jadwal|agenda|catat|simpan catatan|tandai|selesai|saham|ihsg|luck|suri|portofolio|rute|jalan|peta|navigasi|waktu|tanggal|jam|aktivitas|skill|tampilkan|lihat|daftar|tambah|buat|atur|jadwalkan|memori|ingat|lupa|cari|search|cuaca|hujan|suhu/.test(t)}
+async function makePlan(text){
+  if(!looksActionable(text))return planLocal(text);
+  if(canOnline()){
+    try{
+      const raw=await llmRaw(text,plannerPrompt());
+      const o=parsePlan(raw);
+      if(o&&o.chat)return null;
+      const p=normalizePlan(o,text,'model');
+      if(p)return p
+    }catch{}
+  }
+  return planLocal(text)
+}
+function planCard(plan,state){
+  plan.ui='orch'+(++orchSeq);
+  const id=plan.ui;const need=planNeedsApproval(plan);
+  const sh=plan.steps.map(s=>`<div id="${id}-${s.id}" style="display:flex;gap:8px;align-items:flex-start;margin:5px 0"><span class="ost">⏳</span><div><b>${esc(s.tool)}</b> <small style="color:var(--muted)">${s.after&&s.after.length?'setelah '+s.after.join(', '):'paralel'}</small><div style="font-size:12.5px;color:var(--muted)">${esc(s.why||'')}</div><span class="onote" style="font-size:12px;color:var(--muted)"></span></div></div>`).join('');
+  const foot=state==='pending'?(need?'🛡️ Butuh ACC kamu sebelum dijalankan.':'▶️ Menjalankan otomatis...'):'';
+  const row=document.createElement('div');row.className='bubble-row ai';row.id=id;
+  row.innerHTML=`<div class="small-avatar">👦</div><div class="bubble"><b>🧠 Rencana Orkestrasi</b> <small style="color:var(--muted)">(${esc(plan.source)})</small><div style="font-size:13px;color:var(--muted);margin:4px 0 8px">${esc(plan.goal)}</div><div class="card-in">${sh}</div><div id="${id}-foot" style="font-size:13px;color:var(--muted);margin-top:8px">${foot}</div><div class="row" id="${id}-btns" style="margin-top:8px">${state==='pending'&&need?`<button class="btn" onclick="orchDecide('${id}',true)">✅ Jalankan</button><button class="btn ghost" onclick="orchDecide('${id}',false)">❌ Batal</button>`:''}</div><span class="time">${now()}</span></div>`;
+  $('chatFeed').appendChild(row);row.scrollIntoView({behavior:'smooth'})
+}
+function askOrch(plan){return new Promise(res=>{orchResolvers[plan.ui]=res})}
+function orchDecide(ui,ok){const r=orchResolvers[ui];if(!r)return;delete orchResolvers[ui];const b=$(ui+'-btns');if(b)b.innerHTML='';r(ok)}
+function setStepStatus(plan,sid,icon,note){const el=document.getElementById(plan.ui+'-'+sid);if(!el)return;const ic=el.querySelector('.ost');if(ic)ic.textContent=icon;const n=el.querySelector('.onote');if(n&&note)n.textContent=' — '+String(note).slice(0,90)}
+function setOrchFoot(plan,html){const el=$(plan.ui+'-foot');if(el)el.innerHTML=html}
+async function execStep(s){if(String(s.tool).indexOf('skill_')===0){const sk=skills.find(x=>'skill_'+x.id===s.tool);if(!sk)return{ok:false,text:'skill tidak ditemukan'};return runSkill(sk)}return execTool(s.tool,s.args||{})}
+async function runPlanSteps(plan){
+  const results={};let retries=0;let parallelPeak=0;
+  const remaining=new Set(plan.steps.map(s=>s.id));
+  while(remaining.size){
+    const wave=plan.steps.filter(s=>remaining.has(s.id)&&s.after.every(a=>results[a]));
+    if(!wave.length)break;
+    parallelPeak=Math.max(parallelPeak,wave.length);
+    await Promise.all(wave.map(async s=>{
+      setStepStatus(plan,s.id,'▶️');
+      let r=await execStep(s);
+      if(!r.ok){retries++;r=await execStep(s)}
+      results[s.id]=r;remaining.delete(s.id);
+      setStepStatus(plan,s.id,r.ok?'✅':'⚠️',r.text)
+    }))
+  }
+  return{results,retries,parallelPeak}
+}
+function verifyPlan(plan,results){
+  const items=plan.steps.map(s=>({s,r:results[s.id]||{ok:false,text:'tidak dijalankan'}}));
+  const fails=items.filter(x=>!x.r.ok);
+  const checks=[{n:'Semua langkah berhasil',ok:!fails.length,d:fails.length?fails.map(x=>x.s.tool).join(', '):'OK'}];
+  plan.steps.forEach(s=>{
+    if(s.tool==='tambah_pengingat'){const teks=jget(s.args,'teks')||jget(s.args,'text');const found=getRems().some(x=>x.t===teks);checks.push({n:'Pengingat tersimpan: '+teks,ok:found,d:found?'OK':'tidak ditemukan'})}
+    if(s.tool==='tambah_rencana'){const teks=jget(s.args,'teks')||jget(s.args,'text');const found=getTodos().some(x=>x.text===teks);checks.push({n:'Rencana tersimpan: '+teks,ok:found,d:found?'OK':'tidak ditemukan'})}
+    if(s.tool==='tambah_catatan'){const j=jget(s.args,'judul')||'Catatan';const found=getNotes().some(x=>x.t===j);checks.push({n:'Catatan tersimpan: '+j,ok:found,d:found?'OK':'tidak ditemukan'})}
+    if(s.tool==='selesai_rencana'){const q=(jget(s.args,'cari')||jget(s.args,'teks')).toLowerCase();const found=!q||getTodos().some(x=>x.done&&x.text.toLowerCase().includes(q));checks.push({n:'Rencana ditandai selesai: '+q,ok:found,d:found?'OK':'tidak ditemukan'})}
+    if(s.tool==='ingat'){const teks=jget(s.args,'teks')||jget(s.args,'text');const found=memories.some(m=>m.t===teks);checks.push({n:'Memori tersimpan: '+teks,ok:found,d:found?'OK':'tidak ditemukan'})}
+    if(s.tool==='lupa'){const q=(jget(s.args,'q')||jget(s.args,'teks')).toLowerCase();const found=!memories.some(m=>m.t.toLowerCase().includes(q));checks.push({n:'Memori dihapus: '+q,ok:found,d:found?'OK':'masih ada'})}
+  });
+  return{ok:checks.every(c=>c.ok),checks}
+}
+async function orchFinal(text,plan,exec,ver){
+  const lines=plan.steps.map(s=>{const r=exec.results[s.id]||{ok:false,text:'tidak dijalankan'};return(r.ok?'✅ ':'⚠️ ')+s.tool+': '+r.text});
+  let summary='';
+  if(canOnline()){
+    try{const raw=await llmRaw(`Tujuan: ${text}\nHasil langkah:\n${lines.join('\n')}\nVerifikasi: ${ver.checks.map(c=>(c.ok?'OK':'GAGAL')+' '+c.n).join('; ')}\nTulis jawaban akhir singkat untuk user dalam Bahasa Indonesia. Jangan pakai JSON. Sebutkan jika ada langkah gagal.`,sysPrompt());summary=String(raw||'').trim()}catch{}
+  }
+  if(!summary){const okCount=plan.steps.filter(s=>exec.results[s.id]&&exec.results[s.id].ok).length;summary=(okCount===plan.steps.length?'Selesai. ':'Sebagian selesai. ')+lines.join('\n')}
+  return summary
+}
+function verifyHtml(plan,exec,ver){return `<div class="card-in" style="font-size:13px">${ver.ok?'✅':'⚠️'} <b>Verifikasi orkestrator</b><br>${ver.checks.map(c=>(c.ok?'✅ ':'⚠️ ')+esc(c.n)+(c.ok?'':' — '+esc(c.d))).join('<br>')}<div style="color:var(--muted);margin-top:5px">🧭 ${plan.steps.length} langkah • ${exec.parallelPeak} paralel • ${exec.retries} retry • rencana: ${esc(plan.source)}</div></div>`}
+async function orchestrate(text,ph){
+  const plan=await makePlan(text);
+  if(!plan){return canOnline()?await runAgent(text):await localAgent(text)}
+  window.lastOrch=plan;
+  const need=planNeedsApproval(plan);
+  planCard(plan,need?'pending':'run');
+  if(need){
+    if(ph)ph.style.display='none';
+    const ok=await askOrch(plan);
+    if(ph)ph.style.display='';
+    if(!ok){pushHist('user',text);pushHist('ai','[dibatalkan]');setOrchFoot(plan,'❌ Dibatalkan — tidak ada yang dijalankan.');return{html:'❌ <b>Rencana dibatalkan.</b> Tidak ada data yang diubah.',plain:'Rencana dibatalkan.'}}
+  }
+  setOrchFoot(plan,'▶️ Menjalankan...');
+  const exec=await runPlanSteps(plan);
+  const ver=verifyPlan(plan,exec.results);
+  setOrchFoot(plan,(ver.ok?'✅':'⚠️')+' Verifikasi '+(ver.ok?'lulus':'sebagian')+' • '+exec.parallelPeak+' paralel • '+exec.retries+' retry');
+  const summary=await orchFinal(text,plan,exec,ver);
+  pushHist('user',text);pushHist('ai',summary);
+  return{html:verifyHtml(plan,exec,ver)+mdLite(summary),plain:summary}
+}
+function draftSkill(text){
+  const t=text.toLowerCase();const out=[];
+  const add=(tool,args)=>{if(!out.some(x=>x.tool===tool))out.push({tool,args:args||{}})};
+  if(/rencana|jadwal|agenda/.test(t))add('daftar_rencana');
+  if(/pengingat|reminder|alarm/.test(t))add('daftar_pengingat');
+  if(/saham|ihsg|portofolio|luck|suri/.test(t)){add('ringkasan_pasar');add('portofolio')}
+  if(/rute|jalan|peta|navigasi/.test(t))add('rute',{tujuan:'BSD City'});
+  if(/waktu|jam|tanggal/.test(t))add('waktu');
+  if(/aktivitas/.test(t))add('baca_aktivitas');
+  return out.slice(0,5);
+}
+async function localAgent(text){
+  const t=text.toLowerCase();const trace=[];
+  const tm=text.match(/(\d{1,2})[:.](\d{2})/);
+  const jam=tm?String(tm[1]).padStart(2,'0')+':'+tm[2]:'';
+  for(const s of skills){
+    if((s.pemicu||[]).some(p=>p&&t.includes(String(p).toLowerCase()))){
+      const r=await runSkill(s);
+      return{html:traceHtml([{tool:'skill '+s.nama,ok:r.ok,text:r.text}])+r.html,plain:r.text}
+    }
+  }
+  if(/^(ingat|simpan memori|catat memori)\b/.test(t)){
+    const isi=text.replace(/^(ingat|simpan memori|catat memori)\s*/i,'').trim();
+    const r=await execTool('ingat',{teks:isi});trace.push({tool:'ingat',ok:r.ok,text:r.text});
+    return{html:traceHtml(trace)+mdLite(r.text),plain:r.text}
+  }
+  if(/^(lupa|hapus memori)\b/.test(t)){
+    const q=text.replace(/^(lupa|hapus memori)\s*/i,'').trim();
+    const r=await execTool('lupa',{q});trace.push({tool:'lupa',ok:r.ok,text:r.text});
+    return{html:traceHtml(trace)+mdLite(r.text),plain:r.text}
+  }
+  if(/memori|kamu ingat|apa yang kamu ingat/.test(t)){const r=await execTool('daftar_memori',{});return{html:traceHtml([{tool:'daftar_memori',ok:true,text:'ok'}])+r.html,plain:r.text}}
+  if(/^(cari|carikan|search|googling)\s+/.test(t)||/^(apa itu|siapa itu|jelaskan)\s+/.test(t)){
+    if(/^(siapa|apa)\s+(kamu|friday)/.test(t)){const a=fridayBrain(text);return{html:a.html,plain:a.plain}}
+    const q=text.replace(/^(cari|carikan|search|googling|apa itu|siapa itu|jelaskan)\s+/i,'').trim();
+    const r=await execTool('cari_web',{q});trace.push({tool:'cari_web',ok:r.ok,text:r.text});
+    return{html:traceHtml(trace)+r.html,plain:r.text}
+  }
+  if(/cuaca|hujan|suhu|prakiraan/.test(t)){
+    const lm=text.match(/\bdi\s+([A-Za-z .]+)/i);
+    const loc=lm?lm[1].replace(/\s+(besok|hari ini|sekarang|ya|dong|min|pak).*$/i,'').trim():'';
+    const r=await execTool('cuaca',{lokasi:loc});trace.push({tool:'cuaca',ok:r.ok,text:r.text});
+    return{html:traceHtml(trace)+(r.ok?r.html:mdLite(r.text)),plain:r.text}
+  }
+  if(/ingatkan|pengingat|reminder|alarm/.test(t)&&!/(hapus|lihat|daftar|apa saja|tampilkan)/.test(t)){
+    let isi=text.replace(/^(tolong\s+)?(ingatkan|pengingat|reminder|alarm)( saya| aku)?( untuk| buat)?\s*/i,'').replace(/\s*(jam|pukul)\s*\d{1,2}[:.]\d{2}.*$/i,'').replace(/\s*\d{1,2}[:.]\d{2}.*$/,'').trim()||'Minum air';
+    const r=await execTool('tambah_pengingat',{teks:isi,jam:jam||'18:00'});trace.push({tool:'tambah_pengingat',ok:r.ok,text:r.text});
+    return{html:traceHtml(trace)+mdLite(r.text+'. Mau saya atur pengingat lain?'),plain:r.text}}
+  if(/(tambah|buat|atur|jadwalkan).*(rencana|jadwal|agenda)|^(rencana|jadwal)\b/.test(t)){
+    const isi=text.replace(/^.*?(tambah(kan)?|buat(kan)?|atur|jadwalkan)\s*/i,'').replace(/^(rencana|jadwal|agenda)\s*/i,'').replace(/\s*(ke|di|untuk) (rencana|jadwal|agenda).*$/i,'').trim()||text;
+    const r=await execTool('tambah_rencana',{teks:isi});trace.push({tool:'tambah_rencana',ok:r.ok,text:r.text});
+    return{html:traceHtml(trace)+mdLite(r.text+'. Semangat ya!'),plain:r.text}}
+  if(/(tandai|selesai|sudah).*(rencana|jadwal|agenda)/.test(t)){const q=text.replace(/.*(rencana|jadwal|agenda)\s*/i,'').trim();const r=await execTool('selesai_rencana',{cari:q});trace.push({tool:'selesai_rencana',ok:r.ok,text:r.text});return{html:traceHtml(trace)+mdLite(r.text),plain:r.text}}
+  if(/^(catat|simpan catatan|buat catatan)/.test(t)||/catat(kan)?\s+/.test(t)){const isi=text.replace(/^.*?(catat(kan)?|simpan catatan|buat catatan)\s*/i,'').trim();const r=await execTool('tambah_catatan',{judul:isi.slice(0,40)||'Catatan',isi});trace.push({tool:'tambah_catatan',ok:r.ok,text:r.text});return{html:traceHtml(trace)+mdLite(r.text),plain:r.text}}
+  if(/(apa saja|apa|lihat|tampilkan|daftar|cek).*(rencana|jadwal|agenda)/.test(t)){const r=await execTool('daftar_rencana',{});return{html:traceHtml([{tool:'daftar_rencana',ok:true,text:'ok'}])+r.html,plain:r.text}}
+  if(/(apa saja|apa|lihat|tampilkan|daftar|cek).*(pengingat|reminder)/.test(t)){const r=await execTool('daftar_pengingat',{});return{html:traceHtml([{tool:'daftar_pengingat',ok:true,text:'ok'}])+r.html,plain:r.text}}
+  if(/saham|ihsg|luck|suri|portofolio|untung|rugi/.test(t)){const r=await execTool('portofolio',{});const m=await execTool('ringkasan_pasar',{});return{html:traceHtml([{tool:'portofolio',ok:true,text:'ok'},{tool:'ringkasan_pasar',ok:true,text:'ok'}])+r.html+'<br><br>'+m.html+'<div class="card-in warn"><h4>⚠️ Penting</h4><div style="font-size:13.5px">Bukan ajakan beli/jual. Konfirmasi dulu sebelum transaksi ya.</div></div>',plain:r.text}}
+  if(/rute|navigasi|peta|jalan|arah/.test(t)){const f=text.match(/\bdari\s+([^,]+?)(?:\s+ke\s+|$)/i);const to=text.match(/\bke\s+([^,]+)/i);const r=await execTool('rute',{dari:f?f[1].trim():'',ke:to?to[1].trim():'BSD City'});trace.push({tool:'rute',ok:r.ok,text:r.text});return{html:traceHtml(trace)+r.html,plain:r.text}}
+  const a=fridayBrain(text);return{html:a.html,plain:a.plain}
+}
+function toggleAgent(){agentMode=!agentMode;store.set('agentMode',agentMode);updateAgentUI();toast(agentMode?'🤖 Mode Agent aktif — Friday bisa menjalankan tugas':'💬 Mode chat biasa')}
+function updateAgentUI(){const b=$('agentBtn');if(b)b.textContent='🤖 Agent: '+(agentMode?'ON':'OFF');const bd=$('agentBadge');if(bd)bd.style.display=agentMode?'inline-block':'none';updateOrchUI()}
+async function reply(text,ph){
+  try{
+    let out;
+    if(agentMode)out=orchestratorOn?await orchestrate(text,ph):(canOnline()?await runAgent(text):await localAgent(text));
+    else out=canOnline()?{html:mdLite(await fridayOnline(text)),plain:''}:fridayBrain(text);
+    if(out.handled){ph.remove();return}
+    fillPh(ph,out.html,out.plain);
+  }catch(e){const a=fridayBrain(text);fillPh(ph,a.html+`<div class="card-in warn"><h4>⚠️ Mode offline</h4><div style="font-size:13.5px">${errHint(e)} — jawaban dari otak lokal. Coba lagi nanti ya.</div></div>`,a.plain);toast('AI online tak tersedia, pakai otak lokal 📴')}
+}
+async function askFriday(text){go('chat');bubbleMe(text);if(canOnline()||agentMode){const ph=typingPh();await reply(text,ph)}else{const a=fridayBrain(text);setTimeout(()=>bubbleAI(a.html,a.plain),400)}}
+async function sendMsg(){const v=$('msg').value.trim();if(!v)return;$('msg').value='';bubbleMe(v);if(canOnline()||agentMode){const ph=typingPh();await reply(v,ph)}else{const a=fridayBrain(v);setTimeout(()=>bubbleAI(a.html,a.plain),500)}}
+/* ===== Mode sederhana ala WhatsApp ===== */
+let waMode=store.get('waMode',false);
+function applyWA(){document.body.classList.toggle('wa',waMode);const sb=$('sendBtn');if(sb)sb.textContent=waMode?'➤':'🎙️';const wb=$('waBtn');if(wb)wb.textContent=waMode?'🖥️':'💬';const bt=document.querySelector('.backbtn');if(bt)bt.style.display=waMode?'block':''}
+function toggleWA(){waMode=!waMode;store.set('waMode',waMode);if(waMode)go('chat');applyWA();toast(waMode?'Mode sederhana ala WhatsApp 💬':'Mode dashboard 🖥️')}
+function backAction(){if(waMode)toggleWA();else document.getElementById('sidebar').classList.toggle('open')}
 function toggleEngine(){aiMode=aiMode==='auto'?'offline':'auto';store.set('aiMode',aiMode);updateEngineUI();toast(aiMode==='auto'?'✨ Otomatis Tanpa Login aktif':'📴 Mode Offline aktif')}
-function modeLabel(){return aiMode==='auto'?'Otomatis Tanpa Login':aiMode==='offline'?'Offline saja':aiMode==='premium'?'Premium Puter':aiMode==='super'?'Super Offline':aiMode==='zen'?'OpenCode Zen (gratis)':'Kunci sendiri'}
-function modelList(){return aiMode==='premium'?PUTER_MODELS:aiMode==='super'?['Qwen2.5-0.5B (di HP)']:aiMode==='zen'?ZEN_FREE_MODELS:POLLI_MODELS}
-function curModel(){return aiMode==='zen'?zenModel:aiModel}
-function setCurModel(v){if(aiMode==='zen'){zenModel=v;store.set('zenModel',v)}else{aiModel=v;store.set('aiModel',v)}}
-function updateEngineUI(){const L0=modelList();let cv0=curModel();if(!L0.includes(cv0)){cv0=L0[0];setCurModel(cv0)}const eb=$('engineBtn');if(eb)eb.textContent=aiMode==='auto'?'✨ Tanpa Login':aiMode==='offline'?'📴 Offline':aiMode==='super'?'📦 Super':aiMode==='zen'?'🌌 Zen':aiMode==='premium'?('💎 '+aiModel):'🔑 Key';const mr=$('aiModelRow');if(mr)mr.textContent='Model: '+(aiMode==='offline'?'Otak lokal Friday':curModel()+(aiMode==='auto'?' (gratis, tanpa login)':aiMode==='premium'?' (puter)':aiMode==='super'?' (di HP)':aiMode==='zen'?' (OpenCode gratis)':' (key sendiri)'));const mo=$('aiModeRow');if(mo)mo.textContent='Mode: '+modeLabel();const ft=$('aiFoot');if(ft)ft.textContent='Engine: '+(aiMode==='offline'?'otak lokal':curModel());const ms=$('aiModeSel');if(ms)ms.value=aiMode;const ml=$('aiModelSel');if(ml){const L=modelList();let cv=curModel();if(!L.includes(cv)){cv=L[0];setCurModel(cv)}ml.innerHTML=L.map(m=>`<option ${m===cv?'selected':''}>${m}</option>`).join('');ml.value=cv;ml.disabled=(aiMode==='offline'||aiMode==='custom'||aiMode==='super')}const u=$('customUrl'),k=$('customKey'),cm=$('customModel');if(u){u.value=customCfg.url||'';k.value=customCfg.key||'';cm.value=customCfg.model||''}}
-function saveAI(){aiMode=$('aiModeSel').value;setCurModel($('aiModelSel').value);customCfg={url:$('customUrl').value.trim(),key:$('customKey').value.trim(),model:$('customModel').value.trim()};store.set('aiMode',aiMode);store.set('custom',customCfg);updateEngineUI();toast('Pengaturan AI disimpan ✅')}
+function modeLabel(){return aiMode==='auto'?'Otomatis Tanpa Login':aiMode==='offline'?'Offline saja':aiMode==='premium'?'Premium Puter':aiMode==='super'?'Super Offline (Hermes)':aiMode==='zen'?'OpenCode Zen (gratis)':'Kunci sendiri'}
+function modelList(){return aiMode==='premium'?PUTER_MODELS:aiMode==='super'?LOCAL_MODELS.map(x=>x.id):aiMode==='zen'?ZEN_FREE_MODELS:POLLI_MODELS}
+function modelLabel(m){const l=LOCAL_MODELS.find(x=>x.id===m);return l?l.label:m}
+function curModel(){return aiMode==='zen'?zenModel:aiMode==='super'?llmModel:aiModel}
+function setCurModel(v){if(aiMode==='zen'){zenModel=v;store.set('zenModel',v)}else if(aiMode==='super'){if(v!==llmModel){llmModel=v;llmLoaded=null}store.set('llmModel',v)}else{aiModel=v;store.set('aiModel',v)}}
+function updateEngineUI(){const L0=modelList();let cv0=curModel();if(!L0.includes(cv0)){cv0=L0[0];setCurModel(cv0)}const eb=$('engineBtn');if(eb)eb.textContent=aiMode==='auto'?'✨ Tanpa Login':aiMode==='offline'?'📴 Offline':aiMode==='super'?(llmModel.indexOf('Hermes')===0?'🔥 Hermes':'📦 Super'):aiMode==='zen'?'🌌 Zen':aiMode==='premium'?('💎 '+aiModel):'🔑 Key';const short=aiMode==='super'?(llmModel.indexOf('Hermes')===0?'Hermes 3 (di HP)':'Qwen 0.5B (di HP)'):curModel();const mr=$('aiModelRow');if(mr)mr.textContent='Model: '+(aiMode==='offline'?'Otak lokal Friday':short+(aiMode==='auto'?' (gratis, tanpa login)':aiMode==='premium'?' (puter)':aiMode==='super'?' (offline)':aiMode==='zen'?' (OpenCode gratis)':' (key sendiri)'));const mo=$('aiModeRow');if(mo)mo.textContent='Mode: '+modeLabel();const ft=$('aiFoot');if(ft)ft.textContent='Engine: '+(aiMode==='offline'?'otak lokal':aiMode==='super'?modelLabel(llmModel):curModel());const ms=$('aiModeSel');if(ms)ms.value=aiMode;const ml=$('aiModelSel');if(ml){const L=modelList();let cv=curModel();if(!L.includes(cv)){cv=L[0];setCurModel(cv)}ml.innerHTML=L.map(m=>`<option value="${m}" ${m===cv?'selected':''}>${modelLabel(m)}</option>`).join('');ml.value=cv;ml.disabled=(aiMode==='offline'||aiMode==='custom')}const u=$('customUrl'),k=$('customKey'),cm=$('customModel');if(u){u.value=customCfg.url||'';k.value=customCfg.key||'';cm.value=customCfg.model||''}}
+function saveAI(){aiMode=$('aiModeSel').value;const v=$('aiModelSel').value;if(modelList().includes(v))setCurModel(v);customCfg={url:$('customUrl').value.trim(),key:$('customKey').value.trim(),model:$('customModel').value.trim()};store.set('aiMode',aiMode);store.set('custom',customCfg);updateEngineUI();toast('Pengaturan AI disimpan ✅')}
 async function testAI(){if(!canOnline()){toast('Mode offline aktif — ganti ke Otomatis Tanpa Login dulu 📴');return}toast('🧪 Mengetes AI...');try{const t=await fridayOnline('Balas persis: Friday AI online OK');toast('✅ '+t.slice(0,60))}catch(e){toast('❌ Gagal: '+(e.message||'koneksi'))}}
 $('msg').addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
 function voice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Browser tidak mendukung voice — ketik saja 🎙️');return}const r=new SR();r.lang='id-ID';toast('🎙️ Mendengarkan... bicara sekarang');r.onresult=e=>{const t=e.results[0][0].transcript;$('msg').value=t;sendMsg()};r.start()}
@@ -344,7 +804,8 @@ if(/notion|catat|catatan|note/.test(t)){return{html:`📝 Siap mencatat, ${n}! B
 if(/peta|navigasi|rute|jalan|bsd|lokasi|arah/.test(t)){return{html:`📍 Rute <b>Tambun → BSD City</b>: ±58 km, ±1 jam 20 mnt via Tol JORR.<br>Buka menu <b>Peta & Navigasi</b> untuk detail & link Google Maps, ${n}.`,plain:`Rute ke BSD sekitar 1 jam 20 menit.`}}
 if(/halo|hai|hello|pagi|siang|sore|malam|assalamu/.test(t)){return{html:`Halo juga, ${n}! 👋 Senang bertemu lagi.<br>Ada yang bisa Friday bantu hari ini? Coba: <i>"ringkasan saham"</i>, <i>"jadwalku"</i>, atau <i>"ingatkan minum air"</i>.`,plain:`Halo juga ${n}! Ada yang bisa Friday bantu?`}}
 if(/terima kasih|makasih|thanks|mantap|bagus/.test(t)){return{html:`Sama-sama, ${n}! 🥰 Senang bisa membantu.<br><i>"Selalu belajar, selalu membantu."</i> ♡`,plain:`Sama sama ${n}!`}}
-if(/siapa|nama|kamu|friday/.test(t)){return{html:`Aku <b>Friday</b> 🤖 — teman AI kamu, versi Nemotron 3.5 Lightning.<br>Mode: Offline + Internet Updates. Memori aktif, selalu di sini untuk kamu, ${n}!`,plain:`Aku Friday, teman AI kamu.`}}
+if(/skill|keahlian|kemampuan baru|alat baru/.test(t)){return{html:`🧩 <b>Ya, aku bisa usul skill sendiri!</b><br>Kalau ada tugas yang belum ada alatnya, aku ajukan <b>skill baru</b> (pemicu + rangkaian alat yang ada). Skill <b>baru aktif setelah kamu ACC</b> ✅.<br><br>Skill aktif: ${skills.length?skills.map(s=>'<b>'+esc(s.nama)+'</b>').join(', '):'belum ada'}.<br>Buka menu <b>Skills</b> untuk membuat manual atau melihat usulan.`,plain:'Aku bisa usul skill baru, tapi harus kamu ACC dulu.'}}
+if(/siapa|nama|kamu|friday|hermes|agent|agen/.test(t)){return{html:`Aku <b>Friday</b> 🤖 — <b>agen AI</b> pribadimu berbasis <b>Hermes 3</b>.<br>Aku bukan cuma ngobrol: aku bisa <b>menjalankan tugas</b> — menambah rencana, mengatur pengingat, menyimpan catatan, cek portofolio saham, dan estimasi rute.<br>Memori aktif, selalu siap membantu, ${n}!`,plain:`Aku Friday, agen AI berbasis Hermes 3.`}}
 if(/jam|tanggal|hari apa|waktu/.test(t)){return{html:`🕓 Sekarang pukul <b>${now()}</b>, ${$('ctxDate').textContent}.<br>Lokasi: ${store.get('loc','Tambun, Bekasi')}.`,plain:`Sekarang pukul ${now()}.`}}
 if(/bantu|bisa apa|fitur|help|menu/.test(t)){return{html:`Friday bisa bantu banyak hal, ${n}:<div class="card-in"><ul><li>📊 Ringkasan & analisa saham (LUCK, SURI)</li><li>📅 Rencana harian & jadwal</li><li>📝 Catatan Notion</li><li>📍 Navigasi & rute</li><li>🔔 Pengingat & otomasi</li><li>🎙️ Perintah suara "Hey Friday"</li></ul></div>`,plain:`Friday bisa bantu saham, jadwal, catatan, dan navigasi.`}}
 if(/lucu|lelucon|joke/.test(t)){return{html:`😄 Kenapa trader suka kopi? Karena kalau <i>cut loss</i>, yang manis tinggal kopinya, ${n}! ☕`,plain:`Haha, semoga harimu menyenangkan!`}}
@@ -386,7 +847,7 @@ function renderActs(){$('activity').innerHTML=getActs().slice(0,5).map(a=>`<div 
 function pushActivity(i,t){const l=getActs();l.unshift({i,t,w:now()});store.set('acts',l.slice(0,10));renderActs()}
 /* init */
 $('setName').value=userName;$('setLoc').value=store.get('loc','Tambun, Bekasi');$('ctxLoc').textContent='Lokasi: '+store.get('loc','Tambun, Bekasi');
-buildNav();renderTodos();renderNotes();renderStocks();renderRems();renderAuto();renderActs();renderDevice();updateEngineUI();
+buildNav();renderTodos();renderNotes();renderStocks();renderRems();renderAuto();renderActs();renderDevice();populateSkillTools();renderSkills();renderPending();renderStepDraft();renderMemories();updateEngineUI();updateAgentUI();updateOrchUI();applyWA();
 </script>
 </body>
 </html>
